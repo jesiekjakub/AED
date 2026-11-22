@@ -1,14 +1,21 @@
 # Render Blueprint: publiczne demo frontendu portalu ze stroną /pl/aed.
 #
-# Blueprint tworzy wyłącznie jedną stronę statyczną (static site), która na Renderze
-# jest darmowa. Nie ma tu baz danych, workerów ani usług z płatnym planem.
+# Blueprint tworzy dwa darmowe zasoby i nic poza nimi (bez baz danych, workerów
+# i płatnych planów):
+#   1. aed-na-ratunek        strona statyczna z frontendem portalu,
+#   2. aed-na-ratunek-proxy  usługa na planie `free`, która przekazuje zapytania
+#                            frontendu do produkcyjnego dane.gov.pl.
 #
 # To odpowiednik lokalnego `ng serve --configuration aed`:
 #   - dane AED pochodzą z portal/src/assets/aed,
-#   - zapytania /api, /media, /flags i /cms trafiają do produkcyjnego dane.gov.pl
-#     (reguły poniżej są przeniesione z portal/proxy.aed.conf.json).
+#   - zapytania /api, /media, /flags i /cms trafiają do dane.gov.pl (te same reguły
+#     co w portal/proxy.aed.conf.json, zapisane w render/proxy.mjs).
 # Wykaz zbiorczy z naszego backendu (/api/aggregated-aed-info) wymaga pełnego
 # portalu uruchomionego lokalnie, więc w tym demo nie jest dostępny.
+#
+# Usługa na planie `free` zasypia po 15 minutach bez ruchu. Mapa i dane AED działają
+# wtedy od razu, a treści z dane.gov.pl (stopka, okno RODO, wyszukiwarka danych)
+# pojawiają się po wybudzeniu proxy, co trwa do około minuty.
 services:
   - type: web
     runtime: static
@@ -28,19 +35,39 @@ services:
       - key: NODE_VERSION
         value: 24.13.0
     routes:
+      # Zapytania do dane.gov.pl idą przez proxy, a nie wprost: Render dokleja do reguł
+      # rewrite nagłówek X-Forwarded-Host, na który dane.gov.pl odpowiada przekierowaniem 301.
       - type: rewrite
         source: /api/*
-        destination: https://api.dane.gov.pl/1.4/*
+        destination: https://aed-na-ratunek-proxy.onrender.com/api/*
       - type: rewrite
         source: /media/*
-        destination: https://api.dane.gov.pl/media/*
+        destination: https://aed-na-ratunek-proxy.onrender.com/media/*
       - type: rewrite
         source: /flags/*
-        destination: https://dane.gov.pl/flags/*
+        destination: https://aed-na-ratunek-proxy.onrender.com/flags/*
       - type: rewrite
         source: /cms/*
-        destination: https://cms.dane.gov.pl/*
+        destination: https://aed-na-ratunek-proxy.onrender.com/cms/*
       # Aplikacja jednostronicowa: każdy inny adres obsługuje router Angulara.
       - type: rewrite
         source: /*
         destination: /index.html
+
+  - type: web
+    runtime: node
+    plan: free
+    name: aed-na-ratunek-proxy
+    region: frankfurt
+    # Proxy korzysta tylko z modułów wbudowanych w Node.js, więc nie ma czego instalować.
+    buildCommand: node --version
+    startCommand: node render/proxy.mjs
+    healthCheckPath: /healthz
+    autoDeployTrigger: commit
+    buildFilter:
+      paths:
+        - render/**
+        - render.yaml
+    envVars:
+      - key: NODE_VERSION
+        value: 24.13.0
