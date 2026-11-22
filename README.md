@@ -14,6 +14,8 @@ Przy nagłym zatrzymaniu krążenia liczy się każda minuta, a informacja o tym
 
 ![Wykaz zbiorczy AED wyświetlany standardową tabelą w lokalnym portalu dane.gov.pl](kampania/zrzuty/wykaz_tabela_w_portalu_kadr.png)
 
+> **Dla jury:** instrukcja krok po kroku, gdzie sprawdzić każde wymaganie z zadania: [`INSTRUKCJA_DLA_JURY.md`](INSTRUKCJA_DLA_JURY.md) (także jako PDF: [`kampania/instrukcja_dla_jury_AED.pdf`](kampania/instrukcja_dla_jury_AED.pdf)).
+
 ## Spis najważniejszych rzeczy
 
 - **Wykaz zbiorczy AED działa w backendzie dane.gov.pl.** Dysponent zaznacza przy zasobie „Zasób zawiera wykaz AED”, portal sprawdza plik, a w nocy skleja wszystkie takie zasoby w jeden wykaz z informacją, skąd pochodzi każdy wiersz. Działa to tak samo jak istniejący wykaz DGA. Kod: `backend/mcod/resources/aed_utils.py` i `tasks/aed.py`.
