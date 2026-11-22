@@ -1,0 +1,74 @@
+zrodlo_id,dostawca_danych,rekordow_zrodla_z_wsp,punktow_osm_w_obszarze,rekordy_z_osm_do_50m,rekordy_z_osm_do_150m,rekordy_bez_osm_w_150m
+WWW-PIELGRZYMKA,Urząd Gminy Pielgrzymka,8,11,7,8,0
+GMINA-0204013,Gmina Góra (strona www urzędu),8,14,8,8,0
+WWW-JGORA,Urząd Miasta Jelenia Góra,4,29,4,4,0
+GMINA-0216043,Gmina Polkowice (strona www urzędu),2,6,1,1,1
+WWW-WROINPOST,Urząd Miejski Wrocławia (stacje Helpbox 365 na paczkomatach InPost),5,6346,3,3,2
+GMINA-0403012,Gmina Białe Błota (strona www urzędu),3,3,1,2,1
+GMINA-0407011,Gmina Inowrocław (strona www urzędu),3,33,1,2,1
+GMINA-0410013,Gmina Kcynia (strona www urzędu),3,5,1,1,2
+GMINA-0463011,Gmina Toruń (strona www urzędu),45,111,22,31,14
+WWW-CHELM,Urząd Miasta Chełm,8,20,7,8,0
+GMINA-0615052,Gmina Komarówka Podlaska (strona www urzędu),3,1,1,3,0
+JST-LUB,Urząd Miasta Lublin,36,146,16,26,10
+GMINA-0812013,Gmina Sława (strona www urzędu),10,10,8,9,1
+GMINA-0809053,Gmina Nowogród Bobrzański (strona www urzędu),7,3,4,6,1
+GMINA-0862011,Gmina Zielona Góra (strona www urzędu),65,81,9,18,47
+GMINA-0811021,Gmina Żary (strona www urzędu),3,8,1,3,0
+GMINA-1434041,Gmina Zielonka (strona www urzędu),16,10,12,12,4
+WWW-WIAZOWNA,Gmina Wiązowna (portal tuWiązowna.pl),9,13,9,9,0
+GMINA-1404011,Gmina Gostynin (strona www urzędu),5,2,0,0,5
+GMINA-1438042,Gmina Radziejowice (strona www urzędu),3,5,3,3,0
+DGP-LEG,Urząd Miasta Legionowo,24,24,16,18,6
+WWW-LESZNO,Urząd Miasta Leszna,26,826,18,21,5
+DGP-MAR,Urząd Miasta Marki,8,938,6,6,2
+GMINA-1428082,Gmina Teresin (strona www urzędu),2,3,0,2,0
+GMINA-1218062,Gmina Spytkowice (strona www urzędu),6,11,6,6,0
+JST-KRK,Urząd Miasta Krakowa,66,413,51,55,11
+WWW-RADLOW,Urząd Miejski w Radłowie,10,47,5,6,4
+GMINA-1209052,Gmina Raciechowice (strona www urzędu),3,2,1,1,2
+WWW-TARNOWOP,Urząd Gminy Tarnów Opolski,3,4,2,3,0
+DGP-KRO,Urząd Miasta Krosna,21,54,20,21,0
+GMINA-1811011,Gmina Mielec (strona www urzędu),11,34,6,9,2
+DGP-PRZ,Urząd Miejski w Przemyślu,21,35,13,16,5
+GMINA-1818011,Gmina Stalowa Wola (strona www urzędu),3,21,2,2,1
+WWW-PSTAROGARD,Starostwo Powiatowe w Starogardzie Gdańskim,25,60,16,16,9
+JST-GDA,Urząd Miejski w Gdańsku,95,283,50,71,24
+WWW-SOPOT,Urząd Miasta Sopotu,23,42,13,19,4
+GMINA-2204062,Gmina Pszczółki (strona www urzędu),3,1,1,1,2
+WWW-KOLCZYGLOWY,Urząd Gminy Kołczygłowy,1,1,1,1,0
+GMINA-2204011,Gmina Pruszcz Gdański (strona www urzędu),15,21,4,7,8
+GMINA-2213031,Gmina Starogard Gdański (strona www urzędu),14,16,9,9,5
+WWW-SLUPSK,Urząd Miejski w Słupsku,25,39,18,22,3
+JST-OLS,Urząd Miasta Olsztyna,43,78,31,37,6
+WWW-CZERWONAK,Gmina Czerwonak (Akwen Czerwonak – jednostka gminy),36,47,25,30,6
+GMINA-3011053,Gmina Śmigiel (strona www urzędu),16,16,9,10,6
+GMINA-3029012,Gmina Przemęt (strona www urzędu),23,31,16,16,7
+GMINA-3003042,Gmina Kiszkowo (strona www urzędu),3,4,3,3,0
+GMINA-3012033,Gmina Koźmin Wielkopolski (strona www urzędu),3,4,3,3,0
+GMINA-3021113,Gmina Murowana Goślina (strona www urzędu),14,21,12,14,0
+GMINA-3019011,Gmina Piła (strona www urzędu),17,81,8,11,6
+GMINA-3016023,Gmina Rogoźno (strona www urzędu),5,7,5,5,0
+GMINA-3026043,Gmina Śrem (strona www urzędu),5,17,5,5,0
+WWW-WOPRWZ,WOPR Województwa Zachodniopomorskiego – Zachodniopomorska Sieć Defibrylatorów AED,75,579,44,57,18
+JST-KOS,Urząd Miejski w Koszalinie,35,61,34,34,1
+WWW-PKOLOBRZEG,Starostwo Powiatowe w Kołobrzegu,1,3,0,0,1
+GMINA-3214011,Gmina Stargard (strona www urzędu),16,42,10,13,3
+GMINA-1001011,Gmina Bełchatów (strona www urzędu),2,10,2,2,0
+JST-PIOTRKOW,Urząd Miasta Piotrkowa Trybunalskiego,15,21,12,14,1
+GMINA-1063011,Gmina Skierniewice (strona www urzędu),3,17,1,2,1
+GMINA-1019011,Gmina Zduńska Wola (strona www urzędu),4,18,3,4,0
+JST-LDZ,Urząd Miasta Łodzi,148,262,118,140,8
+GMINA-1004011,Gmina Łęczyca (strona www urzędu),5,6,3,5,0
+GMINA-2414011,Gmina Bieruń (strona www urzędu),13,24,9,11,2
+GMINA-2466011,Gmina Gliwice (strona www urzędu),3,45,0,1,2
+WWW-PAWLOWICE,Urząd Gminy Pawłowice,10,13,6,6,4
+WWW-KAMIENICA,Urząd Gminy Kamienica Polska,6,12,6,6,0
+GMINA-2402072,Gmina Kozy (strona www urzędu),11,6,10,11,0
+WWW-MIASTECZKO,Urząd Miejski w Miasteczku Śląskim,3,3,3,3,0
+GMINA-2471011,Gmina Piekary Śląskie (strona www urzędu),2,8,0,1,1
+GMINA-2404152,Gmina Rędziny (strona www urzędu),3,1,0,0,3
+JST-SIEMIANOWICE,Urząd Miasta Siemianowice Śląskie,44,20,14,18,26
+GMINA-2413041,Gmina Tarnowskie Góry (strona www urzędu),6,28,1,1,5
+GMINA-2477011,Gmina Tychy (strona www urzędu),12,31,5,7,5
+WWW-SWIETOCHLOWICE,Urząd Miasta Świętochłowice,10,6,2,2,8

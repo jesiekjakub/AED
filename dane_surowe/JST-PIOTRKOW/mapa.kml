@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>defibrylatory w Piotrkowie Trybunalskim</name>
+    <description/>
+    <Style id="icon-1899-DB4436-normal">
+      <IconStyle>
+        <color>ff3644db</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-DB4436-highlight">
+      <IconStyle>
+        <color>ff3644db</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-DB4436">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-DB4436-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-DB4436-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Folder>
+      <name>defibrylatorry</name>
+      <Placemark>
+        <name>Defibrylator wewnętrzny</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZiI8OmzaCAhMXijXGQ2Lg7-HIDyXlJ7lZdgOUo7OSHzZhkhqFwI49DrHDRRtbPKYJn-WTQboZWncXt-GDvos9sgLYJdEIdkalD8AVVvjcTGHYPXTzhR7rd0YxOiK9t-u7oAkmn0ItQej_zvdlfwza492JdKeFpYuCP2Hs4aeQTU7q8glO9GJZb4F57PCSg0_WmLD-VBm329BEE_uuXb8YN_qEaPn335wSKgkzrrYvrSSS0u7xDym4NccAI?fife=s16383" height="200" width="auto" /><br><br>Urząd Miasta, ul. Szkolna 28 (defibrylator wewnętrzny)]]></description>
+        <styleUrl>#icon-1899-DB4436</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZiI8OmzaCAhMXijXGQ2Lg7-HIDyXlJ7lZdgOUo7OSHzZhkhqFwI49DrHDRRtbPKYJn-WTQboZWncXt-GDvos9sgLYJdEIdkalD8AVVvjcTGHYPXTzhR7rd0YxOiK9t-u7oAkmn0ItQej_zvdlfwza492JdKeFpYuCP2Hs4aeQTU7q8glO9GJZb4F57PCSg0_WmLD-VBm329BEE_uuXb8YN_qEaPn335wSKgkzrrYvrSSS0u7xDym4NccAI?fife=s16383</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            19.6780867,51.4113745,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Defibrylator zewnętrzny</name>
+        <description>Urząd Miasta, Pasaż Rudowskiego 10 (defibrylator zewnętrzny)</description>
+        <styleUrl>#icon-1899-DB4436</styleUrl>
+        <Point>
+          <coordinates>
+            19.6895206,51.4050137,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Defibrylator wewnętrzny</name>
+        <description>OSIR - Centrum Rekreacyjne ul. Belzacka 106 (defibrylator wewnętrzny)</description>
+        <styleUrl>#icon-1899-DB4436</styleUrl>
+        <Point>
+          <coordinates>
+            19.6636949,51.4067555,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Defibrylator wewnętrzny</name>
+        <description>OSIR - Boisko Sportowe, ul. Ronalda Reagana 18 (defibrylator wewnętrzny)</description>
+        <styleUrl>#icon-1899-DB4436</styleUrl>
+        <Point>
+          <coordinates>
+            19.7164406,51.4076592,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Defibrylator wewnętrzny</name>
+        <description>OSIR - Stadion Miejski ul. Żwirki 6 (defibrylator wewnętrzny)</description>
+        <styleUrl>#icon-1899-DB4436</styleUrl>
+        <Point>
+          <coordinates>
+            19.690664,51.3943655,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Defibrylator wewnętrzny</name>
+        <description>OSIR - Hala Relax, al. 3 Maja 6b (defibrylator wewnętrzny)</description>
+        <styleUrl>#icon-1899-DB4436</styleUrl>
+        <Point>
+          <coordinates>
+            19.6943814,51.4054262,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Defibrylator wewnętrzny</name>
+        <description>Miejski Ośrodek Kultury, al. 3 Maja 12 (defibrylator wewnętrzny)</description>
+        <styleUrl>#icon-1899-DB4436</styleUrl>
+        <Point>
+          <coordinates>
+            19.6932012,51.4046298,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Defibrylator wewnętrzny</name>
+        <description>Miejski Ośrodek Kultury, ul. Słowackiego 13 (defibrylator wewnętrzny)</description>
+        <styleUrl>#icon-1899-DB4436</styleUrl>
+        <Point>
+          <coordinates>
+            19.6900415,51.4094015,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Defibrylator wewnętrzny</name>
+        <description>Mediateka, ul. Skłodowskiej-Curie 3 (defibrylator wewnętrzny)</description>
+        <styleUrl>#icon-1899-DB4436</styleUrl>
+        <Point>
+          <coordinates>
+            19.7028186,51.408662,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Defibrylator zewnętrzny</name>
+        <description>Szkoła Podstawowa nr 3, ul. Wysoka 28/38 (Na ścianie obok wejścia do szkoły)</description>
+        <styleUrl>#icon-1899-DB4436</styleUrl>
+        <Point>
+          <coordinates>
+            19.6802173,51.4196741,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Defibrylator wewnętrzny</name>
+        <description>Starostwo Powiatowe w Piotrkowie Trybunalskim, od strony ul. Grota Roweckiego (wewnątrz budynku)</description>
+        <styleUrl>#icon-1899-DB4436</styleUrl>
+        <Point>
+          <coordinates>
+            19.6871336,51.4110109,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Defibrylator zewnętrzny</name>
+        <description>Aeroklub Ziemi Piotrkowskiej, ul. Przemysłowa 48 (przy wejściu)</description>
+        <styleUrl>#icon-1899-DB4436</styleUrl>
+        <Point>
+          <coordinates>
+            19.6835785,51.3846035,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Defibrylator zewnętrzny</name>
+        <description>Akademia Piotrkowska</description>
+        <styleUrl>#icon-1899-DB4436</styleUrl>
+        <Point>
+          <coordinates>
+            19.6715839,51.4098005,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Defibrylator wewnętrzny</name>
+        <description>Komenda Policji, ul. Szkolna 30/38</description>
+        <styleUrl>#icon-1899-DB4436</styleUrl>
+        <Point>
+          <coordinates>
+            19.6777868,51.4115328,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Defibrylator zewnętrzny</name>
+        <description>IV Liceum Ogólnokształcące, Władysława Broniewskiego 5</description>
+        <styleUrl>#icon-1899-DB4436</styleUrl>
+        <Point>
+          <coordinates>
+            19.7091049,51.4106816,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>

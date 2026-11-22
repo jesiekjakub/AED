@@ -1,0 +1,1833 @@
+<!DOCTYPE html>
+<html lang="pl-PL" class="js_active">
+
+<head><script id="acp-gcm-default">window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("consent","default",{"ad_storage":"denied","ad_user_data":"denied","ad_personalization":"denied","analytics_storage":"denied","functionality_storage":"denied","personalization_storage":"denied","security_storage":"granted","wait_for_update":500});</script><script id="acp-blocker-head">window.acpConfig={"cookieName":"acp_consent","cookiePath":"\/","expiryDays":180,"categories":["necessary","functional","analytics","performance","advertisement","others"],"providers":{"googletagmanager.com":"analytics","google-analytics.com":"analytics","hotjar.com":"analytics","clarity.ms":"analytics","connect.facebook.net":"advertisement","doubleclick.net":"advertisement","googlesyndication.com":"advertisement","linkedin.com":"advertisement","ads-twitter.com":"advertisement","tiktok.com":"advertisement","youtube.com":"functional","youtube-nocookie.com":"functional","vimeo.com":"functional"},"rules":[{"pattern":"*youtube.com*","category":"others"},{"pattern":"*googletagmanager.com*","category":"analytics"},{"pattern":"*google-analytics.com*","category":"analytics"},{"pattern":"*google.com*","category":"advertisement"},{"pattern":"*youtube.com*","category":"functional"}],"cookies":[{"name":"page-visited","category":"others"},{"name":"YSC","category":"others"},{"name":"VISITOR_INFO1_LIVE","category":"others"},{"name":"VISITOR_PRIVACY_METADATA","category":"others"},{"name":"__Secure-YNID","category":"others"},{"name":"__Secure-ROLLOUT_TOKEN","category":"others"},{"name":"_ga_*","category":"analytics"},{"name":"_ga","category":"analytics"},{"name":"_gid","category":"analytics"},{"name":"_gat","category":"analytics"},{"name":"PHPSESSID","category":"necessary"},{"name":"__cf_bm","category":"necessary"},{"name":"NID","category":"advertisement"},{"name":"ytidb*","category":"functional"}],"gcmAllow":["ads.google.com","google-analytics.com","googletagmanager.com","googleadservices.com","googlesyndication.com\/pagead\/js\/adsbygoogle.js"],"logUrl":"https:\/\/tuwiazowna.pl\/wp-json\/agency\/v1\/consent_log"};/**
+ * Consent model — single cookie `acp_consent` (mirrors includes/helpers/class-consent.php).
+ * Exposes window.acpConsent and fires `acp:consent-updated` on every change.
+ */
+(function (w, d) {
+	'use strict';
+
+	var cfg = w.acpConfig || {};
+	var COOKIE = cfg.cookieName || 'acp_consent';
+	var CATEGORIES = cfg.categories || ['necessary', 'functional', 'analytics', 'performance', 'advertisement', 'others'];
+	var EXPIRY_DAYS = cfg.expiryDays || 180;
+	var PATH = cfg.cookiePath || '/';
+
+	function readCookie(name) {
+		var match = d.cookie.match('(?:^|; )' + name.replace(/([.*+?^${}()|[\]\\])/g, '\\$1') + '=([^;]*)');
+		return match ? decodeURIComponent(match[1]) : '';
+	}
+
+	function writeCookie(name, value, days) {
+		var date = new Date();
+		date.setTime(date.getTime() + days * 864e5);
+		var secure = w.location.protocol === 'https:' ? ';secure' : '';
+		d.cookie = name + '=' + encodeURIComponent(value) + ';expires=' + date.toUTCString() + ';path=' + PATH + ';samesite=lax' + secure;
+	}
+
+	function defaultState() {
+		var s = { consent: false };
+		for (var i = 0; i < CATEGORIES.length; i++) {
+			s[CATEGORIES[i]] = (CATEGORIES[i] === 'necessary');
+		}
+		return s;
+	}
+
+	function parse(raw) {
+		var s = defaultState();
+		var pairs = raw.split(',');
+		for (var i = 0; i < pairs.length; i++) {
+			var idx = pairs[i].indexOf(':');
+			if (idx < 0) { continue; }
+			var key = pairs[i].slice(0, idx).trim();
+			var granted = pairs[i].slice(idx + 1).trim() === 'yes';
+			if (key === 'consent') { s.consent = granted; }
+			else if (CATEGORIES.indexOf(key) >= 0) { s[key] = granted; }
+		}
+		s.necessary = true;
+		return s;
+	}
+
+	function serialize(s) {
+		var parts = ['consent:' + (s.consent ? 'yes' : 'no')];
+		for (var i = 0; i < CATEGORIES.length; i++) {
+			var cat = CATEGORIES[i];
+			var granted = cat === 'necessary' ? true : !!s[cat];
+			parts.push(cat + ':' + (granted ? 'yes' : 'no'));
+		}
+		return parts.join(',');
+	}
+
+	function copy(o) {
+		var c = {};
+		for (var k in o) { if (Object.prototype.hasOwnProperty.call(o, k)) { c[k] = o[k]; } }
+		return c;
+	}
+
+	var state = parse(readCookie(COOKIE));
+	var COOKIES_MAP = cfg.cookies || []; // [{ name, category }] from the cookie table.
+
+	// Categories whose scripts were allowed to run (granted at load or since). Used
+	// to decide when a withdrawal must reload the page to re-block already-run code.
+	var ran = {};
+	for (var _r = 0; _r < CATEGORIES.length; _r++) {
+		if (CATEGORIES[_r] !== 'necessary' && state[CATEGORIES[_r]]) { ran[CATEGORIES[_r]] = true; }
+	}
+
+	function emit() {
+		d.dispatchEvent(new CustomEvent('acp:consent-updated', { detail: copy(state) }));
+	}
+
+	function expireCookie(name) {
+		var host = w.location.hostname;
+		var domains = ['', host, '.' + host];
+		var parts = host.split('.');
+		if (parts.length > 2) { domains.push('.' + parts.slice(-2).join('.')); }
+		var paths = ['/', w.location.pathname];
+		for (var di = 0; di < domains.length; di++) {
+			for (var pi = 0; pi < paths.length; pi++) {
+				d.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=' + paths[pi] + (domains[di] ? ';domain=' + domains[di] : '');
+			}
+		}
+	}
+
+	// Delete every current cookie matching the configured name (prefix match, so
+	// "_ga" also clears "_ga_XXXX"), across host/domain/path variants.
+	function deleteCookie(pattern) {
+		var prefix = String(pattern).replace(/\*+$/, '');
+		if (!prefix) { return; }
+		var all = d.cookie ? d.cookie.split(';') : [];
+		for (var i = 0; i < all.length; i++) {
+			var cname = all[i].split('=')[0].trim();
+			if (cname && cname.indexOf(prefix) === 0) { expireCookie(cname); }
+		}
+		expireCookie(prefix);
+	}
+
+	function clearDeniedCookies() {
+		for (var i = 0; i < COOKIES_MAP.length; i++) {
+			var item = COOKIES_MAP[i];
+			if (!item || !item.name || !item.category || item.category === 'necessary') { continue; }
+			if (state[item.category]) { continue; } // still granted → keep.
+			deleteCookie(item.name);
+		}
+	}
+
+	function persist() {
+		writeCookie(COOKIE, serialize(state), EXPIRY_DAYS);
+		clearDeniedCookies();
+
+		// If a category that was allowed to run is now denied, its scripts already
+		// executed this session and can't be unloaded — reload so the blocker (which
+		// runs first) neutralizes them. Newly granted categories just get their
+		// scripts activated in place (no reload → no INP hit).
+		var reload = false;
+		for (var i = 0; i < CATEGORIES.length; i++) {
+			var cat = CATEGORIES[i];
+			if (cat === 'necessary') { continue; }
+			if (state[cat]) { ran[cat] = true; }
+			else if (ran[cat]) { reload = true; }
+		}
+
+		emit();
+		if (reload) { w.location.reload(); }
+	}
+
+	w.acpConsent = {
+		categories: function () { return CATEGORIES.slice(); },
+		state: function () { return copy(state); },
+		hasConsented: function () { return !!state.consent; },
+		isGranted: function (category) { return category === 'necessary' ? true : !!state[category]; },
+		save: function (map) {
+			for (var i = 0; i < CATEGORIES.length; i++) {
+				var cat = CATEGORIES[i];
+				if (cat !== 'necessary') { state[cat] = !!(map && map[cat]); }
+			}
+			state.necessary = true;
+			state.consent = true;
+			persist();
+		},
+		acceptAll: function () {
+			for (var i = 0; i < CATEGORIES.length; i++) { state[CATEGORIES[i]] = true; }
+			state.consent = true;
+			persist();
+		},
+		rejectAll: function () {
+			for (var i = 0; i < CATEGORIES.length; i++) { state[CATEGORIES[i]] = (CATEGORIES[i] === 'necessary'); }
+			state.consent = true;
+			persist();
+		},
+		reset: function () {
+			state = defaultState();
+			writeCookie(COOKIE, '', -1);
+			emit();
+		}
+	};
+})(window, document);
+/**
+ * Script/iframe blocking engine. Runs before page scripts: overrides
+ * document.createElement and watches the DOM, neutralizing tags whose category
+ * isn't consented, then restoring them on `acp:consent-updated`.
+ *
+ * Tag a resource with data-acp="analytics" (script or iframe), or rely on the
+ * provider map (src match). The "necessary" category is never blocked.
+ *
+ * Restoring replays the tags in the order they were blocked, and holds inline
+ * code until the external scripts queued before it have executed.
+ */
+(function (w, d) {
+	'use strict';
+
+	var consent = w.acpConsent;
+	if (!consent) { return; }
+
+	var cfg = w.acpConfig || {};
+	var providers = cfg.providers || {};
+
+	// A pattern splits on "*" into fragments that must all appear in the source, in
+	// order (unanchored, case-insensitive); without "*" it is one fragment, i.e. a
+	// substring. Plain indexOf, no RegExp: a glob regex opens with ".*", which
+	// backtracks from every offset — seconds per script on the long data: URLs
+	// FlyingPress makes of inline code, all checked on the first tap (INP).
+	// Mirrors Block_Rules::matches (PHP). Compiled once; null for a blank pattern.
+	function compile(pattern) {
+		pattern = String(pattern || '').trim();
+		if (!pattern) { return null; }
+		return pattern.toLowerCase().split('*').filter(function (part) { return part !== ''; });
+	}
+
+	// hay is the source lowercased once per lookup, not once per rule.
+	function matches(hay, parts) {
+		if (!parts) { return false; }
+		var pos = 0;
+		for (var i = 0; i < parts.length; i++) {
+			var at = hay.indexOf(parts[i], pos);
+			if (at < 0) { return false; }
+			pos = at + parts[i].length;
+		}
+		return true;
+	}
+
+	// [{ pattern, category }] from the cookie table.
+	var rules = (cfg.rules || []).map(function (rule) {
+		return { parts: compile(rule && rule.pattern), category: rule && rule.category };
+	});
+	// Google Consent Mode loaders: never blocked (advanced mode).
+	var gcmAllow = (cfg.gcmAllow || []).map(compile);
+
+	// Google Consent Mode advanced mode: the Google tag loader loads on
+	// default=denied (so Google gets the cookieless G100 collect) — never block it,
+	// even if a cookie rule or provider entry would otherwise match.
+	function isGcmLoader(hay) {
+		for (var i = 0; i < gcmAllow.length; i++) {
+			if (matches(hay, gcmAllow[i])) { return true; }
+		}
+		return false;
+	}
+
+	function categoryFromSrc(src) {
+		if (!src) { return ''; }
+		// Coerce once, up front: on Trusted Types pages the src setter receives a
+		// TrustedScriptURL (an object, no .indexOf). A string method on it throws,
+		// and the setter's catch would then let the script load unblocked.
+		src = 'string' === typeof src ? src : String(src);
+		var hay = src.toLowerCase();
+		if (isGcmLoader(hay)) { return ''; }
+		for (var i = 0; i < rules.length; i++) {
+			if (matches(hay, rules[i].parts)) { return rules[i].category; }
+		}
+		for (var domain in providers) {
+			if (Object.prototype.hasOwnProperty.call(providers, domain) && src.indexOf(domain) >= 0) {
+				return providers[domain];
+			}
+		}
+		return '';
+	}
+
+	function categoryOf(explicit, src) {
+		return explicit || categoryFromSrc(src);
+	}
+
+	function blocked(category) {
+		return !!category && category !== 'necessary' && !consent.isGranted(category);
+	}
+
+	// Replay order is the order tags were blocked, not document order: a loader
+	// that inserts before the first <script> lands high in the DOM although it
+	// arrived last, and restoring by document order would run it far too early.
+	var seq = 0;
+
+	function stamp(node) {
+		if (!node.hasAttribute('data-acp-ord')) { node.setAttribute('data-acp-ord', seq++); }
+	}
+
+	// Author-inerted markup is already dead (type="text/plain"); it only needs the
+	// category tag and its place in the queue.
+	function tagInert(node) {
+		if (node.getAttribute('data-acp-cat')) { return; }
+		node.setAttribute('data-acp-cat', node.getAttribute('data-acp'));
+		stamp(node);
+	}
+
+	function neutralizeScript(node, category) {
+		if (node.type === 'text/plain') { return; }
+		node.setAttribute('data-acp-cat', category);
+		stamp(node);
+		if (!node.getAttribute('data-acp-type')) { node.setAttribute('data-acp-type', node.type || 'text/javascript'); }
+		var src = node.getAttribute('src');
+		if (src) { node.setAttribute('data-acp-src', src); node.removeAttribute('src'); }
+		node.type = 'text/plain';
+	}
+
+	function neutralizeIframe(node, category) {
+		var src = node.getAttribute('src');
+		if (!src) { return; }
+		node.setAttribute('data-acp-cat', category);
+		stamp(node);
+		node.setAttribute('data-acp-src', src);
+		node.removeAttribute('src');
+	}
+
+	// --- 1) Catch dynamically created scripts (e.g. analytics loaders) -------
+	// Attribute-based src accessor (NOT the native HTMLScriptElement.prototype
+	// descriptor). Using proto.get/proto.set here breaks Google Tag Manager's
+	// container execution — GTM stalls in bootstrap and never fires its GA4/Ads
+	// tags. Mirroring WebToffee's setAttribute-based approach keeps GTM working
+	// while still neutralizing unconsented scripts. Allowed scripts (incl. the
+	// Google tag loaders in advanced Consent Mode) get their real src untouched.
+	var nativeCreate = d.createElement.bind(d);
+	d.createElement = function (tag) {
+		var el = nativeCreate(tag);
+		if (String(tag).toLowerCase() !== 'script') { return el; }
+		var setAttr = el.setAttribute.bind(el);
+		try {
+			// The override shape must mirror WebToffee exactly, or Google Tag Manager
+			// stalls in bootstrap and never fires its GA4/Ads tags (verified live). A
+			// partial override — src only, configurable, no setAttribute routing —
+			// breaks GTM even when it blocks nothing. Wrapping BOTH src and type as
+			// non-configurable attribute-backed accessors and routing setAttribute
+			// through them is GTM-safe. Allowed scripts (incl. the Google tag loaders
+			// in advanced Consent Mode) keep a normal src and load untouched.
+			Object.defineProperties(el, {
+				src: {
+					get: function () { return el.getAttribute('data-acp-src') || el.getAttribute('src') || ''; },
+					set: function (value) {
+						try {
+							var cat = categoryOf(el.getAttribute('data-acp'), value);
+							if (blocked(cat)) {
+								setAttr('data-acp-cat', cat);
+								setAttr('data-acp-ord', seq++);
+								setAttr('data-acp-src', String(value));
+								setAttr('type', 'text/plain');
+								return;
+							}
+						} catch (e) { /* never let categorization throw into the host script (e.g. GTM) */ }
+						setAttr('src', value);
+					}
+				},
+				type: {
+					get: function () { return el.getAttribute('type'); },
+					set: function (value) { setAttr('type', el.getAttribute('data-acp-cat') ? 'text/plain' : value); }
+				}
+			});
+			el.setAttribute = function (name, value) {
+				if ('src' === name || 'type' === name) { el[name] = value; return; }
+				setAttr(name, value);
+			};
+		} catch (e) { /* getter/setter unsupported — fall back to observer */ }
+		return el;
+	};
+
+	// --- 2) Catch parsed/inserted markup tags as early as possible -----------
+	function inspect(node) {
+		if (!node || node.nodeType !== 1) { return; }
+		if (node.tagName === 'SCRIPT') {
+			if (node.type === 'text/plain' && node.getAttribute('data-acp')) { tagInert(node); return; }
+			var c = categoryOf(node.getAttribute('data-acp'), node.getAttribute('src'));
+			if (blocked(c)) { neutralizeScript(node, c); }
+		} else if (node.tagName === 'IFRAME') {
+			if (node.getAttribute('data-acp') && node.getAttribute('data-acp-src') && !node.getAttribute('src')) { tagInert(node); return; }
+			var ci = categoryOf(node.getAttribute('data-acp'), node.getAttribute('src'));
+			if (blocked(ci)) { neutralizeIframe(node, ci); }
+		}
+	}
+
+	var observer = new MutationObserver(function (mutations) {
+		for (var i = 0; i < mutations.length; i++) {
+			var added = mutations[i].addedNodes;
+			for (var j = 0; j < added.length; j++) { inspect(added[j]); }
+		}
+	});
+	observer.observe(d.documentElement, { childList: true, subtree: true });
+
+	// --- 3) Restore granted resources on consent change ----------------------
+	var KEEP_OUT = ['type', 'src', 'data-acp', 'data-acp-src', 'data-acp-type', 'data-acp-cat', 'data-acp-ord', 'data-acp-done'];
+
+	// Returns the inserted script when the replay has to wait for it (an external
+	// whose execution order still matters), otherwise null.
+	function activateScript(node) {
+		var s = nativeCreate('script');
+		for (var k = 0; k < node.attributes.length; k++) {
+			var attr = node.attributes[k];
+			if (KEEP_OUT.indexOf(attr.name) >= 0) { continue; }
+			s.setAttribute(attr.name, attr.value);
+		}
+		s.type = node.getAttribute('data-acp-type') || 'text/javascript';
+		var src = node.getAttribute('data-acp-src');
+		var ordered = false;
+		if (src) {
+			// async=false makes dynamically inserted scripts execute in insertion
+			// order while still downloading in parallel. A script the author marked
+			// async never depended on order — leave it async and don't wait for it.
+			ordered = !node.hasAttribute('async');
+			if (ordered) { s.async = false; }
+			s.setAttribute('src', src);
+		} else {
+			s.text = node.text || node.textContent || '';
+		}
+		if (!node.parentNode) { return null; }
+		node.parentNode.replaceChild(s, node);
+		return ordered ? s : null;
+	}
+
+	function activateIframe(node) {
+		var src = node.getAttribute('data-acp-src');
+		if (src) { node.setAttribute('src', src); }
+		node.removeAttribute('data-acp-src');
+		node.removeAttribute('data-acp-cat');
+		node.removeAttribute('data-acp-ord');
+		node.removeAttribute('data-acp-done');
+	}
+
+	// Restoring scripts is the heavy part (replaceChild → network + parse). Run it
+	// OFF the click that triggered consent, yielding every few tags, so it never
+	// extends the interaction (keeps INP low). Falls back gracefully on older browsers.
+	var BATCH = 8;
+	var WAIT_MS = 3000; // Cap on waiting for pending externals (adblocked or dead src).
+
+	function schedule(cb) {
+		if (w.scheduler && typeof w.scheduler.postTask === 'function') {
+			w.scheduler.postTask(cb, { priority: 'background' });
+		} else if (typeof w.requestAnimationFrame === 'function') {
+			w.requestAnimationFrame(function () { cb(); });
+		} else {
+			w.setTimeout(cb, 0);
+		}
+	}
+
+	function ordOf(node) {
+		var n = parseInt(node.getAttribute('data-acp-ord'), 10);
+		return isNaN(n) ? 0 : n;
+	}
+
+	// Everything granted, oldest first. Claiming each node up front (data-acp-done)
+	// keeps a second pass — a consent click landing before DOMContentLoaded, or a
+	// re-save — from replaying a tag the in-flight pass already owns and firing it twice.
+	// Scripts and iframes only: anything else carrying data-acp-cat (0.6.2's own
+	// preference switches did) would be swapped for an empty <script>.
+	function claim() {
+		var found = d.querySelectorAll('script[data-acp-cat]:not([data-acp-done]), iframe[data-acp-cat]:not([data-acp-done])');
+		var list = [];
+		for (var i = 0; i < found.length; i++) {
+			if (!consent.isGranted(found[i].getAttribute('data-acp-cat'))) { continue; }
+			found[i].setAttribute('data-acp-done', '1');
+			list.push(found[i]);
+		}
+		list.sort(function (a, b) { return ordOf(a) - ordOf(b); });
+		return list;
+	}
+
+	// Replays the queue in arrival order. An inline tag only runs once every
+	// external queued before it has executed: inline code is what calls into those
+	// libraries (fbq, gtag), so running it early is what loses the Pixel's methods
+	// and throws. One dead src can't stall the rest — WAIT_MS gives up on it.
+	function replay(list) {
+		var i = 0;
+		var pending = 0; // Externals inserted but not done loading.
+		var waiting = false; // An inline tag parked until they finish.
+		var timer = 0;
+
+		function finished() {
+			if (pending > 0) { pending--; }
+			if (pending > 0 || !waiting) { return; }
+			waiting = false;
+			if (timer) { w.clearTimeout(timer); timer = 0; }
+			step();
+		}
+
+		function giveUp() {
+			timer = 0;
+			pending = 0;
+			waiting = false;
+			step();
+		}
+
+		function step() {
+			var run = 0;
+			while (i < list.length) {
+				var node = list[i];
+				if (node.tagName === 'IFRAME') { i++; activateIframe(node); continue; }
+				if (pending > 0 && !node.getAttribute('data-acp-src')) {
+					waiting = true;
+					timer = w.setTimeout(giveUp, WAIT_MS);
+					return;
+				}
+				i++;
+				var s = activateScript(node);
+				if (s) {
+					pending++;
+					s.addEventListener('load', finished);
+					s.addEventListener('error', finished);
+				}
+				if (++run >= BATCH) { schedule(step); return; }
+			}
+		}
+
+		step();
+	}
+
+	function unblock() {
+		var list = claim();
+		if (list.length) { schedule(function () { replay(list); }); }
+	}
+
+	d.addEventListener('acp:consent-updated', unblock);
+
+	// Fallback for author-inerted markup (type="text/plain" data-acp=...) the
+	// observer never saw — inspect() tags the rest as it arrives.
+	d.addEventListener('DOMContentLoaded', function () {
+		var pre = d.querySelectorAll('script[type="text/plain"][data-acp]:not([data-acp-cat]), iframe[data-acp][data-acp-src]:not([data-acp-cat])');
+		for (var i = 0; i < pre.length; i++) { tagInert(pre[i]); }
+		unblock();
+	});
+})(window, document);
+/**
+ * Google Consent Mode v2 bridge. The `default` call printed inline in <head> is
+ * always fully denied (it can be served from a page cache), so the stored state
+ * of a returning visitor reaches Google only through the `update` this pushes on
+ * every load — plus one on every change. Mirrors includes/helpers/class-gcm.php.
+ */
+(function (w, d) {
+	'use strict';
+
+	var consent = w.acpConsent;
+	if (!consent) { return; }
+
+	w.dataLayer = w.dataLayer || [];
+	function gtag() { w.dataLayer.push(arguments); }
+
+	function params() {
+		var s = consent.state();
+		var grant = function (b) { return b ? 'granted' : 'denied'; };
+		var ads = !!s.advertisement;
+		var an = !!s.analytics;
+		var fn = !!s.functional;
+		return {
+			ad_storage: grant(ads),
+			ad_user_data: grant(ads),
+			ad_personalization: grant(ads),
+			analytics_storage: grant(an),
+			functionality_storage: grant(fn),
+			personalization_storage: grant(fn),
+			security_storage: 'granted'
+		};
+	}
+
+	d.addEventListener('acp:consent-updated', function () {
+		gtag('consent', 'update', params());
+	});
+
+	// Replay the stored choice on load, so a returning visitor is not stuck on the
+	// denied default (gcs=G100) just because no consent event fires this page view.
+	// The default's wait_for_update window holds the first collect until this lands.
+	if (consent.hasConsented()) {
+		gtag('consent', 'update', params());
+	}
+})(window, document);
+</script>
+
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160" />
+<link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196" />
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png" />
+
+
+<link rel="profile" href="https://gmpg.org/xfn/11">
+<link rel="pingback" href="https://tuwiazowna.pl/xmlrpc.php">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+
+
+<link rel="stylesheet" href="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/bootstrap.min.css">
+<link rel="stylesheet" href="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/fluid-style.css">
+
+   <!-- Bootstrap Latest compiled and minified CSS -->
+   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" type="text/css">--><!-- Font-Awesome -->
+
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" type="text/css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-136533903-1"></script>
+
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/js/fluid-core.js"></script>
+       <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDku4fOV4oMTlIl-Vwmf-cmGQY28i-5TcU"> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkagtFRMhpn_lnw1YnmjCeVaz3ClV9H5g">
+
+    </script>
+     
+<meta name='robots' content='index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v28.9 - https://yoast.com/product/yoast-seo-wordpress/ -->
+	<title>Mamy już dziewięć ogólnodostępnych defibrylatorów AED na terenie gminy - tuWiązowna.pl</title>
+	<link rel="canonical" href="https://tuwiazowna.pl/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy/" />
+	<meta property="og:locale" content="pl_PL" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Mamy już dziewięć ogólnodostępnych defibrylatorów AED na terenie gminy - tuWiązowna.pl" />
+	<meta property="og:url" content="https://tuwiazowna.pl/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy/" />
+	<meta property="og:site_name" content="tuWiązowna.pl" />
+	<meta property="article:publisher" content="https://www.facebook.com/tuWiazowna" />
+	<meta property="article:published_time" content="2026-05-18T10:07:47+00:00" />
+	<meta property="article:modified_time" content="2026-06-23T11:01:12+00:00" />
+	<meta property="og:image" content="https://tuwiazowna.pl/wp-content/uploads/2024/07/AdobeStock_181474091-scaled.jpeg" />
+	<meta property="og:image:width" content="2560" />
+	<meta property="og:image:height" content="1707" />
+	<meta property="og:image:type" content="image/jpeg" />
+	<meta name="author" content="Izabela Trzaska" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:label1" content="Napisane przez" />
+	<meta name="twitter:data1" content="Izabela Trzaska" />
+	<meta name="twitter:label2" content="Szacowany czas czytania" />
+	<meta name="twitter:data2" content="4 minuty" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https:\/\/schema.org","@graph":[{"@type":"Article","@id":"https:\/\/tuwiazowna.pl\/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy\/#article","isPartOf":{"@id":"https:\/\/tuwiazowna.pl\/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy\/"},"author":{"name":"Izabela Trzaska","@id":"https:\/\/tuwiazowna.pl\/#\/schema\/person\/525f3f42d649718ca5d46c41d7a336ba"},"headline":"Mamy już dziewięć ogólnodostępnych defibrylatorów AED na terenie gminy","datePublished":"2026-05-18T10:07:47+00:00","dateModified":"2026-06-23T11:01:12+00:00","mainEntityOfPage":{"@id":"https:\/\/tuwiazowna.pl\/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy\/"},"wordCount":836,"image":{"@id":"https:\/\/tuwiazowna.pl\/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy\/#primaryimage"},"thumbnailUrl":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2024\/07\/AdobeStock_181474091-scaled.jpeg","keywords":["AED","AED na terenie gminy wiązowna"],"articleSection":["WIĄZOWNA"],"inLanguage":"pl-PL"},{"@type":"WebPage","@id":"https:\/\/tuwiazowna.pl\/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy\/","url":"https:\/\/tuwiazowna.pl\/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy\/","name":"Mamy już dziewięć ogólnodostępnych defibrylatorów AED na terenie gminy - tuWiązowna.pl","isPartOf":{"@id":"https:\/\/tuwiazowna.pl\/#website"},"primaryImageOfPage":{"@id":"https:\/\/tuwiazowna.pl\/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy\/#primaryimage"},"image":{"@id":"https:\/\/tuwiazowna.pl\/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy\/#primaryimage"},"thumbnailUrl":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2024\/07\/AdobeStock_181474091-scaled.jpeg","datePublished":"2026-05-18T10:07:47+00:00","dateModified":"2026-06-23T11:01:12+00:00","author":{"@id":"https:\/\/tuwiazowna.pl\/#\/schema\/person\/525f3f42d649718ca5d46c41d7a336ba"},"breadcrumb":{"@id":"https:\/\/tuwiazowna.pl\/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy\/#breadcrumb"},"inLanguage":"pl-PL","potentialAction":[{"@type":"ReadAction","target":["https:\/\/tuwiazowna.pl\/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy\/"]}]},{"@type":"ImageObject","inLanguage":"pl-PL","@id":"https:\/\/tuwiazowna.pl\/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy\/#primaryimage","url":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2024\/07\/AdobeStock_181474091-scaled.jpeg","contentUrl":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2024\/07\/AdobeStock_181474091-scaled.jpeg","width":2560,"height":1707,"caption":"Defibrylator AED. Ręce w rękawiczkach odklejają zabezpieczenie diody do reanimacji."},{"@type":"BreadcrumbList","@id":"https:\/\/tuwiazowna.pl\/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy\/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"tuWiązowna.pl","item":"https:\/\/tuwiazowna.pl\/"},{"@type":"ListItem","position":2,"name":"WIĄZOWNA","item":"https:\/\/tuwiazowna.pl\/category\/wiazowna\/"},{"@type":"ListItem","position":3,"name":"Mamy już dziewięć ogólnodostępnych defibrylatorów AED na terenie gminy"}]},{"@type":"WebSite","@id":"https:\/\/tuwiazowna.pl\/#website","url":"https:\/\/tuwiazowna.pl\/","name":"tuWiązowna.pl","description":"","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https:\/\/tuwiazowna.pl\/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"pl-PL"},{"@type":"Person","@id":"https:\/\/tuwiazowna.pl\/#\/schema\/person\/525f3f42d649718ca5d46c41d7a336ba","name":"Izabela Trzaska","image":{"@type":"ImageObject","inLanguage":"pl-PL","@id":"https:\/\/secure.gravatar.com\/avatar\/d22727e021afab5336a5b122c29aecd3e00a38bfd0986200ba05c81bc025d9da?s=96&d=mm&r=g","url":"https:\/\/secure.gravatar.com\/avatar\/d22727e021afab5336a5b122c29aecd3e00a38bfd0986200ba05c81bc025d9da?s=96&d=mm&r=g","contentUrl":"https:\/\/secure.gravatar.com\/avatar\/d22727e021afab5336a5b122c29aecd3e00a38bfd0986200ba05c81bc025d9da?s=96&d=mm&r=g","caption":"Izabela Trzaska"},"url":"https:\/\/tuwiazowna.pl\/author\/i-trzaska\/"}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<meta name="description" content="Automatyczne Defibrylatory Zewnętrzne (AED) są coraz częściej dostępne w przestrzeni publicznej – przy urzędach, szkołach, remizach OSP czy centrach kultury. To urządzenia, które mogą uratować życie w przypadku nagłego zatrzymania krążenia jeszcze przed przyjazdem służb ratunkowych. Eksperci podkreślają, że użycie AED w pierwszych minutach od zatrzymania krążenia znacząco zwiększa szanse&hellip;">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<link rel="canonical" href="https://tuwiazowna.pl/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy/">
+<meta property="og:url" content="https://tuwiazowna.pl/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy/">
+<meta property="og:site_name" content="tuWiązowna.pl">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:type" content="article">
+<meta property="article:author" content="">
+<meta property="article:publisher" content="">
+<meta property="article:section" content="WIĄZOWNA">
+<meta property="article:tag" content="AED">
+<meta property="article:tag" content="AED na terenie gminy wiązowna">
+<meta property="og:title" content="Mamy już dziewięć ogólnodostępnych defibrylatorów AED na terenie gminy - tuWiązowna.pl">
+<meta property="og:description" content="Automatyczne Defibrylatory Zewnętrzne (AED) są coraz częściej dostępne w przestrzeni publicznej – przy urzędach, szkołach, remizach OSP czy centrach kultury. To urządzenia, które mogą uratować życie w przypadku nagłego zatrzymania krążenia jeszcze przed przyjazdem służb ratunkowych. Eksperci podkreślają, że użycie AED w pierwszych minutach od zatrzymania krążenia znacząco zwiększa szanse&hellip;">
+<meta property="og:image" content="https://tuwiazowna.pl/wp-content/uploads/2024/07/AdobeStock_181474091-scaled.jpeg">
+<meta property="og:image:secure_url" content="https://tuwiazowna.pl/wp-content/uploads/2024/07/AdobeStock_181474091-scaled.jpeg">
+<meta property="og:image:width" content="2560">
+<meta property="og:image:height" content="1707">
+<meta property="og:image:alt" content="Defibrylator AED. Ręce w rękawiczkach odklejają zabezpieczenie diody do reanimacji.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mamy już dziewięć ogólnodostępnych defibrylatorów AED na terenie gminy - tuWiązowna.pl">
+<meta name="twitter:description" content="Automatyczne Defibrylatory Zewnętrzne (AED) są coraz częściej dostępne w przestrzeni publicznej – przy urzędach, szkołach, remizach OSP czy centrach kultury. To urządzenia, które mogą uratować życie w przypadku nagłego zatrzymania krążenia jeszcze przed przyjazdem służb ratunkowych. Eksperci podkreślają, że użycie AED w pierwszych minutach od zatrzymania krążenia znacząco zwiększa szanse&hellip;">
+<meta name="twitter:image" content="https://tuwiazowna.pl/wp-content/uploads/2024/07/AdobeStock_181474091-scaled.jpeg">
+<link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />
+<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+<link rel="alternate" type="application/rss+xml" title="tuWiązowna.pl &raquo; Kanał z wpisami" href="https://tuwiazowna.pl/feed/" />
+<style id="acp-inline-styles">.acp-blocked-placeholder{display:flex;align-items:center;justify-content:center;min-height:160px;background:#f4f4f5;color:#666;border:1px dashed #ccc;border-radius:6px;font:14px/1.4 system-ui,sans-serif;text-align:center;padding:16px;}#acp-banner[hidden]{display:none;}.acp-banner{position:fixed;z-index:999999;max-width:var(--acp-max-width,440px);background:var(--acp-bg,#fff);color:var(--acp-text,#1f2329);box-shadow:var(--acp-shadow,0 6px 28px rgba(0,0,0,.18));border-radius:var(--acp-radius,10px);border:var(--acp-border-width,0) solid var(--acp-border-color,transparent);padding:var(--acp-padding,20px);font-size:var(--acp-body-size,14px);line-height:var(--acp-line,1.5);font-family:var(--acp-font,inherit);}.acp-banner.acp-pos-bottom-left{left:20px;bottom:20px;}.acp-banner.acp-pos-bottom-right{right:20px;bottom:20px;}.acp-banner.acp-pos-bottom,.acp-banner.acp-pos-top{left:50%;transform:translateX(-50%);max-width:900px;width:calc(100% - 40px);}.acp-banner.acp-pos-bottom{bottom:20px;}.acp-banner.acp-pos-top{top:20px;}.acp-layout-bar{max-width:none;width:100%;left:0;right:0;bottom:0;border-radius:0;transform:none;display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;}.acp-banner-title{margin:0 0 6px;font-size:var(--acp-title-size,16px);font-weight:var(--acp-title-weight,600);font-family:var(--acp-font,inherit);}.acp-banner-msg{margin:0 0 14px;}.acp-banner-msg a{color:var(--acp-accent,#2563eb);}.acp-clamp{overflow:hidden;}.acp-clamp:not(.acp-clamp--open){display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:var(--acp-clamp-lines,3);}.acp-more{margin-top:4px;background:none;border:none;padding:0;color:var(--acp-accent,#f9741c);cursor:pointer;font:inherit;text-decoration:underline;}.acp-more[hidden],.acp-more span[hidden]{display:none;}.acp-clamp p{margin:0 0 8px;}.acp-clamp ul,.acp-clamp ol{margin:6px 0;padding-left:20px;}.acp-banner-cats{margin:0 0 14px;display:grid;gap:8px;}.acp-cat{display:flex;align-items:center;gap:8px;}.acp-cat-note{color:#888;font-style:normal;font-size:12px;}.acp-banner-actions{display:flex;flex-wrap:wrap;gap:var(--acp-gap,8px);width:100%;}.acp-btn{cursor:pointer;border:1px solid var(--acp-accent,#2563eb);background:transparent;color:var(--acp-accent,#2563eb);border-radius:var(--acp-btn-radius,6px);padding:10px 16px;font-size:14px;line-height:1;flex:1 1 0;min-width:0;box-sizing:border-box;text-align:center;font-family:inherit;transition:opacity .15s,background .15s;}.acp-btn:hover{opacity:.85;}.acp-btn-primary{background:var(--acp-btn-bg,#2563eb);color:var(--acp-btn-text,#fff);border-color:var(--acp-btn-bg,#2563eb);}.acp-btn-secondary{background:transparent;color:var(--acp-btn-bg,#25225e);border-color:var(--acp-btn-bg,#25225e);flex:0.62 1 0;}.acp-btn-link{border-color:transparent;text-decoration:underline;padding-left:6px;padding-right:6px;}#acp-banner .acp-btn,#acp-preferences .acp-btn{line-height:1;}#acp-revisit.acp-revisit{position:fixed;z-index:999997;width:var(--acp-rv-size,46px);height:var(--acp-rv-size,46px);border-radius:var(--acp-rv-radius,50%);border:none;cursor:pointer;background:var(--acp-rv-bg,var(--acp-btn-bg,#25225e));color:var(--acp-rv-color,var(--acp-btn-text,#fff));box-shadow:var(--acp-rv-shadow,0 4px 16px rgba(0,0,0,.24));font-size:var(--acp-rv-icon,22px);line-height:1;display:flex;align-items:center;justify-content:center;padding:0;}#acp-revisit svg{width:var(--acp-rv-icon,22px);height:var(--acp-rv-icon,22px);display:block;}#acp-revisit.acp-rv-bottom-left{left:var(--acp-rv-offset,20px);bottom:var(--acp-rv-offset,20px);}#acp-revisit.acp-rv-bottom-right{right:var(--acp-rv-offset,20px);bottom:var(--acp-rv-offset,20px);}#acp-revisit.acp-rv-top-left{left:var(--acp-rv-offset,20px);top:var(--acp-rv-offset,20px);}#acp-revisit.acp-rv-top-right{right:var(--acp-rv-offset,20px);top:var(--acp-rv-offset,20px);}#acp-revisit.acp-revisit:hover{opacity:.9;}.acp-switch{position:relative;display:inline-block;width:46px;height:26px;flex:none;}.acp-switch input{position:absolute;opacity:0;width:0;height:0;}.acp-switch-slider{position:absolute;inset:0;background:#c8ccd4;border-radius:999px;transition:background .2s;cursor:pointer;}.acp-switch-slider::before{content:"";position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3);}.acp-switch input:checked+.acp-switch-slider{background:var(--acp-accent,#f9741c);}.acp-switch input:checked+.acp-switch-slider::before{transform:translateX(20px);}.acp-switch input:disabled+.acp-switch-slider{opacity:.55;cursor:not-allowed;}.acp-bv-pill .acp-btn{border-radius:999px;}.acp-bv-outline .acp-btn-primary{background:transparent;color:var(--acp-btn-bg,#25225e);border-color:var(--acp-btn-bg,#25225e);}.acp-bv-solid .acp-btn{background:var(--acp-btn-bg,#25225e);color:var(--acp-btn-text,#fff);border-color:var(--acp-btn-bg,#25225e);}#acp-banner .acp-btn.acp-b-fill,#acp-preferences .acp-btn.acp-b-fill,#acp-banner .acp-btn.acp-b-solid,#acp-preferences .acp-btn.acp-b-solid{background:var(--acp-btn-bg,#25225e);color:var(--acp-btn-text,#fff);border-color:var(--acp-btn-bg,#25225e);}#acp-banner .acp-btn.acp-b-outline,#acp-preferences .acp-btn.acp-b-outline{background:transparent;color:var(--acp-btn-bg,#25225e);border-color:var(--acp-btn-bg,#25225e);}#acp-banner .acp-btn.acp-b-link,#acp-preferences .acp-btn.acp-b-link{background:transparent;border-color:transparent;color:var(--acp-accent,#f9741c);text-decoration:underline;padding-left:6px;padding-right:6px;}#acp-banner .acp-btn.acp-b-pill,#acp-preferences .acp-btn.acp-b-pill{border-radius:999px;}@keyframes acpFade{from{opacity:0}to{opacity:1}}@keyframes acpSlideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}@keyframes acpSlideDown{from{opacity:0;transform:translateY(-24px)}to{opacity:1;transform:translateY(0)}}@keyframes acpZoom{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}.acp-anim-fade{animation:acpFade .35s ease both;}.acp-anim-slide-up{animation:acpSlideUp .35s ease both;}.acp-anim-slide-down{animation:acpSlideDown .35s ease both;}.acp-anim-zoom{animation:acpZoom .35s ease both;}.acp-banner.acp-layout-center{top:50%;left:50%;right:auto;bottom:auto;transform:translate(-50%,-50%);max-width:520px;width:calc(100% - 40px);}.acp-backdrop{position:fixed;inset:0;background:var(--acp-overlay-bg,rgba(0,0,0,.5));z-index:999998;-webkit-backdrop-filter:blur(var(--acp-overlay-blur,0));backdrop-filter:blur(var(--acp-overlay-blur,0));}.acp-backdrop[hidden]{display:none;}#acp-preferences[hidden]{display:none;}.acp-prefs{position:fixed;inset:0;z-index:1000000;font-size:var(--acp-body-size,14px);line-height:var(--acp-line,1.5);font-family:var(--acp-font,inherit);}.acp-prefs-overlay{position:absolute;inset:0;background:var(--acp-overlay-bg,rgba(0,0,0,.5));-webkit-backdrop-filter:blur(var(--acp-overlay-blur,0));backdrop-filter:blur(var(--acp-overlay-blur,0));}.acp-prefs-dialog{position:relative;margin:5vh auto;max-width:560px;width:calc(100% - 40px);max-height:90vh;overflow:auto;background:var(--acp-bg,#fff);color:var(--acp-text,#1f2329);border-radius:var(--acp-radius,10px);padding:24px;box-shadow:var(--acp-shadow,0 10px 40px rgba(0,0,0,.25));}.acp-prefs-title{margin:0 0 8px;font-size:18px;font-weight:600;}.acp-prefs-msg{margin:0 0 16px;}.acp-prefs-msg a{color:var(--acp-accent,#f9741c);}.acp-prefs-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;width:100%;}.acp-acc{border:1px solid #e4e7ed;border-radius:8px;margin-bottom:8px;}.acp-acc-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;}.acp-acc-toggle{flex:1;text-align:left;background:transparent;border:0;cursor:pointer;color:inherit;font-family:inherit;font-weight:600;font-size:14px;line-height:1.4;display:flex;align-items:center;gap:8px;}.acp-acc-toggle::before{content:"\25B8";display:inline-block;transition:transform .15s;}.acp-acc-toggle[aria-expanded="true"]::before{transform:rotate(90deg);}.acp-acc-switch{display:flex;align-items:center;gap:6px;white-space:nowrap;}.acp-acc-body{padding:0 12px 12px;}.acp-acc-body[hidden]{display:none;}.acp-cat-desc{margin:0 0 10px;color:#555;}.acp-acc-cookies{width:100%;border-collapse:collapse;font-size:13px;}.acp-acc-cookies th,.acp-acc-cookies td{border:1px solid #ebeef5;padding:6px 8px;text-align:left;vertical-align:top;}.acp-acc-cookies th{background:#f7f8fa;font-weight:600;}.acp-audit-cat{margin:1.4em 0 .5em;}.acp-audit-table{width:100%;table-layout:fixed;border-collapse:collapse;}.acp-audit-table th,.acp-audit-table td{border:1px solid #e4e7ed;padding:8px 10px;text-align:left;vertical-align:top;overflow-wrap:break-word;word-break:break-word;}.acp-audit-table th{background:#f7f8fa;font-weight:600;}.acp-audit-table th:nth-child(1){width:20%;}.acp-audit-table th:nth-child(2){width:22%;}.acp-audit-table th:nth-child(3){width:22%;}@media (max-width:600px){.acp-banner{max-width:none;}.acp-banner.acp-pos-bottom-left,.acp-banner.acp-pos-bottom-right{left:12px;right:12px;bottom:12px;width:auto;}.acp-banner.acp-pos-bottom,.acp-banner.acp-pos-top,.acp-banner.acp-layout-center{width:calc(100% - 24px);}.acp-banner.acp-pos-bottom{bottom:12px;}.acp-banner.acp-pos-top{top:12px;}.acp-banner.acp-layout-bar{left:0;right:0;bottom:0;width:100%;transform:none;}#acp-banner .acp-btn,#acp-preferences .acp-btn{flex:1 1 calc(50% - var(--acp-gap,8px))!important;min-width:0;line-height:1.25;overflow-wrap:anywhere;padding:12px 10px;}#acp-banner .acp-btn[data-acp-action="customize"],#acp-preferences .acp-btn[data-acp-action="save"]{flex:1 0 100%!important;order:99;}.acp-prefs-dialog{margin:12px auto;width:calc(100% - 24px);padding:16px;max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);}.acp-acc-cookies,.acp-acc-cookies tbody,.acp-acc-cookies tr,.acp-acc-cookies td{display:block;width:100%;box-sizing:border-box;}.acp-acc-cookies thead{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;}.acp-acc-cookies tr{border:1px solid #ebeef5;border-radius:6px;margin-bottom:8px;}.acp-acc-cookies tr:last-child{margin-bottom:0;}.acp-acc-cookies td{border:0;border-top:1px solid #f0f2f5;padding:8px 10px;overflow-wrap:anywhere;word-break:break-word;}.acp-acc-cookies tr td:first-child{border-top:0;}.acp-acc-cookies td::before{content:attr(data-label);display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;color:#6b7280;margin-bottom:2px;}.acp-acc-cookies td:empty{display:none;}}@media (max-width:782px){.acp-audit .acp-audit-table,.acp-audit .acp-audit-table tbody,.acp-audit .acp-audit-table tr,.acp-audit .acp-audit-table td{display:block;width:100%;box-sizing:border-box;}.acp-audit .acp-audit-table thead{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;}.acp-audit .acp-audit-table tr{border:1px solid #ebeef5;border-radius:6px;margin-bottom:8px;}.acp-audit .acp-audit-table tr:last-child{margin-bottom:0;}.acp-audit .acp-audit-table td{border:0;border-top:1px solid #f0f2f5;padding:8px 10px;overflow-wrap:anywhere;word-break:break-word;}.acp-audit .acp-audit-table tr td:first-child{border-top:0;}.acp-audit .acp-audit-table td::before{content:attr(data-label);display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;color:#6b7280;margin-bottom:2px;}.acp-audit .acp-audit-table td:empty{display:none;}}</style><link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://tuwiazowna.pl/wp-json/oembed/1.0/embed?url=https%3A%2F%2Ftuwiazowna.pl%2Fmamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy%2F" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://tuwiazowna.pl/wp-json/oembed/1.0/embed?url=https%3A%2F%2Ftuwiazowna.pl%2Fmamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy%2F&#038;format=xml" />
+<style id="wp-img-auto-sizes-contain-inline-css">
+img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+</style>
+<link rel='stylesheet' id='map-css' href='https://tuwiazowna.pl/wp-content/plugins/map-markers/styles/style.css?ver=3fa7ea78d46dbc72c9ee74efcfc32de2' media='all' />
+<link rel='stylesheet' id='timeline-css-css' href='https://tuwiazowna.pl/wp-content/plugins/content_timeline/css/frontend/timeline.css?ver=3fa7ea78d46dbc72c9ee74efcfc32de2' media='all' />
+<link rel='stylesheet' id='customScroll-css-css' href='https://tuwiazowna.pl/wp-content/plugins/content_timeline/css/frontend/jquery.mCustomScrollbar.css?ver=3fa7ea78d46dbc72c9ee74efcfc32de2' media='all' />
+<link rel='stylesheet' id='prettyPhoto-css-css' href='https://tuwiazowna.pl/wp-content/plugins/content_timeline/css/frontend/prettyPhoto.css?ver=3fa7ea78d46dbc72c9ee74efcfc32de2' media='all' />
+<link rel='stylesheet' id='my_timeline_font_awesome-css' href='https://tuwiazowna.pl/wp-content/plugins/content_timeline//css/frontend/awesome/font-awesome.css?ver=3fa7ea78d46dbc72c9ee74efcfc32de2' media='all' />
+<link rel='stylesheet' id='my_timeline_lineicons_css-css' href='https://tuwiazowna.pl/wp-content/plugins/content_timeline//css/frontend/themify-icons.css?ver=3fa7ea78d46dbc72c9ee74efcfc32de2' media='all' />
+<style id="wp-emoji-styles-inline-css">
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+/*# sourceURL=wp-emoji-styles-inline-css */
+</style>
+<style id="wp-block-library-inline-css">
+:root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}:root .has-text-align-center{text-align:center}:root .has-text-align-left{text-align:left}:root .has-text-align-right{text-align:right}.has-fit-text{white-space:nowrap!important}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{word-wrap:normal!important;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal!important}.screen-reader-text:focus{background-color:#ddd;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style^=border-color],[style*=";border-color"],[style*="; border-color"]){border-style:solid}html :where([style^=border-top-color],[style*=";border-top-color"],[style*="; border-top-color"]){border-top-style:solid}html :where([style^=border-right-color],[style*=";border-right-color"],[style*="; border-right-color"]){border-right-style:solid}html :where([style^=border-bottom-color],[style*=";border-bottom-color"],[style*="; border-bottom-color"]){border-bottom-style:solid}html :where([style^=border-left-color],[style*=";border-left-color"],[style*="; border-left-color"]){border-left-style:solid}html :where([style^=border-width],[style*=";border-width"],[style*="; border-width"]){border-style:solid}html :where([style^=border-top-width],[style*=";border-top-width"],[style*="; border-top-width"]){border-top-style:solid}html :where([style^=border-right-width],[style*=";border-right-width"],[style*="; border-right-width"]){border-right-style:solid}html :where([style^=border-bottom-width],[style*=";border-bottom-width"],[style*="; border-bottom-width"]){border-bottom-style:solid}html :where([style^=border-left-width],[style*=";border-left-width"],[style*="; border-left-width"]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}
+
+/*# sourceURL=/wp-includes/css/dist/block-library/common.min.css */
+</style>
+<style id="classic-theme-styles-inline-css">
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+/*# sourceURL=/wp-includes/css/classic-themes.min.css */
+</style>
+
+<style id="global-styles-inline-css">
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);}.wp-block-button{--wp--preset--dimension--25: 25%;--wp--preset--dimension--50: 50%;--wp--preset--dimension--75: 75%;--wp--preset--dimension--100: 100%;}:where(body) { margin: 0; }:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}body{padding-top: 0px;padding-right: 0px;padding-bottom: 0px;padding-left: 0px;}:root :where(.wp-element-button, .wp-block-button__link){background-color: #32373c;border-width: 0;color: #fff;font-family: inherit;font-size: inherit;font-style: inherit;font-weight: inherit;letter-spacing: inherit;line-height: inherit;padding-top: calc(0.667em + 2px);padding-right: calc(1.333em + 2px);padding-bottom: calc(0.667em + 2px);padding-left: calc(1.333em + 2px);text-decoration: none;text-transform: inherit;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+/*# sourceURL=global-styles-inline-css */
+</style>
+
+<link rel='stylesheet' id='sr7css-css' href='//tuwiazowna.pl/wp-content/plugins/revslider/public/css/sr7.css?ver=6.8.1' media='all' />
+<link rel='stylesheet' id='tuwiazowna-style-css' href='https://tuwiazowna.pl/wp-content/themes/tuwiazowna/style.css?ver=3fa7ea78d46dbc72c9ee74efcfc32de2' media='all' />
+<link rel='stylesheet' id='newsletter-css' href='https://tuwiazowna.pl/wp-content/plugins/newsletter/style.css?ver=9.5.7' media='all' />
+<link rel='stylesheet' id='fancybox-css' href='https://tuwiazowna.pl/wp-content/plugins/easy-fancybox/fancybox/1.5.4/jquery.fancybox.min.css?ver=3fa7ea78d46dbc72c9ee74efcfc32de2' media='screen' />
+<link rel='stylesheet' id='js_composer_front-css' href='https://tuwiazowna.pl/wp-content/plugins/js_composer/assets/css/js_composer.min.css?ver=9.2' media='all' />
+<style id="js_composer_front-inline-css">
+@media (min-width: 1200px){.vc_hidden-xl{display:none!important}}@media (min-width: 1024px) and (max-width: 1199px){.vc_hidden-lg{display:none!important}}@media (min-width: 768px) and (max-width: 1023px){.vc_hidden-md{display:none!important}}@media (min-width: 640px) and (max-width: 767px){.vc_hidden-sm{display:none!important}}@media (max-width: 639px){.vc_hidden-xs{display:none!important}}
+/*# sourceURL=js_composer_front-inline-css */
+</style>
+<link rel='stylesheet' id='udi-wcag-css' href='https://tuwiazowna.pl/wp-content/plugins/udi-wcag/assets/css/style.min.css?ver=1.0.0' media='all' />
+<script id="jquery-core-js" src="https://tuwiazowna.pl/wp-includes/js/jquery/jquery.min.js?ver=3.7.1"></script>
+<script id="jquery-migrate-js" src="https://tuwiazowna.pl/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1"></script>
+<script id="jQuery-easing-js" src="https://tuwiazowna.pl/wp-content/plugins/content_timeline/js/frontend/jquery.easing.1.3.js?ver=3fa7ea78d46dbc72c9ee74efcfc32de2"></script>
+<script id="jQuery-timeline-js" src="https://tuwiazowna.pl/wp-content/plugins/content_timeline/js/frontend/jquery.timeline.js?ver=3fa7ea78d46dbc72c9ee74efcfc32de2"></script>
+<script id="jQuery--vertical-timeline-js" src="https://tuwiazowna.pl/wp-content/plugins/content_timeline/js/frontend/jquery.Verticaltimeline.js?ver=3fa7ea78d46dbc72c9ee74efcfc32de2"></script>
+<script id="jQuery-mousew-js" src="https://tuwiazowna.pl/wp-content/plugins/content_timeline/js/frontend/jquery.mousewheel.min.js?ver=3fa7ea78d46dbc72c9ee74efcfc32de2"></script>
+<script id="jQuery-customScroll-js" src="https://tuwiazowna.pl/wp-content/plugins/content_timeline/js/frontend/jquery.mCustomScrollbar.min.js?ver=3fa7ea78d46dbc72c9ee74efcfc32de2"></script>
+<script id="rollover-js" src="https://tuwiazowna.pl/wp-content/plugins/content_timeline/js/frontend/rollover.js?ver=3fa7ea78d46dbc72c9ee74efcfc32de2"></script>
+<script id="jquery-prettyPhoto-js" src="https://tuwiazowna.pl/wp-content/plugins/content_timeline/js/frontend/jquery.prettyPhoto.js?ver=3fa7ea78d46dbc72c9ee74efcfc32de2"></script>
+<script id="my_timeline_added_script-js" src="https://tuwiazowna.pl/wp-content/plugins/content_timeline//js/frontend/jquery.my_add_function.js?ver=3fa7ea78d46dbc72c9ee74efcfc32de2"></script>
+<script id="acp-mcm-js" src="https://tuwiazowna.pl/wp-content/plugins/cookie-agency-consent/frontend/js/acp-mcm.js?ver=0.6.6"></script>
+<script id="acp-wca-js" src="https://tuwiazowna.pl/wp-content/plugins/cookie-agency-consent/frontend/js/acp-wca.js?ver=0.6.6"></script>
+<script id="map-js-extra">
+var inData = {"ajaxUrl":"https://tuwiazowna.pl/wp-admin/admin-ajax.php"};
+//# sourceURL=map-js-extra
+</script>
+<script id="map-js" src="https://tuwiazowna.pl/wp-content/plugins/map-markers/js/map.js?ver=3fa7ea78d46dbc72c9ee74efcfc32de2"></script>
+<script async data-wp-strategy="async" id="tp-tools-js" src="//tuwiazowna.pl/wp-content/plugins/revslider/public/js/libs/tptools.js?ver=6.8.1"></script>
+<script async data-wp-strategy="async" id="sr7-js" src="//tuwiazowna.pl/wp-content/plugins/revslider/public/js/sr7.js?ver=6.8.1"></script>
+<script id="udi-wcag-fontawesome-js" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/fontawesome.min.js?ver=3fa7ea78d46dbc72c9ee74efcfc32de2"></script>
+<script></script><link rel="https://api.w.org/" href="https://tuwiazowna.pl/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="https://tuwiazowna.pl/wp-json/wp/v2/posts/98592" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://tuwiazowna.pl/xmlrpc.php?rsd" />
+
+<link rel='shortlink' href='https://tuwiazowna.pl/?p=98592' />
+		<script type="text/javascript">
+			my_timeline_front_ajax_nonce="091d48d7ce";
+			my_timeline_front_ajax_url="https://tuwiazowna.pl/wp-admin/admin-ajax.php";
+		</script>
+		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css"><meta name="generator" content="Powered by WPBakery Page Builder - drag and drop page builder for WordPress."/>
+<style id="custom-background-css">
+body.custom-background { background-image: url("https://tuwiazowna.pl/wp-content/uploads/2019/01/JE8A2287JE8A2287.jpg"); background-position: center center; background-size: auto; background-repeat: repeat; background-attachment: scroll; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<meta name="generator" content="Powered by Slider Revolution 6.8.1 - responsive, Mobile-Friendly Slider Plugin for WordPress with comfortable drag and drop interface." />
+<script>
+	window._tpt			??= {};
+	window.SR7			??= {};
+	_tpt.R				??= {};
+	_tpt.R.fonts		??= {};
+	_tpt.R.fonts.customFonts??= {};
+	SR7.devMode			=  false;
+	SR7.F 				??= {};
+	SR7.G				??= {};
+	SR7.LIB				??= {};
+	SR7.E				??= {};
+	SR7.E.gAddons		??= {};
+	SR7.E.php 			??= {};
+	SR7.E.nonce			= '7fe18d303b';
+	SR7.E.ajaxurl		= 'https://tuwiazowna.pl/wp-admin/admin-ajax.php';
+	SR7.E.resturl		= 'https://tuwiazowna.pl/wp-json/';
+	SR7.E.slug_path		= 'revslider/revslider.php';
+	SR7.E.slug			= 'revslider';
+	SR7.E.plugin_url	= 'https://tuwiazowna.pl/wp-content/plugins/revslider/';
+	SR7.E.wp_plugin_url = 'https://tuwiazowna.pl/wp-content/plugins/';
+	SR7.E.revision		= '6.8.1';
+	SR7.E.fontBaseUrl	= '';
+	SR7.G.breakPoints 	= [1240,1024,778,480];
+	SR7.G.fSUVW 		= false;
+	SR7.E.modules 		= ['module','page','slide','layer','draw','animate','srtools','canvas','defaults','carousel','navigation','media','modifiers','migration'];
+	SR7.E.libs 			= ['WEBGL'];
+	SR7.E.css 			= ['csslp','cssbtns','cssfilters','cssnav','cssmedia'];
+	SR7.E.resources		= {};
+	SR7.E.ytnc			= false;
+	SR7.JSON			??= {};
+/*! Slider Revolution 7.0 - Page Processor */
+!function(){"use strict";window.SR7??={},window._tpt??={},SR7.version="Slider Revolution 6.7.40",_tpt.getMobileZoom=()=>_tpt.is_mobile?document.documentElement.clientWidth/window.innerWidth:1,_tpt.getWinDim=function(t){_tpt.screenHeightWithUrlBar??=window.innerHeight;let e=SR7.F?.modal?.visible&&SR7.M[SR7.F.module.getIdByAlias(SR7.F.modal.requested)];_tpt.scrollBar=window.innerWidth!==document.documentElement.clientWidth||e&&window.innerWidth!==e.c.module.clientWidth,_tpt.winW=_tpt.getMobileZoom()*window.innerWidth-(_tpt.scrollBar||"prepare"==t?_tpt.scrollBarW??_tpt.mesureScrollBar():0),_tpt.winH=_tpt.getMobileZoom()*window.innerHeight,_tpt.winWAll=document.documentElement.clientWidth},_tpt.getResponsiveLevel=function(t,e){return SR7.G.fSUVW?_tpt.closestGE(t,window.innerWidth):_tpt.closestGE(t,_tpt.winWAll)},_tpt.mesureScrollBar=function(){let t=document.createElement("div");return t.className="RSscrollbar-measure",t.style.width="100px",t.style.height="100px",t.style.overflow="scroll",t.style.position="absolute",t.style.top="-9999px",document.body.appendChild(t),_tpt.scrollBarW=t.offsetWidth-t.clientWidth,document.body.removeChild(t),_tpt.scrollBarW},_tpt.loadCSS=async function(t,e,s){return s?_tpt.R.fonts.required[e].status=1:(_tpt.R[e]??={},_tpt.R[e].status=1),new Promise(((i,n)=>{if(_tpt.isStylesheetLoaded(t))s?_tpt.R.fonts.required[e].status=2:_tpt.R[e].status=2,i();else{const o=document.createElement("link");o.rel="stylesheet";let l="text",r="css";o["type"]=l+"/"+r,o.href=t,o.onload=()=>{s?_tpt.R.fonts.required[e].status=2:_tpt.R[e].status=2,i()},o.onerror=()=>{s?_tpt.R.fonts.required[e].status=3:_tpt.R[e].status=3,n(new Error(`Failed to load CSS: ${t}`))},document.head.appendChild(o)}}))},_tpt.addContainer=function(t){const{tag:e="div",id:s,class:i,datas:n,textContent:o,iHTML:l}=t,r=document.createElement(e);if(s&&""!==s&&(r.id=s),i&&""!==i&&(r.className=i),n)for(const[t,e]of Object.entries(n))"style"==t?r.style.cssText=e:r.setAttribute(`data-${t}`,e);return o&&(r.textContent=o),l&&(r.innerHTML=l),r},_tpt.collector=function(){return{fragment:new DocumentFragment,add(t){var e=_tpt.addContainer(t);return this.fragment.appendChild(e),e},append(t){t.appendChild(this.fragment)}}},_tpt.isStylesheetLoaded=function(t){let e=t.split("?")[0];return Array.from(document.querySelectorAll('link[rel="stylesheet"], link[rel="preload"]')).some((t=>t.href.split("?")[0]===e))},_tpt.preloader={requests:new Map,preloaderTemplates:new Map,show:function(t,e){if(!e||!t)return;const{type:s,color:i}=e;if(s<0||"off"==s)return;const n=`preloader_${s}`;let o=this.preloaderTemplates.get(n);o||(o=this.build(s,i),this.preloaderTemplates.set(n,o)),this.requests.has(t)||this.requests.set(t,{count:0});const l=this.requests.get(t);clearTimeout(l.timer),l.count++,1===l.count&&(l.timer=setTimeout((()=>{l.preloaderClone=o.cloneNode(!0),l.anim&&l.anim.kill(),void 0!==_tpt.gsap?l.anim=_tpt.gsap.fromTo(l.preloaderClone,1,{opacity:0},{opacity:1}):l.preloaderClone.classList.add("sr7-fade-in"),t.appendChild(l.preloaderClone)}),150))},hide:function(t){if(!this.requests.has(t))return;const e=this.requests.get(t);e.count--,e.count<0&&(e.count=0),e.anim&&e.anim.kill(),0===e.count&&(clearTimeout(e.timer),e.preloaderClone&&(e.preloaderClone.classList.remove("sr7-fade-in"),e.anim=_tpt.gsap.to(e.preloaderClone,.3,{opacity:0,onComplete:function(){e.preloaderClone.remove()}})))},state:function(t){if(!this.requests.has(t))return!1;return this.requests.get(t).count>0},build:(t,e="#ffffff",s="")=>{if(t<0||"off"===t)return null;const i=parseInt(t);if(t="prlt"+i,isNaN(i))return null;if(_tpt.loadCSS(SR7.E.plugin_url+"public/css/preloaders/t"+i+".css","preloader_"+t),isNaN(i)||i<6){const n=`background-color:${e}`,o=1===i||2==i?n:"",l=3===i||4==i?n:"",r=_tpt.collector();["dot1","dot2","bounce1","bounce2","bounce3"].forEach((t=>r.add({tag:"div",class:t,datas:{style:l}})));const d=_tpt.addContainer({tag:"sr7-prl",class:`${t} ${s}`,datas:{style:o}});return r.append(d),d}{let n={};if(7===i){let t;e.startsWith("#")?(t=e.replace("#",""),t=`rgba(${parseInt(t.substring(0,2),16)}, ${parseInt(t.substring(2,4),16)}, ${parseInt(t.substring(4,6),16)}, `):e.startsWith("rgb")&&(t=e.slice(e.indexOf("(")+1,e.lastIndexOf(")")).split(",").map((t=>t.trim())),t=`rgba(${t[0]}, ${t[1]}, ${t[2]}, `),t&&(n.style=`border-top-color: ${t}0.65); border-bottom-color: ${t}0.15); border-left-color: ${t}0.65); border-right-color: ${t}0.15)`)}else 12===i&&(n.style=`background:${e}`);const o=[10,0,4,2,5,9,0,4,4,2][i-6],l=_tpt.collector(),r=l.add({tag:"div",class:"sr7-prl-inner",datas:n});Array.from({length:o}).forEach((()=>r.appendChild(l.add({tag:"span",datas:{style:`background:${e}`}}))));const d=_tpt.addContainer({tag:"sr7-prl",class:`${t} ${s}`});return l.append(d),d}}},SR7.preLoader={show:(t,e)=>{"off"!==(SR7.M[t]?.settings?.pLoader?.type??"off")&&_tpt.preloader.show(e||SR7.M[t].c.module,SR7.M[t]?.settings?.pLoader??{color:"#fff",type:10})},hide:(t,e)=>{"off"!==(SR7.M[t]?.settings?.pLoader?.type??"off")&&_tpt.preloader.hide(e||SR7.M[t].c.module)},state:(t,e)=>_tpt.preloader.state(e||SR7.M[t].c.module)},_tpt.prepareModuleHeight=function(t){window.SR7.M??={},window.SR7.M[t.id]??={},"ignore"==t.googleFont&&(SR7.E.ignoreGoogleFont=!0);let e=window.SR7.M[t.id];if(null==_tpt.scrollBarW&&_tpt.mesureScrollBar(),e.c??={},e.states??={},e.settings??={},e.settings.size??={},t.fixed&&(e.settings.fixed=!0),e.c.module=document.querySelector("sr7-module#"+t.id),e.c.adjuster=e.c.module.getElementsByTagName("sr7-adjuster")[0],e.c.content=e.c.module.getElementsByTagName("sr7-content")[0],"carousel"==t.type&&(e.c.carousel=e.c.content.getElementsByTagName("sr7-carousel")[0]),null==e.c.module||null==e.c.module)return;t.plType&&t.plColor&&(e.settings.pLoader={type:t.plType,color:t.plColor}),void 0===t.plType||"off"===t.plType||SR7.preLoader.state(t.id)&&SR7.preLoader.state(t.id,e.c.module)||SR7.preLoader.show(t.id,e.c.module),_tpt.winW||_tpt.getWinDim("prepare"),_tpt.getWinDim();let s=""+e.c.module.dataset?.modal;"modal"==s||"true"==s||"undefined"!==s&&"false"!==s||(e.settings.size.fullWidth=t.size.fullWidth,e.LEV??=_tpt.getResponsiveLevel(window.SR7.G.breakPoints,t.id),t.vpt=_tpt.fillArray(t.vpt,5),e.settings.vPort=t.vpt[e.LEV],void 0!==t.el&&"720"==t.el[4]&&t.gh[4]!==t.el[4]&&"960"==t.el[3]&&t.gh[3]!==t.el[3]&&"768"==t.el[2]&&t.gh[2]!==t.el[2]&&delete t.el,e.settings.size.height=null==t.el||null==t.el[e.LEV]||0==t.el[e.LEV]||"auto"==t.el[e.LEV]?_tpt.fillArray(t.gh,5,-1):_tpt.fillArray(t.el,5,-1),e.settings.size.width=_tpt.fillArray(t.gw,5,-1),e.settings.size.minHeight=_tpt.fillArray(t.mh??[0],5,-1),e.cacheSize={fullWidth:e.settings.size?.fullWidth,fullHeight:e.settings.size?.fullHeight},void 0!==t.off&&(t.off?.t&&(e.settings.size.m??={})&&(e.settings.size.m.t=t.off.t),t.off?.b&&(e.settings.size.m??={})&&(e.settings.size.m.b=t.off.b),t.off?.l&&(e.settings.size.p??={})&&(e.settings.size.p.l=t.off.l),t.off?.r&&(e.settings.size.p??={})&&(e.settings.size.p.r=t.off.r),e.offsetPrepared=!0),_tpt.updatePMHeight(t.id,t,!0))},_tpt.updatePMHeight=(t,e,s)=>{let i=SR7.M[t];var n=i.settings.size.fullWidth?_tpt.winW:i.c.module.parentNode.offsetWidth;n=0===n||isNaN(n)?_tpt.winW:n;let o=i.settings.size.width[i.LEV]||i.settings.size.width[i.LEV++]||i.settings.size.width[i.LEV--]||n,l=i.settings.size.height[i.LEV]||i.settings.size.height[i.LEV++]||i.settings.size.height[i.LEV--]||0,r=i.settings.size.minHeight[i.LEV]||i.settings.size.minHeight[i.LEV++]||i.settings.size.minHeight[i.LEV--]||0;if(l="auto"==l?0:l,l=parseInt(l),"carousel"!==e.type&&(n-=parseInt(e.onw??0)||0),i.MP=!i.settings.size.fullWidth&&n<o||_tpt.winW<o?Math.min(1,n/o):1,e.size.fullScreen||e.size.fullHeight){let t=parseInt(e.fho)||0,s=(""+e.fho).indexOf("%")>-1;e.newh=_tpt.winH-(s?_tpt.winH*t/100:t)}else e.newh=i.MP*Math.max(l,r);if(e.newh+=(parseInt(e.onh??0)||0)+(parseInt(e.carousel?.pt)||0)+(parseInt(e.carousel?.pb)||0),void 0!==e.slideduration&&(e.newh=Math.max(e.newh,parseInt(e.slideduration)/3)),e.shdw&&_tpt.buildShadow(e.id,e),i.c.adjuster.style.height=e.newh+"px",i.c.module.style.height=e.newh+"px",i.c.content.style.height=e.newh+"px",i.states.heightPrepared=!0,i.dims??={},i.dims.moduleRect=i.c.module.getBoundingClientRect(),i.c.content.style.left="-"+i.dims.moduleRect.left+"px",!i.settings.size.fullWidth)return s&&requestAnimationFrame((()=>{n!==i.c.module.parentNode.offsetWidth&&_tpt.updatePMHeight(e.id,e)})),void _tpt.bgStyle(e.id,e,window.innerWidth==_tpt.winW,!0);_tpt.bgStyle(e.id,e,window.innerWidth==_tpt.winW,!0),requestAnimationFrame((function(){s&&requestAnimationFrame((()=>{n!==i.c.module.parentNode.offsetWidth&&_tpt.updatePMHeight(e.id,e)}))})),i.earlyResizerFunction||(i.earlyResizerFunction=function(){requestAnimationFrame((function(){_tpt.getWinDim(),_tpt.moduleDefaults(e.id,e),_tpt.updateSlideBg(t,!0)}))},window.addEventListener("resize",i.earlyResizerFunction))},_tpt.buildShadow=function(t,e){let s=SR7.M[t];null==s.c.shadow&&(s.c.shadow=document.createElement("sr7-module-shadow"),s.c.shadow.classList.add("sr7-shdw-"+e.shdw),s.c.content.appendChild(s.c.shadow))},_tpt.bgStyle=async(t,e,s,i,n)=>{const o=SR7.M[t];if((e=e??o.settings).fixed&&!o.c.module.classList.contains("sr7-top-fixed")&&(o.c.module.classList.add("sr7-top-fixed"),o.c.module.style.position="fixed",o.c.module.style.width="100%",o.c.module.style.top="0px",o.c.module.style.left="0px",o.c.module.style.pointerEvents="none",o.c.module.style.zIndex=5e3,o.c.content.style.pointerEvents="none"),null==o.c.bgcanvas){let t=document.createElement("sr7-module-bg"),l=!1;if("string"==typeof e?.bg?.color&&e?.bg?.color.includes("{"))if(_tpt.gradient&&_tpt.gsap)e.bg.color=_tpt.gradient.convert(e.bg.color);else try{let t=JSON.parse(e.bg.color);(t?.orig||t?.string)&&(e.bg.color=JSON.parse(e.bg.color))}catch(t){return}let r="string"==typeof e?.bg?.color?e?.bg?.color||"transparent":e?.bg?.color?.string??e?.bg?.color?.orig??e?.bg?.color?.color??"transparent";if(t.style["background"+(String(r).includes("grad")?"":"Color")]=r,("transparent"!==r||n)&&(l=!0),o.offsetPrepared&&(t.style.visibility="hidden"),e?.bg?.image?.src&&(t.style.backgroundImage=`url(${e?.bg?.image.src})`,t.style.backgroundSize=""==(e.bg.image?.size??"")?"cover":e.bg.image.size,t.style.backgroundPosition=e.bg.image.position,t.style.backgroundRepeat=""==e.bg.image.repeat||null==e.bg.image.repeat?"no-repeat":e.bg.image.repeat,l=!0),!l)return;o.c.bgcanvas=t,e.size.fullWidth?t.style.width=_tpt.winW-(s&&_tpt.winH<document.body.offsetHeight?_tpt.scrollBarW:0)+"px":i&&(t.style.width=o.c.module.offsetWidth+"px"),e.sbt?.use?o.c.content.appendChild(o.c.bgcanvas):o.c.module.appendChild(o.c.bgcanvas)}o.c.bgcanvas.style.height=void 0!==e.newh?e.newh+"px":("carousel"==e.type?o.dims.module.h:o.dims.content.h)+"px",o.c.bgcanvas.style.left=!s&&e.sbt?.use||o.c.bgcanvas.closest("SR7-CONTENT")?"0px":"-"+(o?.dims?.moduleRect?.left??0)+"px"},_tpt.updateSlideBg=function(t,e){const s=SR7.M[t];let i=s.settings;s?.c?.bgcanvas&&(i.size.fullWidth?s.c.bgcanvas.style.width=_tpt.winW-(e&&_tpt.winH<document.body.offsetHeight?_tpt.scrollBarW:0)+"px":preparing&&(s.c.bgcanvas.style.width=s.c.module.offsetWidth+"px"))},_tpt.moduleDefaults=(t,e)=>{let s=SR7.M[t];null!=s&&null!=s.c&&null!=s.c.module&&(s.dims??={},s.dims.moduleRect=s.c.module.getBoundingClientRect(),s.c.content.style.left="-"+s.dims.moduleRect.left+"px",s.c.content.style.width=_tpt.winW-_tpt.scrollBarW+"px","carousel"==e.type&&(s.c.module.style.overflow="visible"),_tpt.bgStyle(t,e,window.innerWidth==_tpt.winW))},_tpt.getOffset=t=>{var e=t.getBoundingClientRect(),s=window.pageXOffset||document.documentElement.scrollLeft,i=window.pageYOffset||document.documentElement.scrollTop;return{top:e.top+i,left:e.left+s}},_tpt.fillArray=function(t,e){let s,i;t=Array.isArray(t)?t:[t];let n=Array(e),o=t.length;for(i=0;i<t.length;i++)n[i+(e-o)]=t[i],null==s&&"#"!==t[i]&&(s=t[i]);for(let t=0;t<e;t++)void 0!==n[t]&&"#"!=n[t]||(n[t]=s),s=n[t];return n},_tpt.closestGE=function(t,e){let s=Number.MAX_VALUE,i=-1;for(let n=0;n<t.length;n++)t[n]-1>=e&&t[n]-1-e<s&&(s=t[n]-1-e,i=n);return++i}}();</script>
+<style id="wp-custom-css">
+#acp-banner button,
+#acp-preferences button {
+	box-shadow: none;
+	text-shadow: none;
+}
+
+button.acp-btn {
+	border-color: var(--acp-accent, #2563eb);
+}
+button.acp-btn-primary {
+	border-color: var(--acp-btn-bg, #2563eb);
+}
+button.acp-btn-secondary {
+	border-color: var(--acp-btn-bg, #25225e);
+}
+button.acp-btn-link {
+	border-color: transparent;
+}
+
+.acp-acc-toggle {
+	padding: 0;
+	border-radius: 0;
+}
+.acp-more {
+	border-radius: 0;
+}
+
+div:where(#acp-banner, #acp-preferences) label {
+	max-width: none;
+	margin: 0;
+	font-weight: inherit;
+}
+
+div:where(#acp-banner, #acp-preferences) :is(p, h2, span, li) {
+	color: inherit;
+}
+div:where(#acp-banner, #acp-preferences) :is(p, li) {
+	font-size: inherit;
+}
+div:where(#acp-banner, #acp-preferences) :is(p, a, span, h2) {
+	font-family: var(--acp-font, inherit) !important;
+}
+
+#acp-banner a:not(.acp-btn),
+#acp-banner a:not(.acp-btn):visited,
+#acp-banner a:not(.acp-btn):hover,
+#acp-banner a:not(.acp-btn):focus,
+#acp-preferences a:not(.acp-btn),
+#acp-preferences a:not(.acp-btn):visited,
+#acp-preferences a:not(.acp-btn):hover,
+#acp-preferences a:not(.acp-btn):focus {
+	color: var(--acp-accent, #f9741c) !important;
+}
+
+
+
+body .popmake-content {
+	   outline: unset!important; 
+}
+.title {
+    position: relative !important;
+    left: 15px !important;
+    float: none !important;
+    padding-bottom: 0px !important;
+}
+.map_area img{
+    height: unset !important;
+    max-width: unset !important;
+}
+
+
+#float_fix{
+	float:left;
+}
+body .popmake-content:focus{
+	   outline: unset!important; 
+}
+body .popmake-content div{
+	   outline: unset!important; 
+}
+body .popmake-content div:focus{
+	   outline: unset!important; 
+}
+body .udi_pp{
+    outline: unset!important; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+body .udi_pp:focus{
+        outline: unset!important; 
+}
+
+.footerc {
+	min-height: 230px !important;
+}
+
+.miejscowosc span.wpcf7-list-item, .tematyka span.wpcf7-list-item{
+	width: 30%
+}
+.text_info {
+	cursor:pointer;
+}
+
+.acc_row .button_text {
+	font-weight: 700;
+	color: #404040;
+font-size: 16px;
+line-height: 1.5;
+}
+.accordion_text_box ol {
+	margin:0px;
+}
+.acc_row {
+	padding: 20px 0px;
+}
+.accordion_text_box ol li {
+	font-size:12px
+}
+.accordion_text_box {
+	padding-bottom: 20px;
+}
+.btn.form-button {
+	border-radius:0px;
+	box-shadow:none !important;
+	text-shadow: none !important;
+	background: #EF7F22;
+	color:#fff;
+	border-color: transparent;
+	width: 100px;
+	border:0px;
+}
+.btn.form-button:hover {
+	background: #fff;
+	color:#EF7F22;
+	border: 1px solid #EF7F22;
+}
+
+.form-control, input[type="text"], input[type="email"], input[type="url"], input[type="password"], input[type="search"] {
+	border-color: #EF7F22;
+}
+
+.pum-content.popmake-content .wpb_button, .pum-content.popmake-content .wpb_content_element, .pum-content.popmake-content ul.wpb_thumbnails-fluid>li {
+    margin-bottom: 0px;
+}
+
+.us-survey-title {display: none}
+.us-survey-description {
+	padding: 30px
+}
+
+
+/* NEWSLETTER */
+
+.page-id-57576 .tnp.tnp-profile {
+	padding-left: 30px;
+}
+
+.page-id-57576 .content p {
+    padding-left: 30px;
+}
+
+.tnp-widget label {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.tnp-widget label a {
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.tnp-privacy-field a:hover {
+	text-decoration: underline !important;
+	color: #404040;
+}
+
+.tnp-field-button .tnp-submit {
+	background-color: #f17000 !important;
+	background-image: none;
+	text-shadow: none;
+	color: #fff;
+	margin: 0;
+	font-weight: 700;
+	box-shadow: none !important;
+}
+
+.tnp-subscription label {
+	font-weight: 400 !important;
+	line-height: 1.5 !important;
+}
+
+.newsletter-box {
+    background-color: #fff;
+    height: 115px;
+    padding-top: 35px;
+}
+
+.tnp-privacy {
+	float: left;
+}
+
+.informacjazlewej {
+    margin-top: 180px !important;
+}
+
+body .tuwiazowna-logo-desktop {
+    margin-top: 0% !important;
+}
+
+.btn-news {
+    background-image: url("https://tuwiazowna.pl/wp-content/uploads/2020/08/news-plane.png");
+    background-size: 45px;
+    background-repeat: no-repeat;
+    background-position: left center;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: table;
+    padding-left: 50px;
+    line-height: 50px;
+}
+
+.btn-news:hover {
+	color: #404040;
+}
+
+.informacjaboczna {
+  padding-left: 28px !important;
+}
+
+body .right_slider {
+  padding: 20px 28px 0px 12px !important;
+}
+.belka {
+	left: 0;
+	right: 0px;
+}
+/**POPUP**/
+
+.pum-theme-36151 .pum-content + .pum-close, .pum-theme-default-theme .pum-content + .pum-close{
+	top:50px!important;
+}
+.pum-theme-36151 .pum-title, .pum-theme-default-theme .pum-title{
+	visibility:hidden!important;
+}
+</style>
+<style type="text/css" data-type="vc_shortcodes-default-css">.vc_do_custom_heading{margin-bottom:0.625rem;margin-top:0;}</style><style type="text/css" data-type="vc_shortcodes-custom-css">.vc_custom_1432637473966{margin: 15px !important;}.vc_custom_1446712781422{margin-top: 15px !important;margin-right: 15px !important;margin-bottom: 15px !important;margin-left: 15px !important;}.vc_custom_1779282826528{margin-right: 15px !important;margin-left: 15px !important;}</style><noscript><style> .wpb_animate_when_almost_visible { opacity: 1; }</style></noscript><noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript><style type="text/css">
+
+	@media  (max-width: 900px) {
+	.news a div{height: 400px !important;}}
+	.mobile-dropdown {z-index: 10000 !important;}
+	.page-id-6755 .content .vc_row div	p {color: #F17000 !important; font-weight: bold !important; font-size: 20px !important; }
+	.content .col-md-4 #secondary,
+	.vc_col-sm-4 {padding-left: 0px !important; 0px !important;}
+	
+#secondary,
+	 .widget-area {margin-left: 30px !important; padding-left: 30px !important;}
+	 .vc_gitem-link {font-size: 16px !important;}
+	 .title {position: relative !important; left: 15px !important;}
+	 .page-numbers a {font-weight: 600; font-size: 25px;}
+	 .page-numbers:hover {color: #F36B20 !important;}
+	 center div .current {font-weight: 900;}
+	 .vc_gitem-zone {height: 220px;}
+	 .vc_gitem-animated-block {max-height: 90px !important; position: relative; top: 10px;}
+	 .vc_gitem-zone a:hover {color: #F36B20 !important;}
+	 .vc_gitem-zone a {color: black !important;}
+	 .ui-accordion-header {font-size: 16px !important; }
+	 .donotdis {display: none !important;}
+	 .col-md-2 .widgettitle {padding: 0px !important;}
+	 .p_title {max-height: 150px; font-size: 25px; font-weight: 600; position: relative; left: -2px; top: -20px; }
+	 .title {padding-left: 15px !important;}
+	 .wpb_accordion_header a {color: #515151; }
+	 .wpb_accordion_header a:hover {color: #ee7021 !important; }
+	 p a {color: #515151; }
+	 p a:hover {color: #ee7021 !important; }
+
+@media all and (max-width: 1400px) and (min-width: 1px) {#main-menu li {padding: 6px 8px !important;}  
+	.menu:after {padding-left: 50% !important; }
+	.header::after {left: 50% !important; background: none !important}}
+	.vc_sep_line {border-top-width: 1px !important; position: relative; top: -10px !important;}
+	p,a,span,h1,h2,h3,h4,h5,h6, body, html {font-family: 'Roboto', Arial, sans-serif !important;}
+	.widget-area, news-sidebar , .widgettitle{padding-left: 80px !important;}
+	.widget-area .menu {margin-left: 0px !important;}
+	.news-sidebar ul {list-style: none; margin: 0px; padding-left: 80px;}
+	.news-sidebar ul li, .widget-area .menu li {border-top: 1px solid #ff8d00; padding: 10px 0px; font-size: 18px; background-image: url("https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/arrow_list.jpg"); background-repeat: no-repeat; background-position: left center; padding-left: 15px; }
+	.menu li::before {content: '' !important;}
+	.entry-title {opacity: 0;}
+	.content {padding: 0px 0px;}
+	.col-md-4, .col-md-8 {padding: 0px !important;}
+	.vc_col-sm-4 {padding: 8px;}
+    .footer  .col-md-2 div {height: auto !important;}        
+    .footer  .col-md-2 div .menu {height: auto !important;}
+    .right_slider {margin-top: 180px !important;}
+/* .news_block .col-md-4 {position: relative !important; left: -8px !important;} */
+     .menu li a {color: white;}
+     .news {padding: 8px !important;}
+     p, .news-sidebar ul li a, a h2, h1, h2, h3, h4, h5, h6 {color: black ;}
+     span{color: black;}
+     .news {min-height: 320px;}
+     .news a h2 {color: black !important;}
+     .news a h2:hover {color: #ee7021 !important; }
+     .widget div ul li a, .widget div ul li a:visited {color: #999 !important;}
+     .widget div ul li a:hover {color: #ff6600 !important;}
+     .news-sidebar ul li a, .news-sidebar ul li a:visited {color: black !important;}
+     .news-sidebar ul li a:hover {color: #ff6600 !important;}
+	 .news a p{color: #999;}
+	 html, body {margin: 0px !important; font-family: 'Roboto', Arial, sans-serif !important;}
+	 p, li {font-size: 15px;}
+	 .clearfix {overflow: auto; }
+
+@media all and (min-width: 1800px)  { .header::after {left: 60% !important }}
+@media all and (max-width: 1198px) and (min-width: 1px) {
+	.menu {padding-left: 5px !important;}
+	.header::after {left: 50% !important; top: 40px !important;}}
+	
+@media all and (max-width: 1000px) and (min-width: 1px) {
+	.news_block {margin: 0px; padding: 0px !important; width: 100%;}
+	.header {display: none;}
+	.content, .right_slider, .bottom_header {margin: 0px !important; width: 100%;}
+	.right_slider { padding: 15px !important; }
+	.header-mobile { width: 100%; }
+#main-menu-mobile {padding: 0px; margin: 0px; list-style: none;}
+#main-menu-mobile li a { background: black;  }
+	.tuwiazowna-logo-desktop {display: none;} }
+
+@media all and (min-width: 1001px) {
+	.header-mobile {display: none;}
+	.tuwiazowna-logo-mobile {display: none;}}
+
+	.menu li {z-index: 900 !important;}
+	.entry-title {font-size: 20px; font-weight: 900;}
+/* #wpadminbar {display: none;} */
+	.col-md-2 .menu {padding: 0px; margin: 0px;}
+	.col-md-2 ul li {list-style: none; }
+	.col-md-2 ul li a {font-size: 12px;}
+	a:hover {text-decoration: none ; color: #ffffff ;}
+	.current-menu-item a {color: #ffffff !important;}
+	.wpb_accordion_header a { border-left: 0px solid rgba(255, 255, 255, 0) !important; border-right: 0px solid rgba(255, 255, 255, 0); 
+	background: white; border: 1px solid rgba(194, 194, 194, 1) !important; }
+
+html, body {
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow-x: hidden !important;}
+    
+	.widget-title {font-size: 20px; font-weight: 900;}
+	.current_page_item , .current_page_item a {color: #EE7122;}
+	.col-md-4 .menu {height: auto; border: none !important; padding-left: 0px;}
+	.col-md-4 .menu li { list-style: none; }
+	.col-md-4 .menu li { color: #ee7021; }
+	.col-md-4 .menu li:before {content: '-'; font-size: 20px; padding-right: 5px;}
+	.content {background: white;}
+	.col-md-2 .widgettitle {font-size: 20px; font-weight: 700;}
+    
+    #main-menu  li { display: inline-block; list-style-type: none; padding: 6px 20px;}
+    .topicons {display: inline-block;}
+    .right_slider {padding:16px 16px 0 16px !important; background: white; margin-top: 66px;}
+    .news_block {background: white !important;}
+    .background_link { z-index: -10;  position: fixed; width: 100%; height: 100%;}
+    .background_image { z-index: -999; position: fixed; width: 100%; height: 100%; background-image: url("https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/tlo.jpg") !important; background-size: cover;}
+    .menu-wiazowna-glowne-menu-container .menu {border: 0px solid black; background: #f17000; border-right: none !important; margin-left: 0px !important; font-family: 'Open Sans';}
+        
+    .footer
+    .menu a {color: black; font-size: 15px;}
+	.menu-wiazowna-glowne-menu-container .menu,  .header::after { position: absolute; min-height: 48px; vertical-align: middle; padding-top: 5px;}
+	.header::after {z-index: 0 !important;}
+	.menu, li {z-index: 1000 !important;}
+	.news a h2 {font-size: 19px ;}
+	.news a p {font-size: 17px !important;}
+    .header::after { display: inline-block; position: absolute; z-index: 20; top: 48px; left: 75%; width: 200px;  border-left: none !important; background: #f17000 !important; border: none !important;}
+    .mainmenu_link {color: black; padding: 20px;}
+    .logobar {padding: 0px !important;}
+    .footer .col-md-2 {display: block !important;}
+    .nav-links div a {color: #999; font-size: 16px; }
+    .nav-links div a:hover {color: #ee7021; }
+    .informacjaboczna > div:first-child{
+        width: 100%;
+    }
+    .under_image_description {
+        text-align: left;
+        padding: 10px 10px 0px 10px;
+        color: #666;
+        font-weight: bold;
+        font: 13px Verdana, Helvetica, sans-serif;
+    }
+
+        .vc_images_carousel .vc_carousel-indicators {
+            bottom: 55px !important;
+        }
+    .entry-dates {
+        clear: both;
+        margin: 0 0 20px 30px;
+        padding-top: 10px;
+        border-top: 1px solid #ddd;
+        font-size: 13px;
+    }
+    .entry-dates p {
+        margin: 0;
+        font-size: inherit;
+        color: #666;
+    }
+    /* Cancel the trailing WPBakery row margin (15px) above the dates */
+    .wpb-content-wrapper + .entry-dates {
+        margin-top: -15px;
+    }
+    </style>
+
+
+    <style>
+.news-sidebar ul li a:hover {
+	color: #0f5cae !important;
+}
+.widget div ul li a:hover {
+    color: #0f5cae !important;
+}
+        .widget div ul li a, .widget div ul li a:visited {
+            color: #000 !important;
+        }
+
+        .menu li a {
+            color: white !important;
+        }
+        p a {
+            color: #0f5cae;
+        }
+        p a:hover {
+            color: #0f5cae !important;
+        }
+        .display-name {
+            color: #fff !important;
+        }
+        .showblack .news a h2 {
+            color: #fff !important;
+        }
+        .edycja_konkursu {
+            border-top: 1px solid #ff8d00;
+            border-bottom: 1px solid #ff8d00;
+            padding: 35px 0px;
+        }
+        .showblack span {
+            color: #fff!important;
+        }
+        .showblack .news-sidebar ul li a {
+            color: #fff !important;
+        }
+        .showblack .news-sidebar ul li a:visited {
+            color: #ccc !important;
+        }
+        .showblack .bold-big {
+            color: #fff !important;
+        }
+        body .showblack, .showblack.vc_gitem-link, .showblack.vc-zone-link {background: black !important; color: white !important;}
+        body .showblack p,
+        body .showblack a,
+
+        body .showblack h1,
+        body .showblack h2,
+        body .showblack h3,
+        body .showblack h4,
+        body .showblack h5,
+        body .showblack h6
+        , body .showblack .informacjaboczna,
+
+
+        {color: white !important;}
+        .vc_grid-page a.showblack
+        {color: black !important;}
+
+
+
+        .header::after {display: none !important;}
+        .menu-wiazowna-glowne-menu-container .menu {width: 100% !important;}
+    </style>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-136533903-1');
+</script>
+
+<link rel='stylesheet' id='vc_google_fonts_roboto700-css' href='https://fonts.googleapis.com/css?family=Roboto:700&#038;subset=latin-ext&#038;ver=9.2' media='all' />
+
+</head>
+
+<body class="wp-singular post-template-default single single-post postid-98592 single-format-standard custom-background wp-theme-tuwiazowna group-blog wpb-js-composer js-comp-ver-9.2 vc_responsive">
+<!--
+<div class="popup_1 close-popup">
+    <p>x</p>
+    <img src="https://tuwiazowna.pl/wp-content/uploads/2022/05/ceeb-1.png" alt="">
+</div> -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-62654054-2', 'auto');
+  ga('send', 'pageview');
+
+</script><!-- <a class="radyjko" alt="Radio Wiązowna" href="https://tuwiazowna.pl/radio" target="_blank" style="position: fixed; right: 0px; top: 720px; "><img alt="radio button" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/radio.jpg" /> </a> -->
+<!-- <a class="eu" alt="Portal Mapowy Wiazowna" href="http://mapy.wiazowna.wrotamazowsza.pl/sdiportal/Full.aspx" target="_blank" style="position: fixed; right: 0px; top: 540px; "><img alt="Portal Mapowy Wiazowna" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/portal_mapowy.png" /> </a>
+<a class="pieed" alt="Punkt Informacji Europejskiej Europe Direct" href="http://www.europedirect.um.warszawa.pl" target="_blank" style="position: fixed; right: 0px; top: 588px; "><img alt="Punkt Informacji Europejskiej Europe Direct" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/edw.jpg" /> </a>
+<a class="pieed" alt="PSE" href="http://raport.pse.pl/pl/" target="_blank" style="position: fixed; right: 0px; top: 636px; "><img alt="PSE" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/pse-wiazowna.jpg" /> </a> -->
+<a href="http://bip.wiazowna.pl" target="_blank"> <img class="img-responsive topicons pieed" style="position: fixed; right: 0px; top: 447px; " alt="bip wiązowna" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/bip.jpg" /></a>
+<a href="https://tuwiazowna.pl/we-wspolpracy-z-unia-2/" target="_blank"> <img class="img-responsive topicons pieed" style="position: fixed; right: 0px; top: 494px; " alt="bip wiązowna" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/eu.jpg" /></a>
+<a href="https://tuwiazowna.pl/fundusze-krajowe/" target="_blank"> <img class="img-responsive topicons pieed" style="position: fixed; right: 0px; top: 540px; " src="https://tuwiazowna.pl/wp-content/uploads/2020/09/pl-flaga.png" alt="Polska" /></a>
+<a href="https://tuwiazowna.pl/we-wspolpracy-unia/" target="_blank"> <img class="img-responsive topicons pieed" style="position: fixed; right: 0px; top: 588px;max-width: 48px" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/zadania-realizowane-z-budzetu.png" alt="Fundusze EU" /></a>
+
+<a class="pieed" alt="Czyste powietrze" href="https://tuwiazowna.pl/czyste-powietrze/" target="_blank" style="position: fixed; right: 0px; top: 636px; "><img width="48" height="48" alt="Czyste powietrze" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/czyste-powietrze.png" /> </a>
+<a href="https://tuwiazowna.pl/ochrona-danych-osobowych/" target="_blank"> <img class="img-responsive topicons pieed" style="position: fixed; right: 0px; top: 684px; " src="https://tuwiazowna.pl/wp-content/uploads/2019/11/rodo.png" alt="Rodo Ochrona Danych Osobowych" /></a>
+<a href="https://um.warszawa.pl/waw/metropolia-warszawska" target="_blank"> <img class="img-responsive topicons pieed" style="position: fixed; right: 0px; top: 731px; max-height: 48px;" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/metropolia-warszawska.png" alt="Metropolia Warszawska" /></a>
+
+<!-- <a class="instagram" href="https://www.instagram.com/tuwiazowna.pl/?hl=pl" style="position: fixed;right: 0px;top: 500px;"><img src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/instagram-icon.png" alt="Logo Instagram" />  </a> -->
+
+
+<div class="background_image contrast_image" alt="Obraz w tle" style="background-image: url(https://tuwiazowna.pl/wp-content/uploads/2026/05/AdobeStock_353870391-scaled.jpeg ) !important;"> </div>
+
+ 
+
+<div class="container header" style="padding: 0px 0px;">
+<div class="col-md-12 logobar"  style="position: relative;">
+              
+<a href="/"><img class="img-responsive" style="padding-left: 0px; height: 48px; " src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/logo_main.png" alt="logo nagłówek" /></a>
+
+<div style="position: absolute; right: 0px; top: 0px;display:flex;">
+     <div id="wcag_toolbar_container">
+        <div class="wcag_options_container"><a href="#" class="wcag_option wcag-resize-plus" data-action="resize-plus" data-action-group="resize" title="Powiększ czcionkę">
+                    <img id="bigger_wcag" class="img-responsive topicons" style="padding-left: 0px;" alt="powiększ" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/a+.png" />
+                </a>
+                <a href="#" class="wcag_option wcag-resize-minus" data-action="resize-minus" data-action-group="resize" title="Zmniejsz czcionkę">
+                    <img id="smaller_wcag" class="img-responsive topicons" style="padding-left: 0px;" alt="pomniejsz" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/a-.png" />
+                </a>
+                <a href="#" id="klawisze_dostepnosci" data-toggle="popover-click" title="Klawisze dostępności">
+                    <img id="keys_wcag" class="img-responsive topicons" style="padding-left: 0px;" alt="klawisze" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/keyboard.jpg" />
+                </a><a href="#" class="wcag_option wcag-negative-contrast" data-action="negative-contrast" data-action-group="schema" title="Tryb kontrastowy">
+                <img id="contrast_wcag" class="img-responsive topicons" style="padding-left: 0px;" alt="cz-b" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/czb.jpg" />
+            </a></div></div><!--<img id="t_light" class="img-responsive topicons" style="padding-left: 0px;" alt="cz-b" src="--><!--/inc/img/czb.jpg" />-->
+<!--<img id="t_smaller" class="img-responsive topicons" style="padding-left: 0px;" alt="pomniejsz" src="--><!--/inc/img/a-.png" />-->
+<!--<img id="t_bigger" class="img-responsive topicons" style="padding-left: 0px;" alt="powiększ" src="--><!--/inc/img/a+.png" />-->
+<a href="/?s=">
+<img class="img-responsive topicons" style="padding-left: 0px;" alt="szukaj" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/search.png" /></a>
+
+</div><nav>
+<div class="menu-wiazowna-glowne-menu-container"><ul id="main-menu" class="menu"><li id="menu-item-15366" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-15366"><a href="https://tuwiazowna.pl/zalatw-sprawe-w-urzedzie-2-2/">Załatw sprawę w urzędzie</a></li>
+<li id="menu-item-6520" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6520"><a href="https://tuwiazowna.pl/w-twojej-okolicy-2/">W Twojej okolicy</a></li>
+<li id="menu-item-40123" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-40123"><a href="https://tuwiazowna.pl/edukacja-kultura-2-2/">Edukacja, Kultura</a></li>
+<li id="menu-item-7289" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7289"><a href="https://tuwiazowna.pl/sport-2/">NGO, Sport</a></li>
+<li id="menu-item-7910" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7910"><a href="https://tuwiazowna.pl/dla-firm-2/">Dla Firm</a></li>
+<li id="menu-item-25465" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-25465"><a href="https://tuwiazowna.pl/srodowisko/">Środowisko</a></li>
+<li id="menu-item-100237" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-100237"><a href="https://tuwiazowna.pl/bezpieczenstwo/">Bezpieczeństwo</a></li>
+<li id="menu-item-6518" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6518"><a href="https://tuwiazowna.pl/samorzad/">Samorząd</a></li>
+<li id="menu-item-8945" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8945"><a href="https://tuwiazowna.pl/gmina-wiazowna/">Nasza gmina</a></li>
+</ul></div></nav>
+</div>
+</div>
+
+<div class="container header-mobile" style="padding: 0px 0px;">
+
+<div class="mobile-menu">
+  <a class="dropdown-link">=</a>
+  <nav>
+  <ul class="mobile-dropdown">
+<ul id="main-menu-mobile" class="menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-15366"><a href="https://tuwiazowna.pl/zalatw-sprawe-w-urzedzie-2-2/">Załatw sprawę w urzędzie</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6520"><a href="https://tuwiazowna.pl/w-twojej-okolicy-2/">W Twojej okolicy</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-40123"><a href="https://tuwiazowna.pl/edukacja-kultura-2-2/">Edukacja, Kultura</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7289"><a href="https://tuwiazowna.pl/sport-2/">NGO, Sport</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7910"><a href="https://tuwiazowna.pl/dla-firm-2/">Dla Firm</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-25465"><a href="https://tuwiazowna.pl/srodowisko/">Środowisko</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-100237"><a href="https://tuwiazowna.pl/bezpieczenstwo/">Bezpieczeństwo</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6518"><a href="https://tuwiazowna.pl/samorzad/">Samorząd</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8945"><a href="https://tuwiazowna.pl/gmina-wiazowna/">Nasza gmina</a></li>
+</ul>   </ul></nav>
+</div>
+
+<a href="/"><img class="img-responsive tuwiazowna-logo-mobile" style="padding-left: 0px; width: 100%; background: white;" alt="logo mniejsze" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/logo_small-left.png" /></a>
+<div class="mobile-search"><a href="/?s=">
+        <img class="img-responsive topicons" style="padding-left: 0px;" alt="szukaj" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/search.png"></a></div>
+</div>
+
+<div class="container bottom_header" style="padding: 0px 0px;">
+<div class="col-md-4" style="padding: 0px; padding-right: 0px; vertical-align: bottom; position: relative;">
+<div class="informacjazlewej">
+<div class="newsletter-box">
+<a href="https://tuwiazowna.pl/newsletter/" class="btn-news">Zapisz się do newslettera</a>
+</div>
+<a href="/">
+    <img class="img-responsive tuwiazowna-logo-desktop" style="padding-left: 0px; margin-top: 40%; background: white;" alt="logo wiązowna" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/inc/img/logo_small-left.png" />
+</a>
+<div class="informacjaboczna" style="padding-bottom: 20px; padding-left: 80px; background: white;display: flex;">
+    <div>
+    <p style="background: #f1f1f1; padding: 0px; height: 131px; margin-bottom: 0px; padding-top: 15px; padding-left: 25px; line-height: 19px; font-size: 18px; color: #515151"> Infolinia urzędu:
+<b>22 512 58 00</b>
+<br>
+<br style="margin-bottom: -5px; display: block;"><span style="position: relative; top:-0px; color: #515151;">e-mail: <b>urzad@wiazowna.pl</b><br style="margin-bottom: 3px;">
+<span style="color: #515151; margin-top: 19px; display: block; font-size: 15px;">eDoręczenia AE: <b>PL-81426-32064-WGWBG-14</b></span>
+</span>
+
+
+    </div>
+</div>
+</div>
+</div>
+<div class="col-md-8 right_slider">
+
+				<p class="rs-p-wp-fix"></p>
+				<sr7-module data-alias="homepage" data-id="1" id="SR7_1_1" class="rs-ov-hidden" data-version="6.8.1">
+					<sr7-adjuster></sr7-adjuster>
+					<sr7-content>
+						<sr7-slide id="SR7_1_1-1" data-key="1">
+							<sr7-bg id="SR7_1_1-1-1" class="sr7-layer"><noscript><img src="https://tuwiazowna.pl/wp-content/uploads/2015/08/baner-GLOWNY-herb-.jpg" alt="" title="baner GLOWNY herb"></noscript></sr7-bg>
+						</sr7-slide>
+						<sr7-slide id="SR7_1_1-11" data-key="11">
+							<sr7-bg id="SR7_1_1-11-2" class="sr7-layer"><noscript><img src="https://tuwiazowna.pl/wp-content/uploads/2019/02/telefon_820_300_napis_1.jpg" alt="" title="telefon_820_300_napis_1"></noscript></sr7-bg>
+						</sr7-slide>
+						<sr7-slide id="SR7_1_1-14" data-key="14">
+							<sr7-bg id="SR7_1_1-14-2" class="sr7-layer"><noscript><img src="https://tuwiazowna.pl/wp-content/uploads/2023/02/Wiazowna_przekaz.png" alt="zielona grafika przedstawiająca budynki. Napis: Przekaż 1,5% w gminie Wiązowna" title="Przekaż 1,5%w gminie Wiązowna"></noscript></sr7-bg>
+						</sr7-slide>
+						<sr7-slide id="SR7_1_1-15" data-key="15">
+							<sr7-bg id="SR7_1_1-15-2" class="sr7-layer"><noscript><img src="https://tuwiazowna.pl/wp-content/uploads/2025/09/nieruchomosci-na-sprzedaz.png" alt="" title="nieruchomości na sprzedaż"></noscript></sr7-bg>
+						</sr7-slide>
+						<sr7-slide id="SR7_1_1-7" data-key="7">
+							<sr7-bg id="SR7_1_1-7-2" class="sr7-layer"><noscript><img src="https://tuwiazowna.pl/wp-content/uploads/2018/07/warszawa_plus.jpg" alt="" title="warszawa_plus"></noscript></sr7-bg>
+						</sr7-slide>
+						<sr7-slide id="SR7_1_1-17" data-key="17">
+							<sr7-bg id="SR7_1_1-17-2" class="sr7-layer"><noscript><img src="https://tuwiazowna.pl/wp-content/uploads/2019/02/telefon_820_300_napis_1.jpg" alt="" title="telefon_820_300_napis_1"></noscript></sr7-bg>
+						</sr7-slide>
+						<sr7-slide id="SR7_1_1-18" data-key="18">
+							<sr7-bg id="SR7_1_1-18-2" class="sr7-layer"><noscript><img src="https://tuwiazowna.pl/wp-content/uploads/2019/02/telefon_820_300_napis_1.jpg" alt="" title="telefon_820_300_napis_1"></noscript></sr7-bg>
+						</sr7-slide>
+						<sr7-slide id="SR7_1_1-23" data-key="23">
+						</sr7-slide>
+						<sr7-slide id="SR7_1_1-19" data-key="19">
+						</sr7-slide>
+					</sr7-content>
+					<image_lists style="display:none">
+						<img data-src="//tuwiazowna.pl/wp-content/uploads/2015/08/baner-GLOWNY-herb-.jpg" width="0" height="0" data-dbsrc="Ly90dXdpYXpvd25hLnBsL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDE1LzA4L2JhbmVyLUdMT1dOWS1oZXJiLS5qcGc="/>
+						<img data-src="//tuwiazowna.pl/wp-content/uploads/2018/07/warszawa_plus.jpg" width="0" height="0" data-dbsrc="Ly90dXdpYXpvd25hLnBsL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDE4LzA3L3dhcnN6YXdhX3BsdXMuanBn"/>
+						<img data-src="//tuwiazowna.pl/wp-content/uploads/2016/06/link.png" data-libid="20347" width="0" height="0" data-dbsrc="Ly90dXdpYXpvd25hLnBsL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDE2LzA2L2xpbmsucG5n"/>
+						<img data-src="//tuwiazowna.pl/wp-content/uploads/2016/11/droga_wiazowna-1.jpg" width="0" height="0" data-dbsrc="Ly90dXdpYXpvd25hLnBsL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDE2LzExL2Ryb2dhX3dpYXpvd25hLTEuanBn"/>
+						<img data-src="//tuwiazowna.pl/wp-content/uploads/2015/10/baner-GLOWNY-10_2015-paluch.jpg" width="0" height="0" data-dbsrc="Ly90dXdpYXpvd25hLnBsL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDE1LzEwL2JhbmVyLUdMT1dOWS0xMF8yMDE1LXBhbHVjaC5qcGc="/>
+						<img data-src="//tuwiazowna.pl/wp-content/uploads/2019/09/kalkulator_dłon_napis.jpg" width="0" height="0" data-dbsrc="Ly90dXdpYXpvd25hLnBsL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDE5LzA5L2thbGt1bGF0b3JfZMWCb25fbmFwaXMuanBn"/>
+						<img data-src="//tuwiazowna.pl/wp-content/uploads/2019/02/telefon_820_300_napis_1.jpg" width="0" height="0" data-dbsrc="Ly90dXdpYXpvd25hLnBsL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDE5LzAyL3RlbGVmb25fODIwXzMwMF9uYXBpc18xLmpwZw=="/>
+						<img data-src="//tuwiazowna.pl/wp-content/uploads/2020/04/baner-covid.jpg" data-libid="55969" data-lib="medialibrary" title="baner covid" width="0" height="0" data-dbsrc="Ly90dXdpYXpvd25hLnBsL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDIwLzA0L2JhbmVyLWNvdmlkLmpwZw=="/>
+						<img data-src="//tuwiazowna.pl/wp-content/uploads/2020/04/www_baner_wiazowna-scaled.jpg" data-libid="56134" data-lib="medialibrary" title="www_baner_wiazowna" width="0" height="0" data-dbsrc="Ly90dXdpYXpvd25hLnBsL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDIwLzA0L3d3d19iYW5lcl93aWF6b3duYS1zY2FsZWQuanBn"/>
+						<img data-src="//tuwiazowna.pl/wp-content/uploads/2023/02/Wiazowna_przekaz.png" data-libid="76317" data-lib="medialibrary" alt="zielona grafika przedstawiająca budynki. Napis: Przekaż 1,5% w gminie Wiązowna" title="Przekaż 1,5%w gminie Wiązowna" width="0" height="0" data-dbsrc="Ly90dXdpYXpvd25hLnBsL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDIzLzAyL1dpYXpvd25hX3ByemVrYXoucG5n"/>
+						<img data-src="//tuwiazowna.pl/wp-content/uploads/2025/09/nieruchomosci-na-sprzedaz.png" data-libid="94831" data-lib="medialibrary" title="nieruchomości na sprzedaż" width="0" height="0" data-dbsrc="Ly90dXdpYXpvd25hLnBsL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDI1LzA5L25pZXJ1Y2hvbW9zY2ktbmEtc3ByemVkYXoucG5n"/>
+						<img data-src="//tuwiazowna.pl/wp-content/uploads/2021/03/spis_baner_900.jpg" data-libid="62253" data-lib="medialibrary" title="spis_baner_900" width="0" height="0" data-dbsrc="Ly90dXdpYXpvd25hLnBsL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDIxLzAzL3NwaXNfYmFuZXJfOTAwLmpwZw=="/>
+						<img data-src="//tuwiazowna.pl/wp-content/uploads/2025/01/nieruchomosci-na-sprzedaz.png" data-libid="91027" data-lib="medialibrary" title="nieruchomości na sprzedaż" width="0" height="0" data-dbsrc="Ly90dXdpYXpvd25hLnBsL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDI1LzAxL25pZXJ1Y2hvbW9zY2ktbmEtc3ByemVkYXoucG5n"/>
+					</image_lists>
+				</sr7-module>
+				<script>
+					window.SR7 ??={};SR7.PMH ??={}; SR7.PMH["SR7_1_1"] = {cn:100,state:false,fn: function() { if (window._tpt!==undefined && window._tpt.prepareModuleHeight !== undefined) {  _tpt.prepareModuleHeight({id:"SR7_1_1",el:["350","350","768","960","720"],type:'standard',shdw:'0',gh:["350","350","350","284","175"],gw:["960","960","960","778","480"],vpt:['-200px'],size:{fullWidth:false, fullHeight:false},mh:'0',onh:0,onw:0,bg:{color:'{"orig":"transparent","type":"solid","string":"transparent"}'},plType:'0',plColor:'#FFFFFF'});   SR7.PMH["SR7_1_1"].state=true;} else if(SR7.PMH["SR7_1_1"].cn-->0)	setTimeout( SR7.PMH["SR7_1_1"].fn,19);}};SR7.PMH["SR7_1_1" ].fn();
+				</script>
+
+</div>
+</div>
+
+
+
+<div class="container content">
+
+
+      <div class="col-md-8">
+
+      		
+				
+<div class="" style="padding: 30px 0px !important; text-align: right;">
+	<div class="title col-md-6" 	style="padding-left: 0px; padding-bottom: 20px; font-size: 35px; text-align: left; font-weight: bold;">
+ <h1>Mamy już dziewięć ogólnodostępnych defibrylatorów AED na terenie gminy</h1>
+</div>
+
+	<div class="breadcrumbs col-md-6" xmlns:v="http://rdf.data-vocabulary.org/#"
+		style="font-size: 15px;">
+		
+    </div>
+</div>
+
+				
+			<div class="wpb-content-wrapper" id="wpb-content-root"><div class="vc_row wpb_row vc_row-fluid vc_custom_1432637473966"><div class="wpb_column vc_column_container vc_col-sm-12"><div class="vc_column-inner"><div class="wpb_wrapper">
+	<div class="wpb_single_image wpb_content_element vc_align_center  vc_custom_1779282826528">
+		
+		<figure class="wpb_wrapper vc_figure">
+			<div class="vc_single_image-wrapper  "> <img fetchpriority="high" decoding="async" width="2000" height="1414" src="https://tuwiazowna.pl/wp-content/uploads/2026/05/AED-na-terenie-gminy-Wiazowna-1.png" class="vc_single_image-img attachment-full" alt="" title="AED na terenie gminy Wiązowna" srcset="https://tuwiazowna.pl/wp-content/uploads/2026/05/AED-na-terenie-gminy-Wiazowna-1.png 2000w, https://tuwiazowna.pl/wp-content/uploads/2026/05/AED-na-terenie-gminy-Wiazowna-1-1000x707.png 1000w, https://tuwiazowna.pl/wp-content/uploads/2026/05/AED-na-terenie-gminy-Wiazowna-1-1024x724.png 1024w, https://tuwiazowna.pl/wp-content/uploads/2026/05/AED-na-terenie-gminy-Wiazowna-1-1536x1086.png 1536w" sizes="(max-width: 2000px) 100vw, 2000px" /> </div>
+			<div class="under_image_description">AED na terenie gminy Wiązowna (Grafika: canva/I. Trzaska)</div>
+		</figure>
+	</div>
+</div></div></div></div><div class="vc_row wpb_row vc_row-fluid vc_custom_1446712781422"><div class="wpb_column vc_column_container vc_col-sm-12"><div class="vc_column-inner"><div class="wpb_wrapper"><h2 style="font-size: 20px;color: #000000;text-align: left;font-family:Roboto;font-weight:700;font-style:normal" class="vc_custom_heading vc_do_custom_heading" >Defibrylator AED przywraca prawidłowy rytm serca za pomocą impulsu elektrycznego. W przypadku wystąpienia nagłego zatrzymania krążenia, w połączeniu z reanimacją, jest jedynym sposobem na uratowanie życia. Na terenie naszej gminy mamy już dziewięć takich ogólnodostępnych urządzeń.</h2>
+	<div class="wpb_text_column wpb_content_element" >
+		<div class="wpb_wrapper">
+			<p>Automatyczne Defibrylatory Zewnętrzne (AED) są coraz częściej dostępne w przestrzeni publicznej – przy urzędach, szkołach, remizach OSP czy centrach kultury. To urządzenia, które mogą uratować życie w przypadku nagłego zatrzymania krążenia jeszcze przed przyjazdem służb ratunkowych.</p>
+<p>Eksperci podkreślają, że użycie AED w pierwszych minutach od zatrzymania krążenia znacząco zwiększa szanse przeżycia poszkodowanego. Według danych projektu „Mapa AED”, szybka defibrylacja może zwiększyć szanse przeżycia nawet z około 5% do 70%.</p>
+<p><strong>Gdzie znajdują się urządzenia AED?</strong></p>
+<p>Warto wiedzieć, gdzie <a href="https://tuwiazowna.pl/wp-content/uploads/2026/05/AED-na-terenie-gminy-Wiazowna.png">na terenie naszej gminy znajdują się dostępne defibrylatory</a>. Oto wykaz miejsc wraz z adresami:</p>
+<table width="604">
+<tbody>
+<tr>
+<td width="42"><strong>Lp.</strong></td>
+<td width="260"><strong>Adres</strong></td>
+<td width="302"><strong>Miejsce instalacji</strong></td>
+</tr>
+<tr>
+<td width="42">1.</td>
+<td width="260">Wiązowna, ul. Lubelska 59</td>
+<td width="302">na ścianie Urzędu Gminy Wiązowna</td>
+</tr>
+<tr>
+<td width="42">2.</td>
+<td width="260">Wiązowna, Osiedle Parkowe 17</td>
+<td width="302">na ścianie Gminnego Przedszkola im. Misia Uszatka</td>
+</tr>
+<tr>
+<td width="42">3.</td>
+<td width="260">Wiązowna, ul. Kościelna 41</td>
+<td width="302">w OSP w Wiązownie</td>
+</tr>
+<tr>
+<td width="42">4.</td>
+<td width="260">Malcanów, ul. Mazowiecka 55</td>
+<td width="302">na ścianie Szkoły Podstawowej im. 1 Pułku Szwoleżerów Józefa Piłsudskiego</td>
+</tr>
+<tr>
+<td width="42">5.</td>
+<td width="260">Izabela, ul. Postępu 23</td>
+<td width="302">na ścianie Świetlicy „Pod Jaworem”</td>
+</tr>
+<tr>
+<td width="42">6.</td>
+<td width="260">Zakręt, ul. Szkolna 11</td>
+<td width="302">na ścianie Szkoły Podstawowej im. C.K. Norwida</td>
+</tr>
+<tr>
+<td width="42">7.</td>
+<td width="260">Radiówek 25</td>
+<td width="302">na zewnętrznej ścianie budynku Centrum Usług Społecznych</td>
+</tr>
+<tr>
+<td width="42">8.</td>
+<td width="260">Wola Karczewska, ul. Doliny Świdra 6</td>
+<td width="302">przy wejściu do budynku Domu Kultury „Nad Świdrem”</td>
+</tr>
+<tr>
+<td width="42">9.</td>
+<td width="260">Glinianka, ul. Napoleońska 48</td>
+<td width="302">przy wejściu do budynku OSP w Gliniance</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>Urządzenia AED są zaprojektowane tak, aby mogły użyć ich osoby bez wykształcenia medycznego – wydają jasne komunikaty głosowe i prowadzą użytkownika krok po kroku przez cały proces udzielania pomocy.</p>
+<p>Jak korzystać z AED? Poniżej krótka instrukcja:</p>
+<ol>
+<li>Uruchom AED i postępuj zgodnie z komunikatami dźwiękowymi.</li>
+<li>Zamocuj elektrody AED. Umieść jedną z nich po prawej stronie klatki piersiowej, tuż poniżej obojczyka. Drugą elektrodę umieść w lewym dolnym rogu klatki piersiowej.</li>
+<li>Podłącz złącze (jeśli to konieczne).</li>
+<li>Naciśnij przycisk AED i uruchom analizowanie rytmu serca osoby poszkodowanej.</li>
+<li>Jeśli AED zaleca dostarczenie impulsu elektrycznego, upewnij się, że nikt postronny nie dotyka osoby poszkodowanej.  Naciśnij przycisk wywołujący impuls elektryczny.</li>
+<li>Kontynuuj resuscytację krążeniowo-oddechową i postępując zgodnie z instrukcjami na AED, aż do przybycia personelu ratowniczego.</li>
+</ol>
+<p><strong>Aplikacja „Mapa AED – defibrylatory”</strong></p>
+<p>Jak szybko znaleźć najbliższe dostępne urządzenie? Pomocnym narzędziem jest aplikacja mobilna „Mapa AED – defibrylatory”. Pokazuje lokalizacje defibrylatorów na mapie. Dane pochodzą z największej w Polsce bazy AED opartej na OpenStreetMap. Jest dostępna zarówno na urządzenia z systemem Android (Google Play &#8211; Mapa AED), jak i iOS (App Store &#8211; Mapa AED).</p>
+<p><strong>Wspólne bezpieczeństwo mieszkańców</strong></p>
+<p>Znajomość zasad pierwszej pomocy oraz lokalizacji urządzeń AED może mieć ogromne znaczenie w sytuacji zagrożenia życia. Zachęcamy mieszkańców do instalacji aplikacji „Mapa AED – defibrylatory” oraz zapoznania się z lokalizacjami urządzeń na terenie gminy Wiązowna.</p>
+<p>Każda minuta ma znaczenie – szybka reakcja świadków zdarzenia może uratować ludzkie życie.</p>
+
+		</div>
+	</div>
+</div></div></div></div>
+</div>		
+
+<div class="entry-dates">
+<p>Data aktualizacji strony: 23/06/2026</p>
+<p>Data opublikowania strony: 18/05/2026</p>
+</div>
+
+
+			</div><div class="col-md-4">
+	      
+		<div class="news-sidebar">
+		<h2 class="widgettitle">Nowości</h2>
+		<ul>
+											<li>
+					<a href="https://tuwiazowna.pl/zobacz-czym-oddychasz-mobilne-pluca-w-naszej-gminie/">,,Zobacz, czym oddychasz !”. Mobilne płuca w naszej gminie</a>
+											<span class="post-date">20/11/2026</span>
+									</li>
+											<li>
+					<a href="https://tuwiazowna.pl/rynek-uslug-spolecznych-gminy-wiazowna-na-lata-2027-2029-konsultacje-spoleczne/">„Rynek Usług Społecznych Gminy Wiązowna” na lata 2027-2029. Konsultacje społeczne</a>
+											<span class="post-date">20/11/2026</span>
+									</li>
+											<li>
+					<a href="https://tuwiazowna.pl/planowane-niedostepnosci-uslugi-e-doreczen-zapoznaj-sie-z-terminami/">Planowane niedostępności usługi e-Doręczeń. Zapoznaj się z terminami</a>
+											<span class="post-date">20/11/2026</span>
+									</li>
+											<li>
+					<a href="https://tuwiazowna.pl/program-ochrony-srodowiska-dla-gminy-wiazowna-na-lata-2027-2030-z-perspektywa-na-lata-2031-2034-konsultacje/">„Program Ochrony Środowiska dla Gminy Wiązowna na lata 2027-2030 z perspektywą na lata 2031-2034”. Konsultacje</a>
+											<span class="post-date">19/11/2026</span>
+									</li>
+											<li>
+					<a href="https://tuwiazowna.pl/kolejna-inwestycja-z-dofinansowaniem-feniks-budujemy-nowy-rurociag-przy-suw-w-lipowie/">Kolejna inwestycja z dofinansowaniem FEnIKS. Budujemy nowy rurociąg przy SUW w Lipowie</a>
+											<span class="post-date">19/11/2026</span>
+									</li>
+											<li>
+					<a href="https://tuwiazowna.pl/kondolencje-i-wyrazy-wspolczucia-28/">Kondolencje i wyrazy współczucia</a>
+											<span class="post-date">18/11/2026</span>
+									</li>
+											<li>
+					<a href="https://tuwiazowna.pl/przerwy-w-dostawie-energii-elektrycznej-na-terenie-targowiska-gminnego-moj-rynek/">Przerwy w dostawie energii elektrycznej na terenie Targowiska Gminnego „Mój Rynek”</a>
+											<span class="post-date">18/11/2026</span>
+									</li>
+											<li>
+					<a href="https://tuwiazowna.pl/spotkanie-dla-seniorow-jak-zadbac-o-dobry-sen/">Wykład dla seniorów. Jak zadbać o dobry sen</a>
+											<span class="post-date">18/11/2026</span>
+									</li>
+											<li>
+					<a href="https://tuwiazowna.pl/wspolna-zabawa-i-integracja-dla-seniorow/">Wspólna zabawa i integracja dla seniorów</a>
+											<span class="post-date">17/11/2026</span>
+									</li>
+											<li>
+					<a href="https://tuwiazowna.pl/eobywatel-przerwa-techniczna-w-eplatnosciach-2-2-2-2/">mObywatel. Przerwa techniczna w ePłatnościach</a>
+											<span class="post-date">17/11/2026</span>
+									</li>
+											<li>
+					<a href="https://tuwiazowna.pl/odpady-komunalne-wspolna-sprawa-wspolne-koszty/">Odpady komunalne – wspólna sprawa, wspólne koszty</a>
+											<span class="post-date">17/11/2026</span>
+									</li>
+											<li>
+					<a href="https://tuwiazowna.pl/kompostujesz-bioodpady-i-masz-nizsza-oplate-nie-mozesz-oddac-bioodpadow-do-zagospodarowania/">Kompostujesz bioodpady i masz niższą opłatę? Nie możesz oddać bioodpadów do zagospodarowania</a>
+											<span class="post-date">17/11/2026</span>
+									</li>
+											<li>
+					<a href="https://tuwiazowna.pl/e-uslugi-dla-uzytkownikow-edoreczen-i-epuap/">e-usługi dla użytkowników eDoręczeń i ePUAP</a>
+											<span class="post-date">17/11/2026</span>
+									</li>
+											<li>
+					<a href="https://tuwiazowna.pl/viii-konkurs-lepiejprzytul-reaguje-nie-ignoruje-zglos-prace-2/">VIII Konkurs #LepiejPrzytul „Reaguję &#8211; nie ignoruję!”. Zgłoś pracę</a>
+											<span class="post-date">16/11/2026</span>
+									</li>
+											<li>
+					<a href="https://tuwiazowna.pl/wieczor-polskich-piesni-ludowych-i-patriotycznych-w-woli-karczewskiej/">Wieczór polskich pieśni ludowych i patriotycznych w Woli Karczewskiej</a>
+											<span class="post-date">13/11/2026</span>
+									</li>
+					</ul>
+
+		</div>      </div>
+
+
+
+
+
+
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"> -->
+</script><!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js" type="text/javascript">
+</script>
+
+<script>
+(function ($) {
+$(document).ready(function() {
+	$(".mobile-menu").on('click', function(){
+		$(".mobile-dropdown").slideToggle("fast");
+	});
+});
+})(jQuery);
+</script>
+
+<script>
+(function ($) {
+
+    $(document).ready(function() {
+        $("#checkAll").click(function () {
+            $('.miejscowosc-checkbox input').not(this).prop('checked', this.checked);
+        });
+    });
+    $(document).ready(function() {
+    $("#checkAllt").click(function () {
+        $('.tematyka-checkbox input').not(this).prop('checked', this.checked);
+    });
+    });
+})(jQuery);
+
+</script>
+
+<script type="text/javascript">
+(function ($) {
+
+	$(document).ready(function()
+{
+	
+	
+	
+var textSize = 1;
+
+
+
+  $('#t_bigger').click(function()
+  {
+	  textSize = textSize + 1;
+	  
+	  
+	  if (textSize >= 10 ) { } else {
+	  $( ".content, .col-md-8 p, .titlem, .news h2, .menu-items a, a, .col-md-4 li, h3,h4,h5,h6" ).each(function( index ) {
+
+    var curr_font_size = $(this).css('font-size');
+    var new_font_size = parseFloat(curr_font_size) + 1;
+    $(this).css({fontSize: new_font_size}, 250);
+});
+}
+
+
+  });
+
+  $('#t_smaller').click(function()
+  {
+
+	  textSize = textSize - 1;
+	  
+	  if (textSize <= 1 ) { } else {
+	  $( ".content, .col-md-8 p, .titlem, .news h2, .menu-items a, .col-md-4 li, h3,h4,h5,h6" ).each(function( index ) {
+
+    var curr_font_size = $(this).css('font-size');
+    var new_font_size = parseFloat(curr_font_size) - 1;
+    $(this).css({fontSize: new_font_size + ' !important'}, 250);
+  });
+  }
+});
+
+
+  
+  	
+ $('#t_light').click(function() {
+ $( "html, body, a, p, h1, h2, h3, h4 ,h5, h6, .menu,.menu:after, .container-fluid, .footerc, .news_block, .right_slider, .col-md-4 div div, .col-md-4, .col-md-8, .content " ).toggleClass( "showblack" );
+});
+});
+})(jQuery);
+
+</script>
+	
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5578ae636b680a6c" async="async"></script>
+</div>
+<footer>
+<div class="container-fluid">
+<div class="container footerc" style="background: #eeeeee; min-height: 200px; padding-top: 20px;">
+<div class="row footer">
+
+ 			
+ <div class="col-md-3">			<div class="textwidget"><a  class="bold-big" href="https://archiwum.tuwiazowna.pl/"  target="_self">Archiwum</a><br>
+<a  class="bold-big" href="https://tuwiazowna.pl/redakcja/"  target="_self">Redakcja</a><br>
+<a  class="bold-big" href="https://tuwiazowna.pl/reklama/"  target="_self">Reklama</a><br>
+<a  class="bold-big" href="https://tuwiazowna.pl/regulamin-polityka-prywatnosci-polityka-cookies/"  target="_self">Regulamin i Polityka Prywatności</a><br>
+<a  class="bold-big" href="https://tuwiazowna.pl/ochrona-danych-osobowych/"  target="_self">Ochrona danych osobowych</a><br>
+<a  class="bold-big" href="https://tuwiazowna.pl/deklaracja-dostepnosci/"  target="_self">Deklaracja Dostępności</a><br>
+</div>
+		</div><div class="clearfix"></div> <div class="col-md-3">			<div class="textwidget"><div class="bold-big">Jeśli chcesz umieścić swoją wiadomość w serwisie tuWiazowna.pl wyślij ją na adres </div>
+<a class="bold-big" href="mailto:tukontakt@wiazowna.pl ">tukontakt@wiazowna.pl</a></div>
+		</div><div class="clearfix"></div> <div class="custom-counter">Odwiedziło nas: <b>27341458</b> osób</div><div class="col-md-3">			<div class="textwidget"><a href="https://www.facebook.com/tuWiazowna?fref=nf"  target="_blank"><img src="/wp-content/uploads/2015/05/f.png" alt="Facebook" width="26" height="26" alt=""/></a>
+<a href="https://plus.google.com/105311955421433831560/about?hl=pl"  target="_blank"><img src="/wp-content/uploads/2015/05/g.png" alt="Google+" width="26" height="26" alt=""/></a>
+<a href="https://www.youtube.com/channel/UCm86LcQXpgxk9k_PCxbuvaA"  target="_blank"><img src="/wp-content/uploads/2015/05/yt.png" alt="Youtube" width="26" height="26" alt=""/></a>
+<p></p>
+	  <a href="https://wp-opieka.pl" class="logo-wpo" rel="nofollow" style=""><img width="120" src="https://tuwiazowna.pl/wp-content/uploads/2024/08/Logo-stopka-kolorowe.png" alt="WP-Opieka.pl - tworzenie i wsparcie stron internetowych"></a>
+</div>
+		</div><div class="clearfix"></div></div>
+</div>
+</div>
+</footer>
+
+<script>
+ 
+	(function($) {
+	    
+        $('.accc_row').click(function() {
+            $(this).next('.acccordion_text_box').slideToggle( "300", function() {
+                if ($(this).is(":visible"))  $(this).addClass('show-elem');
+                else $(this).removeClass('show-elem');
+            });
+            $(this).find('.texxt_info').toggleClass('is-open');
+        });
+	
+	    $('.tnp-field.tnp-privacy-field label')
+	        .html('<input type="checkbox" name="ny" required="" class="tnp-privacy"><div><p>Wyrażam zgodę na przetwarzanie moich danych osobowych w celu przesyłania newslettera www.tuwiazowna.pl. </p><p>Uprzejmie informuję, że:<br> Administratorem przetwarzanych danych osobowych w Urzędzie Gminy Wiązowna w związku z wykonywaniem zadań publicznych jest Wójt Gminy Wiązowna z siedzibą w Wiązownie ul. Lubelska 59 05-462 Wiązowna. W sprawach ochrony danych osobowych można kontaktować się z Inspektorem Ochrony Danych – tel. 22 512 5 856, email: iod@wiazowna.pl, lub pisemnie na adres urzędu.</p><p>Pani/Pana dane osobowe:<br>1.Będą przetwarzane zgodnie z art. 6 ust. 1 lit. a (rozporządzenie Parlamentu Europejskiego i Rady UE z 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE) w celu przesyłania informacji publikowanych na stronie www.tuwiazowna.pl, na podstawie zgody; 2.Nie będą udostępniane innym odbiorcom; 3.Będą przechowywane nie dłużej, niż czas świadczenia usługi newslettera; 4.Nie będą przetwarzane w sposób zautomatyzowany, w celu podjęcia decyzji w sprawie indywidualnej.</p><p>Przysługuje Pani/Panu prawo do:<br>1. Dostępu do swoich danych osobowych; 2. Ich sprostowania lub usunięcia; 3. Ograniczenia przetwarzania danych, przenoszenia danych; 4. Cofnięcia zgody -osoba, której dane dotyczą, ma prawo w dowolnym momencie wycofać zgodę. Wycofanie zgody nie wpływa na zgodność z prawem przetwarzania, którego dokonano na podstawie zgody przed jej wycofaniem. Osoba, której dane dotyczą, jest o tym informowana, zanim wyrazi zgodę; 5. Wniesienia skargi do organu nadzorczego – Prezesa Urzędu Ochrony Danych Osobowych w Warszawie;6. Podanie danych osobowych jest niezbędne  do przesyłania informacji.<p></div>');
+
+    })(jQuery);
+    
+</script>
+
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/tuwiazowna/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+		<div class="my_timeline_hover_12_123" id="">
+		</div>
+		<div id="acp-banner-backdrop" class="acp-backdrop" hidden></div><div id="acp-banner" class="acp-banner acp-layout-center acp-bv-fill" role="dialog" aria-live="polite" aria-label="Zgoda na pliki cookie" hidden style="--acp-bg:#ffffff;--acp-text:#1f2329;--acp-btn-bg:#000000;--acp-btn-text:#ffffff;--acp-accent:#f17000;--acp-border-color:#e4e7ed;--acp-overlay-bg:rgba(0,0,0,0.5);--acp-font:inherit;--acp-title-size:16px;--acp-title-weight:600;--acp-body-size:14px;--acp-line:1.5;--acp-padding:20px;--acp-radius:10px;--acp-max-width:440px;--acp-gap:8px;--acp-btn-radius:6px;--acp-border-width:0px;--acp-shadow:0 6px 28px rgba(0,0,0,0.18);--acp-overlay-blur:0px;"><div class="acp-banner-body"><h2 class="acp-banner-title">Informacje o Plikach Cookies</h2><div class="acp-banner-msg"><div class="acp-clamp" data-acp-clamp style="--acp-clamp-lines:3;"><p>W tuWiązowna korzystamy z plików cookies, aby zapewnić Ci najlepsze doświadczenia podczas korzystania z naszej strony internetowej. Klikając <strong>„Akceptuj wszystkie”</strong>, wyrażasz zgodę na wykorzystanie plików cookies, co pozwoli nam dostosować treści i oferty do Twoich potrzeb. Jeśli nie wyrażasz zgody na korzystanie z nieistotnych plików cookies, możesz kliknąć <strong>„Odrzuć wszystkie”</strong>.</p><p>Możesz także dostosować swoje preferencje, wybierając opcję <strong>„Dostosuj”</strong>. W dowolnym momencie możesz zmienić swoje wybory. Aby dowiedzieć się więcej, zapoznaj się z naszą Polityką prywatności.</p></div><button type="button" class="acp-more" data-acp-more hidden><span data-acp-more-label>Pokaż więcej</span><span data-acp-less-label hidden>Pokaż mniej</span></button></div></div><div class="acp-banner-actions"><button type="button" data-acp-action="customize" class="acp-btn acp-btn-secondary">Dostosuj</button><button type="button" data-acp-action="reject" class="acp-btn ">Odrzuć wszystkie</button><button type="button" data-acp-action="accept" class="acp-btn acp-btn-primary">Akceptuj wszystkie</button></div></div><button type="button" id="acp-revisit" class="acp-revisit acp-rv-bottom-right" data-acp-action="customize" aria-label="Ustawienia cookie" title="Ustawienia cookie" style="--acp-bg:#ffffff;--acp-text:#1f2329;--acp-btn-bg:#000000;--acp-btn-text:#ffffff;--acp-accent:#f17000;--acp-border-color:#e4e7ed;--acp-overlay-bg:rgba(0,0,0,0.5);--acp-font:inherit;--acp-title-size:16px;--acp-title-weight:600;--acp-body-size:14px;--acp-line:1.5;--acp-padding:20px;--acp-radius:10px;--acp-max-width:440px;--acp-gap:8px;--acp-btn-radius:6px;--acp-border-width:0px;--acp-shadow:0 6px 28px rgba(0,0,0,0.18);--acp-overlay-blur:0px;--acp-rv-size:46px;--acp-rv-icon:22px;--acp-rv-offset:20px;--acp-rv-radius:50%;--acp-rv-shadow:0 4px 16px rgba(0,0,0,0.24);"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2a10 10 0 1 0 10 10 3 3 0 0 1-4-2.8A3 3 0 0 1 15 6a3.5 3.5 0 0 1-3-4Zm-3 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm-2 5.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm5 1a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm4.5-1a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/></svg></button><script id="acp-reveal">(function(d){var m=d.cookie.match(/(?:^|;\s*)acp_consent=([^;]*)/);if(m&&decodeURIComponent(m[1]).indexOf("consent:yes")!==-1){return;}var b=d.getElementById("acp-banner");if(b){b.hidden=false;}var o=d.getElementById("acp-banner-backdrop");if(o){o.hidden=false;}var r=d.getElementById("acp-revisit");if(r){r.style.display="none";}})(document);</script><div id="acp-preferences" class="acp-prefs acp-bv-fill" role="dialog" aria-modal="true" aria-label="Ustawienia plików cookie" hidden style="--acp-bg:#ffffff;--acp-text:#1f2329;--acp-btn-bg:#000000;--acp-btn-text:#ffffff;--acp-accent:#f17000;--acp-border-color:#e4e7ed;--acp-overlay-bg:rgba(0,0,0,0.5);--acp-font:inherit;--acp-title-size:16px;--acp-title-weight:600;--acp-body-size:14px;--acp-line:1.5;--acp-padding:20px;--acp-radius:10px;--acp-max-width:440px;--acp-gap:8px;--acp-btn-radius:6px;--acp-border-width:0px;--acp-shadow:0 6px 28px rgba(0,0,0,0.18);--acp-overlay-blur:0px;"><div class="acp-prefs-overlay" data-acp-action="close-prefs"></div><div class="acp-prefs-dialog"><h2 class="acp-prefs-title">Dostosuj zgody</h2><div class="acp-prefs-msg"><div class="acp-clamp" data-acp-clamp style="--acp-clamp-lines:3;"><p>Używamy plików cookies, aby ułatwić Ci nawigację oraz wykonywanie określonych funkcji. Szczegółowe informacje o wszystkich plikach cookies znajdziesz w każdej kategorii zgody poniżej.</p><p>Pliki cookies oznaczone jako „Niezbędne” są przechowywane w Twojej przeglądarce, ponieważ są one kluczowe dla zapewnienia podstawowych funkcji strony.</p><p>Używamy również plików cookies firm trzecich, które pomagają nam analizować, w jaki sposób korzystasz z tej strony, zapamiętują Twoje preferencje oraz dostarczają treści i reklamy odpowiednie dla Ciebie. Te pliki cookies będą przechowywane w Twojej przeglądarce tylko za Twoją uprzednią zgodą.</p><p>Możesz zdecydować, czy chcesz włączyć lub wyłączyć niektóre bądź wszystkie te pliki cookies, jednak wyłączenie niektórych z nich może wpłynąć na Twoje doświadczenia podczas przeglądania strony.</p></div><button type="button" class="acp-more" data-acp-more hidden><span data-acp-more-label>Pokaż więcej</span><span data-acp-less-label hidden>Pokaż mniej</span></button></div><div class="acp-accordions"><div class="acp-acc"><div class="acp-acc-head"><button type="button" class="acp-acc-toggle" data-acp-acc aria-expanded="false" aria-controls="acp-acc-necessary">Niezbędne do świadczenia usługi</button><label class="acp-switch"><input type="checkbox" aria-label="Niezbędne do świadczenia usługi – zawsze aktywne" checked disabled><span class="acp-switch-slider"></span></label></div><div class="acp-acc-body" id="acp-acc-necessary" hidden><div class="acp-cat-desc"><div class="acp-clamp" data-acp-clamp style="--acp-clamp-lines:2;">Pliki cookie absolutnie niezbędne do prawidłowego funkcjonowania witryny. Te pliki cookie zapewniają anonimowe działanie podstawowych funkcji i zabezpieczeń witryny.</div><button type="button" class="acp-more" data-acp-more hidden><span data-acp-more-label>Pokaż więcej</span><span data-acp-less-label hidden>Pokaż mniej</span></button></div><table class="acp-acc-cookies"><thead><tr><th scope="col">Cookie</th><th scope="col">Czas przechowywania</th><th scope="col">Opis</th></tr></thead><tbody><tr><td data-label="Cookie">PHPSESSID</td><td data-label="Czas przechowywania">Session</td><td data-label="Opis">Preserves user session state across page requests.</td></tr><tr><td data-label="Cookie">__cf_bm</td><td data-label="Czas przechowywania">0 minutes</td><td data-label="Opis">Zarządzanie botami w Cloudflare — odróżnia ludzi od botów.</td></tr></tbody></table></div></div><div class="acp-acc"><div class="acp-acc-head"><button type="button" class="acp-acc-toggle" data-acp-acc aria-expanded="false" aria-controls="acp-acc-functional">Funkcjonalne</button><label class="acp-switch"><input type="checkbox" aria-label="Zgoda na Funkcjonalne" data-acp-pref="functional"><span class="acp-switch-slider"></span></label></div><div class="acp-acc-body" id="acp-acc-functional" hidden><div class="acp-cat-desc"><div class="acp-clamp" data-acp-clamp style="--acp-clamp-lines:2;">Funkcjonalne pliki cookie pomagają wykonywać określone funkcje, takie jak udostępnianie zawartości witryny na platformach mediów społecznościowych, zbieranie informacji zwrotnych i inne funkcje stron trzecich.</div><button type="button" class="acp-more" data-acp-more hidden><span data-acp-more-label>Pokaż więcej</span><span data-acp-less-label hidden>Pokaż mniej</span></button></div><table class="acp-acc-cookies"><thead><tr><th scope="col">Cookie</th><th scope="col">Czas przechowywania</th><th scope="col">Opis</th></tr></thead><tbody><tr><td data-label="Cookie">ytidb*</td><td data-label="Czas przechowywania">Persistent</td><td data-label="Opis">YouTube — IndexedDB służąca do przechowywania stanu odtwarzania i wyszukiwania dla osadzonych filmów.</td></tr></tbody></table></div></div><div class="acp-acc"><div class="acp-acc-head"><button type="button" class="acp-acc-toggle" data-acp-acc aria-expanded="false" aria-controls="acp-acc-analytics">Analityczne i statystyczne</button><label class="acp-switch"><input type="checkbox" aria-label="Zgoda na Analityczne i statystyczne" data-acp-pref="analytics"><span class="acp-switch-slider"></span></label></div><div class="acp-acc-body" id="acp-acc-analytics" hidden><div class="acp-cat-desc"><div class="acp-clamp" data-acp-clamp style="--acp-clamp-lines:2;">Analityczne pliki cookie służą do zrozumienia, w jaki sposób odwiedzający wchodzą w interakcję ze stroną internetową. Te pliki cookie pomagają dostarczać informacje o wskaźnikach liczby odwiedzających, współczynniku odrzuceń, źródle ruchu itp.</div><button type="button" class="acp-more" data-acp-more hidden><span data-acp-more-label>Pokaż więcej</span><span data-acp-less-label hidden>Pokaż mniej</span></button></div><table class="acp-acc-cookies"><thead><tr><th scope="col">Cookie</th><th scope="col">Czas przechowywania</th><th scope="col">Opis</th></tr></thead><tbody><tr><td data-label="Cookie">_ga_*</td><td data-label="Czas przechowywania">400 days</td><td data-label="Opis">Google Analytics 4 — zachowuje stan sesji dla poszczególnych właściwości.</td></tr><tr><td data-label="Cookie">_ga</td><td data-label="Czas przechowywania">400 days</td><td data-label="Opis">Google Analytics — rozróżnia unikalnych użytkowników na podstawie identyfikatora klienta.</td></tr><tr><td data-label="Cookie">_gid</td><td data-label="Czas przechowywania">1 day</td><td data-label="Opis">Google Analytics — distinguishes users (24h).</td></tr><tr><td data-label="Cookie">_gat</td><td data-label="Czas przechowywania">0 minutes</td><td data-label="Opis">Google Analytics — throttles request rate.</td></tr></tbody></table></div></div><div class="acp-acc"><div class="acp-acc-head"><button type="button" class="acp-acc-toggle" data-acp-acc aria-expanded="false" aria-controls="acp-acc-performance">Wydajnościowe</button><label class="acp-switch"><input type="checkbox" aria-label="Zgoda na Wydajnościowe" data-acp-pref="performance"><span class="acp-switch-slider"></span></label></div><div class="acp-acc-body" id="acp-acc-performance" hidden><div class="acp-cat-desc"><div class="acp-clamp" data-acp-clamp style="--acp-clamp-lines:2;">Wydajnościowe pliki cookie służą do zrozumienia i analizy kluczowych wskaźników wydajności witryny, co pomaga zapewnić lepsze wrażenia użytkownika dla odwiedzających.</div><button type="button" class="acp-more" data-acp-more hidden><span data-acp-more-label>Pokaż więcej</span><span data-acp-less-label hidden>Pokaż mniej</span></button></div></div></div><div class="acp-acc"><div class="acp-acc-head"><button type="button" class="acp-acc-toggle" data-acp-acc aria-expanded="false" aria-controls="acp-acc-advertisement">Reklamowe</button><label class="acp-switch"><input type="checkbox" aria-label="Zgoda na Reklamowe" data-acp-pref="advertisement"><span class="acp-switch-slider"></span></label></div><div class="acp-acc-body" id="acp-acc-advertisement" hidden><div class="acp-cat-desc"><div class="acp-clamp" data-acp-clamp style="--acp-clamp-lines:2;">Reklamowe pliki cookie służą do dostarczania odwiedzającym odpowiednich reklam i kampanii marketingowych. Te pliki cookie śledzą odwiedzających w witrynach i zbierają informacje w celu dostarczania dostosowanych reklam.</div><button type="button" class="acp-more" data-acp-more hidden><span data-acp-more-label>Pokaż więcej</span><span data-acp-less-label hidden>Pokaż mniej</span></button></div><table class="acp-acc-cookies"><thead><tr><th scope="col">Cookie</th><th scope="col">Czas przechowywania</th><th scope="col">Opis</th></tr></thead><tbody><tr><td data-label="Cookie">NID</td><td data-label="Czas przechowywania">183 days</td><td data-label="Opis">Google — stores preferences for personalized ads.</td></tr></tbody></table></div></div><div class="acp-acc"><div class="acp-acc-head"><button type="button" class="acp-acc-toggle" data-acp-acc aria-expanded="false" aria-controls="acp-acc-others">Pozostałe</button><label class="acp-switch"><input type="checkbox" aria-label="Zgoda na Pozostałe" data-acp-pref="others"><span class="acp-switch-slider"></span></label></div><div class="acp-acc-body" id="acp-acc-others" hidden><div class="acp-cat-desc"><div class="acp-clamp" data-acp-clamp style="--acp-clamp-lines:2;">Inne pliki cookie bez kategorii to te, które są analizowane i nie zostały jeszcze sklasyfikowane w żadnej kategorii.</div><button type="button" class="acp-more" data-acp-more hidden><span data-acp-more-label>Pokaż więcej</span><span data-acp-less-label hidden>Pokaż mniej</span></button></div><table class="acp-acc-cookies"><thead><tr><th scope="col">Cookie</th><th scope="col">Czas przechowywania</th><th scope="col">Opis</th></tr></thead><tbody><tr><td data-label="Cookie">page-visited</td><td data-label="Czas przechowywania">30 days</td><td data-label="Opis"></td></tr><tr><td data-label="Cookie">YSC</td><td data-label="Czas przechowywania">Session</td><td data-label="Opis"></td></tr><tr><td data-label="Cookie">VISITOR_INFO1_LIVE</td><td data-label="Czas przechowywania">180 days</td><td data-label="Opis"></td></tr><tr><td data-label="Cookie">VISITOR_PRIVACY_METADATA</td><td data-label="Czas przechowywania">180 days</td><td data-label="Opis"></td></tr><tr><td data-label="Cookie">__Secure-YNID</td><td data-label="Czas przechowywania">180 days</td><td data-label="Opis"></td></tr><tr><td data-label="Cookie">__Secure-ROLLOUT_TOKEN</td><td data-label="Czas przechowywania">180 days</td><td data-label="Opis"></td></tr></tbody></table></div></div></div><div class="acp-prefs-actions"><button type="button" data-acp-action="reject" class="acp-btn ">Odrzuć wszystkie</button><button type="button" data-acp-action="save" class="acp-btn ">Zapisz wybór</button><button type="button" data-acp-action="accept" class="acp-btn acp-btn-primary">Akceptuj wszystkie</button></div></div></div><script type="text/html" id="wpb-modifications"> window.wpbCustomElement = 1; </script><script id="jquery-ui-core-js-before">
+jQuery.uiBackCompat = true;
+//# sourceURL=jquery-ui-core-js-before
+</script>
+<script id="jquery-ui-core-js" src="https://tuwiazowna.pl/wp-includes/js/jquery/ui/core.min.js?ver=1.14.2"></script>
+<script id="jquery-ui-mouse-js" src="https://tuwiazowna.pl/wp-includes/js/jquery/ui/mouse.min.js?ver=1.14.2"></script>
+<script id="jquery-ui-draggable-js" src="https://tuwiazowna.pl/wp-includes/js/jquery/ui/draggable.min.js?ver=1.14.2"></script>
+<script id="acp-log-js" src="https://tuwiazowna.pl/wp-content/plugins/cookie-agency-consent/frontend/js/acp-log.js?ver=0.6.6"></script>
+<script id="acp-banner-js" src="https://tuwiazowna.pl/wp-content/plugins/cookie-agency-consent/frontend/js/acp-banner.js?ver=0.6.6"></script>
+<script id="popup-1-js" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/js/udi_scripts.js?ver=20120206"></script>
+<script id="tuwiazowna-navigation-js" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/js/navigation.js?ver=20120206"></script>
+<script id="tuwiazowna-skip-link-focus-fix-js" src="https://tuwiazowna.pl/wp-content/themes/tuwiazowna/js/skip-link-focus-fix.js?ver=20130115"></script>
+<script id="newsletter-js-extra">
+var newsletter_data = {"action_url":"https://tuwiazowna.pl/wp-admin/admin-ajax.php"};
+//# sourceURL=newsletter-js-extra
+</script>
+<script id="newsletter-js" src="https://tuwiazowna.pl/wp-content/plugins/newsletter/main.js?ver=9.5.7"></script>
+<script id="fancybox-purify-js" src="https://tuwiazowna.pl/wp-content/plugins/easy-fancybox/vendor/purify.min.js?ver=3fa7ea78d46dbc72c9ee74efcfc32de2"></script>
+<script id="jquery-fancybox-js-extra">
+var efb_i18n = {"close":"Close","next":"Next","prev":"Previous","startSlideshow":"Start slideshow","toggleSize":"Toggle size"};
+//# sourceURL=jquery-fancybox-js-extra
+</script>
+<script id="jquery-fancybox-js" src="https://tuwiazowna.pl/wp-content/plugins/easy-fancybox/fancybox/1.5.4/jquery.fancybox.min.js?ver=3fa7ea78d46dbc72c9ee74efcfc32de2"></script>
+<script id="jquery-fancybox-js-after">
+var fb_timeout, fb_opts={'autoScale':true,'showCloseButton':true,'width':1000,'margin':20,'pixelRatio':'false','centerOnScroll':true,'enableEscapeButton':true,'overlayShow':true,'hideOnOverlayClick':true,'minVpHeight':320,'disableCoreLightbox':'true','enableBlockControls':'true','fancybox_openBlockControls':'true' };
+if(typeof easy_fancybox_handler==='undefined'){
+var easy_fancybox_handler=function(){
+jQuery([".nolightbox","a.wp-block-fileesc_html__button","a.pin-it-button","a[href*='pinterest.com\/pin\/create']","a[href*='facebook.com\/share']","a[href*='twitter.com\/share']"].join(',')).addClass('nofancybox');
+jQuery('a.fancybox-close').on('click',function(e){e.preventDefault();jQuery.fancybox.close()});
+/* IMG */
+						var unlinkedImageBlocks=jQuery(".wp-block-image > img:not(.nofancybox,figure.nofancybox>img)");
+						unlinkedImageBlocks.wrap(function() {
+							var href = jQuery( this ).attr( "src" );
+							return jQuery( "<a></a>" ).attr( "href", href );
+						});
+var fb_IMG_select=jQuery('a[href*=".jpg" i]:not(.nofancybox,li.nofancybox>a,figure.nofancybox>a),area[href*=".jpg" i]:not(.nofancybox),a[href*=".jpeg" i]:not(.nofancybox,li.nofancybox>a,figure.nofancybox>a),area[href*=".jpeg" i]:not(.nofancybox),a[href*=".png" i]:not(.nofancybox,li.nofancybox>a,figure.nofancybox>a),area[href*=".png" i]:not(.nofancybox)');
+fb_IMG_select.addClass('fancybox image');
+var fb_IMG_sections=jQuery('.gallery,.wp-block-gallery,.tiled-gallery,.wp-block-jetpack-tiled-gallery,.ngg-galleryoverview,.ngg-imagebrowser,.nextgen_pro_blog_gallery,.nextgen_pro_film,.nextgen_pro_horizontal_filmstrip,.ngg-pro-masonry-wrapper,.ngg-pro-mosaic-container,.nextgen_pro_sidescroll,.nextgen_pro_slideshow,.nextgen_pro_thumbnail_grid,.tiled-gallery');
+fb_IMG_sections.each(function(){jQuery(this).find(fb_IMG_select).attr('rel','gallery-'+fb_IMG_sections.index(this));});
+jQuery('a.fancybox,area.fancybox,.fancybox>a').each(function(){jQuery(this).fancybox(jQuery.extend(true,{},fb_opts,{'transition':'elastic','transitionIn':'elastic','easingIn':'linear','transitionOut':'elastic','easingOut':'linear','opacity':false,'hideOnContentClick':false,'titleShow':true,'titlePosition':'over','titleFromAlt':true,'showNavArrows':true,'enableKeyboardNav':true,'cyclic':false,'mouseWheel':'true'}))});
+};};
+jQuery(easy_fancybox_handler);jQuery(document).on('post-load',easy_fancybox_handler);
+
+//# sourceURL=jquery-fancybox-js-after
+</script>
+<script id="jquery-easing-js" src="https://tuwiazowna.pl/wp-content/plugins/easy-fancybox/vendor/jquery.easing.min.js?ver=1.4.1"></script>
+<script id="udi-wcag-js-extra">
+var UdiWCAGOptions = {"focusable":"1","hotkeys":"enable","link_titles":"enable","enable_save":"1","save_expiration":"12"};
+//# sourceURL=udi-wcag-js-extra
+</script>
+<script id="udi-wcag-js" src="https://tuwiazowna.pl/wp-content/plugins/udi-wcag/assets/js/app.min.js?ver=1.0.0"></script>
+<script id="wpb_composer_front_js-js" src="https://tuwiazowna.pl/wp-content/plugins/js_composer/assets/js/dist/js_composer_front.min.js?ver=9.2"></script>
+<script>
+	SR7.JSON['SR7_1_1'] = {"settings":{"migrated":"sr6","title":"homepage","alias":"homepage","type":"standard","lazyLoad":"smart","vPort":["-200px","-200px","-200px","-200px","-200px"],"size":{"fullWidth":false,"contentFH":true,"width":[960,960,960,778,480],"height":[350,350,350,284,175],"cachedHeight":[350,350,768,960,720],"maxWidth":0},"carousel":{"type":"h","align":"center","maxV":3,"justify":false,"scale":false,"minS":50,"vScale":false,"oScale":false,"space":0,"rotation":false,"maxR":0,"varR":false,"opacity":true,"maxO":100,"varO":false,"spin":"off","spinA":0,"snap":true,"infinity":false,"skewX":0,"skewY":0,"ease":"power3.inOut","dur":800,"overshoot":false,"stretch":false,"showAllLayers":"false","jMWidth":false,"bR":0,"pNV":"50px","pT":0,"pB":0},"pLoader":{"type":"0"},"general":{"perspectiveType":"local","lazyLoad":"smart","slideshow":{"globalViewPort":true,"globalViewDist":"-200px"}},"shdw":0,"bg":{"color":{"orig":"transparent","type":"solid","string":"transparent"}},"nav":{"m":{"cd":1000},"p":{"w":50,"h":100}},"thumb":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2020\/04\/baner-covid.jpg","aU":[],"imgs":[{"lib_id":"","lib":"","src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2015\/08\/baner-GLOWNY-herb-.jpg"},{"lib_id":"","lib":"","src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2018\/07\/warszawa_plus.jpg"},{"lib_id":20347,"lib":"","src":"http:\/\/tuwiazowna.pl\/wp-content\/uploads\/2016\/06\/link.png"},{"lib_id":"","lib":"","src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2016\/11\/droga_wiazowna-1.jpg"},{"lib_id":"","lib":"","src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2015\/10\/baner-GLOWNY-10_2015-paluch.jpg"},{"lib_id":"","lib":"","src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2019\/09\/kalkulator_d\u0142on_napis.jpg"},{"lib_id":"","lib":"","src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2019\/02\/telefon_820_300_napis_1.jpg"},{"lib_id":55969,"lib":"medialibrary","src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2020\/04\/baner-covid.jpg"},{"lib_id":56134,"lib":"medialibrary","src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2020\/04\/www_baner_wiazowna-scaled.jpg"},{"lib_id":76317,"lib":"medialibrary","src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2023\/02\/Wiazowna_przekaz.png"},{"lib_id":94831,"lib":"medialibrary","src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2025\/09\/nieruchomosci-na-sprzedaz.png"},{"lib_id":62253,"lib":"medialibrary","src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2021\/03\/spis_baner_900.jpg"},{"lib_id":91027,"lib":"medialibrary","src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2025\/01\/nieruchomosci-na-sprzedaz.png"}],"hasYT":false,"version":"6.7.25"},"slides":{"1":{"id":1,"slide":{"addOns":[],"id":1,"version":"6.7.15","title":"Slajd","parentId":null,"language":"default","order":2,"thumb":{"src":"","srcId":"","admin":"","adminId":"","dimension":"slider","default":{"image":{"src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2015\/08\/baner-GLOWNY-herb-.jpg","repeat":"","size":"contain","pos":{"x":"50%","y":"50%"}}}},"description":"","attr":{"class":"","data":"","id":"","a":"","aO":"ml","t":"","tO":"","deepLink":"","attr":""},"publish":{"from":"","to":"","state":"published","sch":true},"slideshow":{"stop":false,"len":"default","hal":0,"hom":false,"hfn":false},"loop":{"u":false,"r":-1,"s":0,"e":99999}},"layers":{"1":{"rTo":"slide","id":1,"alias":"Slide BG Layer","subtype":"slidebg","size":{"cMode":"cover"},"pos":{"h":["center","center","center","center","center"],"v":["center","center","center","center","center"],"pos":"absolute"},"zIndex":0,"order":0,"display":["block","block","block","block","block"],"bg":{"image":{"ratio":1,"src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2015\/08\/baner-GLOWNY-herb-.jpg","lib":"","lib_id":9683,"lib_size":"","fromStream":false,"streamType":"gallery","pos":{"x":"50%","y":"50%"},"repeat":"","size":"contain","sizeVal":"100%","seo":false}},"tl":{"in":{"bg":{"ms":2300,"rnd":false,"temp":{"t":"*opacity* Fade In","p":"fade","m":"basic","g":"fade"},"addOns":[],"in":{"o":0},"out":{"a":false}}}},"type":"shape"}}},"11":{"id":11,"slide":{"addOns":[],"id":11,"version":"6.7.15","actions":[{"a":"link","evt":"click","http":"http","target":["_self"],"flw":"follow","ltype":"jquery","link":"https:\/\/eobywatel.tuwiazowna.pl\/","src":[1]}],"title":"Slajd","parentId":null,"language":"default","order":4,"thumb":{"src":"","srcId":"","admin":"","adminId":"","dimension":"slider","default":{"image":{"src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2019\/02\/telefon_820_300_napis_1.jpg","repeat":"","size":"cover","pos":{"x":"50%","y":"50%"}}}},"description":"","attr":{"class":"","data":"https:\/\/eobywatel.tuwiazowna.pl\/","id":"","a":"","aO":"ml","t":"","tO":"","deepLink":"","attr":""},"publish":{"from":"","to":"","state":"published","sch":true},"slideshow":{"stop":false,"len":"default","hal":0,"hom":false,"hfn":false},"loop":{"u":false,"r":-1,"s":0,"e":99999}},"layers":[]},"14":{"id":14,"slide":{"addOns":[],"id":14,"version":"6.7.15","actions":[{"a":"link","evt":"click","http":"auto","target":["_self"],"flw":"follow","ltype":"jquery","link":"https:\/\/www.pitax.pl\/rozlicz\/urzad-gminy-wiazowna\/","src":[1]}],"title":"","parentId":null,"language":"default","order":5,"thumb":{"src":"","srcId":"","admin":"","adminId":"","dimension":"slider","default":{"image":{"src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2023\/02\/Wiazowna_przekaz.png","repeat":"","size":"contain","pos":{"x":"50%","y":"50%"}}}},"description":"","attr":{"class":"","data":"","id":"","a":"","aO":"ml","t":"","tO":"","deepLink":"","attr":""},"publish":{"from":"","to":"","state":"published","sch":true},"slideshow":{"stop":false,"len":"default","hal":0,"hom":false,"hfn":false},"loop":{"u":false,"r":-1,"s":0,"e":99999}},"layers":[]},"15":{"id":15,"slide":{"addOns":[],"id":15,"version":"6.7.15","actions":[{"a":"link","evt":"click","http":"auto","target":["_self"],"flw":"follow","ltype":"jquery","link":"https:\/\/tuwiazowna.pl\/metropolia-warszawa\/","src":[1]}],"title":"","parentId":null,"language":"default","order":6,"thumb":{"src":"","srcId":"","admin":"","adminId":"","dimension":"slider","default":{"image":{"src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2025\/09\/nieruchomosci-na-sprzedaz.png","repeat":"","size":"contain","pos":{"x":"50%","y":"50%"}}}},"description":"","attr":{"class":"","data":"","id":"","a":"","aO":"ml","t":"","tO":"","deepLink":"","attr":""},"publish":{"from":"","to":"","state":"published","sch":true},"slideshow":{"stop":false,"len":"default","hal":0,"hom":false,"hfn":false},"loop":{"u":false,"r":-1,"s":0,"e":99999}},"layers":[]},"7":{"id":7,"slide":{"addOns":[],"id":7,"version":"6.7.15","actions":[{"a":"link","evt":"click","http":"auto","target":["_self"],"flw":"follow","ltype":"jquery","link":"https:\/\/tuwiazowna.pl\/warszawa\/","src":[1]}],"title":"Slajd","parentId":null,"language":"default","order":8,"thumb":{"src":"","srcId":"","admin":"","adminId":"","dimension":"slider","default":{"image":{"src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2018\/07\/warszawa_plus.jpg","repeat":"","size":"contain","pos":{"x":"50%","y":"50%"}}}},"description":"","attr":{"class":"","data":"","id":"","a":"","aO":"ml","t":"","tO":"","deepLink":"","attr":""},"publish":{"from":"","to":"","state":"published","sch":true},"slideshow":{"stop":false,"len":"default","hal":0,"hom":false,"hfn":false},"loop":{"u":false,"r":-1,"s":0,"e":99999}},"layers":[]},"17":{"id":17,"slide":{"addOns":[],"id":17,"version":"6.7.15","actions":[{"a":"link","evt":"click","http":"auto","target":["_self"],"flw":"follow","ltype":"jquery","link":"https:\/\/eobywatel.tuwiazowna.pl\/","src":[1]}],"title":"Slajd","parentId":null,"language":"default","order":12,"thumb":{"src":"","srcId":"","admin":"","adminId":"","dimension":"slider","default":{"image":{"src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2019\/02\/telefon_820_300_napis_1.jpg","repeat":"","size":"cover","pos":{"x":"50%","y":"50%"}}}},"description":"","attr":{"class":"","data":"","id":"","a":"","aO":"ml","t":"","tO":"","deepLink":"","attr":""},"publish":{"from":"","to":"","state":"published","sch":true},"slideshow":{"stop":false,"len":"default","hal":0,"hom":false,"hfn":false},"loop":{"u":false,"r":-1,"s":0,"e":99999}},"layers":[]},"18":{"id":18,"slide":{"addOns":[],"id":18,"version":"6.7.15","actions":[{"a":"link","evt":"click","http":"auto","target":["_self"],"flw":"follow","ltype":"jquery","link":"https:\/\/eobywatel.tuwiazowna.pl\/","src":[1]}],"title":"Slajd","parentId":null,"language":"default","order":13,"thumb":{"src":"","srcId":"","admin":"","adminId":"","dimension":"slider","default":{"image":{"src":"https:\/\/tuwiazowna.pl\/wp-content\/uploads\/2019\/02\/telefon_820_300_napis_1.jpg","repeat":"","size":"cover","pos":{"x":"50%","y":"50%"}}}},"description":"","attr":{"class":"","data":"","id":"","a":"","aO":"ml","t":"","tO":"","deepLink":"","attr":""},"publish":{"from":"","to":"","state":"published","sch":true},"slideshow":{"stop":false,"len":"default","hal":0,"hom":false,"hfn":false},"loop":{"u":false,"r":-1,"s":0,"e":99999}},"layers":[]},"23":{"id":23,"slide":{"addOns":[],"id":23,"version":"6.7.25","actions":[{"a":"link","evt":"click","http":"keep","target":"_self","flw":"follow","ltype":"a","link":"https:\/\/tuwiazowna.pl\/nieruchomosci-na-sprzedaz\/","src":[3]}],"title":"","parentId":null,"language":"default","order":14,"thumb":{"src":"","srcId":"","admin":"","adminId":"","dimension":"slider","default":{"color":"transparent"}},"description":"","attr":{"class":"","data":"","id":"","a":"","aO":"ml","t":"","tO":"","deepLink":"","attr":""},"publish":{"from":"","to":"","state":"published","sch":true},"slideshow":{"stop":false,"len":"default","hal":0,"hom":false,"hfn":false},"loop":{"u":false,"r":-1,"s":0,"e":99999}},"layers":[]},"19":{"id":"19","slide":{"addOns":[],"id":19,"version":"6.7.15","title":"Global Layers","parentId":null,"language":"default","oflow":false,"global":true,"respVP":true,"pos":"front","fullHeight":true},"layers":[]}},"id":"1","addOns":[]};
+	if (SR7.F.init) SR7.F.init(); // DOUBLE CALL NOT A PROBLEM, MANAGED IN INIT
+	document.addEventListener('DOMContentLoaded', function() {if (SR7.F.init) SR7.F.init(); else SR7.shouldBeInited = true;});
+	window.addEventListener('load', function() {if (SR7.F.init) SR7.F.init(); else SR7.shouldBeInited = true; });
+	SR7.E.v6v7ids ??= {}
+	SR7.E.v6v7ids = JSON.parse('{\"n\":{\"2\":1,\"13\":7,\"20\":8,\"24\":9,\"27\":10,\"28\":11,\"29\":12,\"30\":13,\"31\":14,\"32\":15,\"33\":16,\"34\":17,\"35\":18,\"36\":23},\"s\":{\"1\":19}}');
+</script>
+<script></script><script>window.lazyLoadOptions=[{elements_selector:"img[data-lazy-src],.rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}},{elements_selector:".rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,}];window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(var i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://tuwiazowna.pl/wp-content/plugins/wp-rocket/assets/js/lazyload/17.8.3/lazyload.min.js"></script>
+
+

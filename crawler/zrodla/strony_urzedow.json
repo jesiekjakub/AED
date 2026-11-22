@@ -1,0 +1,226 @@
+[
+ {
+  "zrodlo_id": "WWW-CZERWONAK",
+  "dostawca_danych": "Gmina Czerwonak (Akwen Czerwonak – jednostka gminy)",
+  "url": "https://akwenczerwonak.pl/defibrylatory-aed/",
+  "miejscowosc": "Czerwonak",
+  "obszar": {
+   "gmina": "Czerwonak"
+  },
+  "od": "Lista"
+ },
+ {
+  "zrodlo_id": "WWW-KAMIENICA",
+  "dostawca_danych": "Urząd Gminy Kamienica Polska",
+  "url": "https://www.kamienicapolska.pl/artykul/1468,defibrylatory-aed-ratujace-zyciowe-juz-dostepne-na-terenie-naszej-gminy",
+  "miejscowosc": "Kamienica Polska",
+  "obszar": {
+   "gmina": "Kamienica Polska"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-PIELGRZYMKA",
+  "dostawca_danych": "Urząd Gminy Pielgrzymka",
+  "url": "https://www.pielgrzymka.biz/asp/pl_start.asp?typ=13&menu=217&artykul=1652&akcja=artykul",
+  "miejscowosc": "Pielgrzymka",
+  "obszar": {
+   "gmina": "Pielgrzymka"
+  },
+  "domyslne": {
+   "godziny_dostepnosci": "24/7",
+   "dostepny_24_7": "tak"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-RADLOW",
+  "dostawca_danych": "Urząd Miejski w Radłowie",
+  "url": "https://www.gminaradlow.pl/dla-mieszkanca/bezpieczenstwo/defibrylatory-aed",
+  "miejscowosc": "Radłów",
+  "obszar": {
+   "gmina": "Radłów",
+   "wojewodztwo": "małopolskie"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-PSTAROGARD",
+  "dostawca_danych": "Starostwo Powiatowe w Starogardzie Gdańskim",
+  "url": "https://powiatstarogard.pl/wydzial-nadzoru-wlascicielskiego-i-zdrowia/siec-defibrylatorow/",
+  "miejscowosc": "Starogard Gdański",
+  "obszar": {
+   "teryt_prefiks": "2213"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-WOPRWZ",
+  "dostawca_danych": "WOPR Województwa Zachodniopomorskiego – Zachodniopomorska Sieć Defibrylatorów AED",
+  "url": "https://woprwz.pl/zachodniopomorska-siec-defibrylatorow-aed/",
+  "miejscowosc": "Szczecin",
+  "obszar": {
+   "wojewodztwo": "zachodniopomorskie"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-TARNOWOP",
+  "dostawca_danych": "Urząd Gminy Tarnów Opolski",
+  "url": "https://tarnowopolski.pl/8027/siec-gminnych-defibrylatorow-aed.html",
+  "miejscowosc": "Tarnów Opolski",
+  "obszar": {
+   "gmina": "Tarnów Opolski"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-WIAZOWNA",
+  "dostawca_danych": "Gmina Wiązowna (portal tuWiązowna.pl)",
+  "url": "https://tuwiazowna.pl/mamy-juz-dziewiec-ogolnodostepnych-defibrylatorow-aed-na-terenie-gminy/",
+  "miejscowosc": "Wiązowna",
+  "obszar": {
+   "gmina": "Wiązowna"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-PAWLOWICE",
+  "dostawca_danych": "Urząd Gminy Pawłowice",
+  "url": "https://www.pawlowice.pl/mieszkaniec/zdrowie/mapa-defibrylatorow-aed",
+  "miejscowosc": "Pawłowice",
+  "obszar": {
+   "gmina": "Pawłowice",
+   "wojewodztwo": "śląskie"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-MIASTECZKO",
+  "dostawca_danych": "Urząd Miejski w Miasteczku Śląskim",
+  "url": "https://miasteczko-slaskie.pl/aktualnosci/1639/nowe-defibrylatory-aed-w-naszej-gminie",
+  "miejscowosc": "Miasteczko Śląskie",
+  "obszar": {
+   "gmina": "Miasteczko Śląskie"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-DORUCHOW",
+  "dostawca_danych": "Urząd Gminy Doruchów",
+  "url": "https://doruchow.pl/aktualnosci/aed-w-gminie-doruchow.html",
+  "miejscowosc": "Doruchów",
+  "obszar": {
+   "gmina": "Doruchów"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-KOLCZYGLOWY",
+  "dostawca_danych": "Urząd Gminy Kołczygłowy",
+  "url": "https://kolczyglowy.pl/aktualnosci/defibrylatory-aed.html",
+  "miejscowosc": "Kołczygłowy",
+  "obszar": {
+   "gmina": "Kołczygłowy"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-GORZYCE",
+  "dostawca_danych": "Urząd Gminy Gorzyce",
+  "url": "https://www.gorzyce.pl/aktualnosci/index/Nowe-defibrylatory-AED-juz-dostepne-w-solectwach-Gminy-Gorzyce/idn:1469",
+  "miejscowosc": "Gorzyce",
+  "obszar": {
+   "gmina": "Gorzyce",
+   "wojewodztwo": "śląskie"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-PKOLOBRZEG",
+  "dostawca_danych": "Starostwo Powiatowe w Kołobrzegu",
+  "url": "https://powiat.kolobrzeg.pl/aktualnosc-4516-defibrylatory_aed_na_budynkach.html",
+  "miejscowosc": "Kołobrzeg",
+  "obszar": {
+   "teryt_prefiks": "3208"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-PGARWOLIN",
+  "dostawca_danych": "Starostwo Powiatowe w Garwolinie",
+  "url": "https://samorzad.gov.pl/web/powiat-garwolin/samorzad-powiatu-garwolinskiego-wyposaza-obiekty-uzytecznosci-publicznej-w-defibrylatory-aed",
+  "miejscowosc": "Garwolin",
+  "obszar": {
+   "teryt_prefiks": "1403"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-CHELM",
+  "dostawca_danych": "Urząd Miasta Chełm",
+  "url": "https://samorzad.gov.pl/web/miasto-chelm/defibrylatory-aed-w-miejskiej-przestrzeni-publicznej",
+  "miejscowosc": "Chełm",
+  "obszar": {
+   "gmina": "Chełm"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-WROINPOST",
+  "dostawca_danych": "Urząd Miejski Wrocławia (stacje Helpbox 365 na paczkomatach InPost)",
+  "url": "https://www.wroclaw.pl/dla-mieszkanca/aed-we-wroclawiu-paczkomaty-inpost-adresy-lista",
+  "miejscowosc": "Wrocław",
+  "obszar": {
+   "gmina": "Wrocław"
+  },
+  "domyslne": {
+   "godziny_dostepnosci": "24/7",
+   "dostepny_24_7": "tak",
+   "zabezpieczenie": "szafka_z_alarmem",
+   "typ_montazu": "wolnostojacy",
+   "wewnatrz_budynku": "nie",
+   "dysponent_nazwa": "Gmina Wrocław / InPost (Helpbox 365)"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-SLUPSK",
+  "dostawca_danych": "Urząd Miejski w Słupsku",
+  "url": "https://www.slupsk.pl/mieszkaniec/zdrowie-i-sprawy-spoleczne/defibrylatory-aed",
+  "miejscowosc": "Słupsk",
+  "obszar": {
+   "gmina": "Słupsk"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-SOPOT",
+  "dostawca_danych": "Urząd Miasta Sopotu",
+  "url": "https://www.sopot.pl/aktualnosc/9383/gdzie-w-sopocie-znajdziesz-defibrylator-aed",
+  "miejscowosc": "Sopot",
+  "obszar": {
+   "gmina": "Sopot"
+  },
+  "data_stanu": "2021-10"
+ },
+ {
+  "zrodlo_id": "WWW-JGORA",
+  "dostawca_danych": "Urząd Miasta Jelenia Góra",
+  "url": "https://www.jeleniagora.pl/news/kolejne-defibrylatory-w-jeleniej-gorze",
+  "miejscowosc": "Jelenia Góra",
+  "obszar": {
+   "gmina": "Jelenia Góra"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-NOWYSACZ",
+  "dostawca_danych": "Urząd Miasta Nowy Sącz",
+  "url": "https://www.nowysacz.pl/wykaz-defibrylatorow",
+  "miejscowosc": "Nowy Sącz",
+  "obszar": {
+   "gmina": "Nowy Sącz"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-LESZNO",
+  "dostawca_danych": "Urząd Miasta Leszna",
+  "url": "https://www.leszno.pl/AED_na_terenie_miasta.html",
+  "miejscowosc": "Leszno",
+  "obszar": {
+   "gmina": "Leszno"
+  }
+ },
+ {
+  "zrodlo_id": "WWW-SWIETOCHLOWICE",
+  "dostawca_danych": "Urząd Miasta Świętochłowice",
+  "url": "https://swietochlowice.pl/urzad/dla-mieszkancow/bezpieczenstwo/",
+  "miejscowosc": "Świętochłowice",
+  "obszar": {
+   "gmina": "Świętochłowice"
+  }
+ }
+]

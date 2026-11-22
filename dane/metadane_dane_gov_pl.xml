@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ns2:datasets xmlns:ns2="urn:otwarte-dane:harvester:1.13" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <dataset status="published">
+    <extIdent>misja-aed-defibrylatory-aed</extIdent>
+    <title><polish>Defibrylatory AED – wykaz zbiorczy (Misja AED)</polish><english>AED defibrillators – aggregated list (Misja AED)</english></title>
+    <description><polish>Zbiorczy wykaz automatycznych defibrylatorów zewnętrznych (AED) zebrany z danych publikowanych przez dysponentów (gminy, miasta i inne instytucje), ujednolicony do wzorcowego zakresu danych Misji AED. Każdy rekord wskazuje dostawcę danych, adres źródła, datę stanu oraz flagi jakości. Współrzędne w WGS84 (EPSG:4326); kody TERYT wg usługi geokodowania GUGiK.</polish><english>Aggregated list of automated external defibrillators (AED) collected from data published by their holders (municipalities and other institutions), harmonised to the Misja AED reference schema. Each record states the data provider, source URL, reference date and quality flags.</english></description>
+    <updateFrequency>weekly</updateFrequency>
+    <hasDynamicData>false</hasDynamicData>
+    <hasHighValueData>false</hasHighValueData>
+    <hasHighValueDataFromEuropeanCommissionList>false</hasHighValueDataFromEuropeanCommissionList>
+    <hasResearchData>false</hasResearchData>
+    <categories><category>HEAL</category><category>REGI</category></categories>
+    <conditions>
+      <source>true</source>
+      <modification>true</modification>
+      <dbOrCopyrighted>Warunek wymagany</dbOrCopyrighted>
+      <dbOrCopyrightedLicenseChosen>CC BY 4.0</dbOrCopyrightedLicenseChosen>
+    </conditions>
+    <resources>
+      <resource status="published">
+        <extIdent>misja-aed-csv</extIdent>
+        <url>https://example.org/misja-aed/dane/aed_zbiorczy.csv</url>
+        <title><polish>Defibrylatory AED – CSV</polish><english>AED defibrillators – CSV</english></title>
+        <description><polish>Plik CSV (UTF-8, separator przecinek) zgodny ze wzorcowym zakresem danych.</polish><english>CSV file (UTF-8, comma) following the reference schema.</english></description>
+        <availability>remote</availability>
+        <dataDate>2026-11-19</dataDate>
+        <lastUpdateDate>2026-11-21T23:28:57.000Z</lastUpdateDate>
+        <hasDynamicData>false</hasDynamicData>
+        <hasHighValueData>false</hasHighValueData>
+        <hasHighValueDataFromEuropeanCommissionList>false</hasHighValueDataFromEuropeanCommissionList>
+        <hasResearchData>false</hasResearchData>
+        <containsProtectedData>false</containsProtectedData>
+        <regions><terytIdent>02</terytIdent><terytIdent>04</terytIdent><terytIdent>06</terytIdent><terytIdent>08</terytIdent><terytIdent>10</terytIdent><terytIdent>12</terytIdent><terytIdent>14</terytIdent><terytIdent>16</terytIdent><terytIdent>18</terytIdent><terytIdent>22</terytIdent><terytIdent>24</terytIdent><terytIdent>28</terytIdent><terytIdent>30</terytIdent><terytIdent>32</terytIdent></regions>
+      </resource>
+      <resource status="published">
+        <extIdent>misja-aed-geojson</extIdent>
+        <url>https://example.org/misja-aed/dane/aed_zbiorczy.geojson</url>
+        <title><polish>Defibrylatory AED – GeoJSON</polish><english>AED defibrillators – GeoJSON</english></title>
+        <description><polish>Warstwa punktowa GeoJSON (EPSG:4326).</polish><english>GeoJSON point layer (EPSG:4326).</english></description>
+        <availability>remote</availability>
+        <dataDate>2026-11-19</dataDate>
+        <lastUpdateDate>2026-11-21T23:28:57.000Z</lastUpdateDate>
+        <hasDynamicData>false</hasDynamicData>
+        <hasHighValueData>false</hasHighValueData>
+        <hasHighValueDataFromEuropeanCommissionList>false</hasHighValueDataFromEuropeanCommissionList>
+        <hasResearchData>false</hasResearchData>
+        <containsProtectedData>false</containsProtectedData>
+        <regions><terytIdent>02</terytIdent><terytIdent>04</terytIdent><terytIdent>06</terytIdent><terytIdent>08</terytIdent><terytIdent>10</terytIdent><terytIdent>12</terytIdent><terytIdent>14</terytIdent><terytIdent>16</terytIdent><terytIdent>18</terytIdent><terytIdent>22</terytIdent><terytIdent>24</terytIdent><terytIdent>28</terytIdent><terytIdent>30</terytIdent><terytIdent>32</terytIdent></regions>
+      </resource>
+      <resource status="published">
+        <extIdent>misja-aed-raport</extIdent>
+        <url>https://example.org/misja-aed/dane/raport_jakosci.json</url>
+        <title><polish>Raport jakości danych AED</polish><english>AED data quality report</english></title>
+        <description><polish>Kompletność pól i wykryte problemy w podziale na źródła.</polish><english>Field completeness and detected issues per source.</english></description>
+        <availability>remote</availability>
+        <dataDate>2026-11-19</dataDate>
+        <lastUpdateDate>2026-11-21T23:28:57.000Z</lastUpdateDate>
+        <hasDynamicData>false</hasDynamicData>
+        <hasHighValueData>false</hasHighValueData>
+        <hasHighValueDataFromEuropeanCommissionList>false</hasHighValueDataFromEuropeanCommissionList>
+        <hasResearchData>false</hasResearchData>
+        <containsProtectedData>false</containsProtectedData>
+        <regions><terytIdent>02</terytIdent><terytIdent>04</terytIdent><terytIdent>06</terytIdent><terytIdent>08</terytIdent><terytIdent>10</terytIdent><terytIdent>12</terytIdent><terytIdent>14</terytIdent><terytIdent>16</terytIdent><terytIdent>18</terytIdent><terytIdent>22</terytIdent><terytIdent>24</terytIdent><terytIdent>28</terytIdent><terytIdent>30</terytIdent><terytIdent>32</terytIdent></regions>
+      </resource>
+    </resources>
+    <tags>
+      <tag lang="pl">AED</tag><tag lang="pl">defibrylator</tag><tag lang="pl">ratownictwo</tag><tag lang="pl">pierwsza pomoc</tag><tag lang="pl">zdrowie</tag>
+      <tag lang="en">AED</tag><tag lang="en">defibrillator</tag>
+    </tags>
+    <lastUpdateDate>2026-11-21T23:28:57.000Z</lastUpdateDate>
+  </dataset>
+</ns2:datasets>

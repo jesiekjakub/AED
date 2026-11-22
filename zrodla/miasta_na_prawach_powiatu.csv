@@ -1,0 +1,67 @@
+miasto,wojewodztwo,status_udostepniania,id_zrodla,url,liczba_aed,uwagi,data_sprawdzenia
+Jelenia Góra,dolnośląskie,C,WWW-JGORA,https://www.jeleniagora.pl/news/kolejne-defibrylatory-w-jeleniej-gorze,10,artykuł z listą adresów,2026-11-21
+Legnica,dolnośląskie,D,,"https://portal.legnica.eu/aktualnosci/bezpieczne-przestrzenie-publiczne-legnicy-30-defibrylatorow-aed-trafilo-do-szkol-i-instytucji,22122,1,6.html",30,30 AED w szkołach i instytucjach – brak listy adresów,2026-11-21
+Wałbrzych,dolnośląskie,D,,https://urzad.um.walbrzych.pl/en/node/1343,,AED w ratuszu; BO planował 30 lokalizacji – brak wykazu,2026-11-21
+Wrocław,dolnośląskie,C,WWW-WROINPOST,,,">300 AED, mapa w aplikacji Nasz Wrocław; lista tylko paczkomatów",2026-11-21
+Bydgoszcz,kujawsko-pomorskie,C,JST-BYD,,,tylko osiedle Szwederowo,2026-11-21
+Grudziądz,kujawsko-pomorskie,D,,https://mzk.grudziadz.pl/2025/02/27/defibrylator-aed/,,pojedyncze komunikaty (MZK) – brak wykazu,2026-11-21
+Toruń,kujawsko-pomorskie,C,JST-TOR,,,do weryfikacji,2026-11-21
+Włocławek,kujawsko-pomorskie,D,,https://konsultacje.wloclawek.eu/budzet-obywatelski/01907cd4-0d30-4193-9e7e-ea9476aff5eb,,AED z budżetu obywatelskiego – brak wykazu,2026-11-21
+Biała Podlaska,lubelskie,F,,,,Nic nie znaleziono na stronie miasta ani w wyszukiwarce,2026-11-21
+Chełm,lubelskie,C,WWW-CHELM,,,samorzad.gov.pl,2026-11-21
+Lublin,lubelskie,C,JST-LUB,,,PDF,2026-11-21
+Zamość,lubelskie,F,,,,Tylko wzmianki szkolne (Szkoła AED); brak wykazu,2026-11-21
+Gorzów Wielkopolski,lubuskie,F,,,,,2026-11-21
+Zielona Góra,lubuskie,B,JST-ZGO,,,mapa Google (do weryfikacji),2026-11-21
+Łódź,łódzkie,B,JST-LDZ,,,XLS + mapa; serwer blokuje pobieranie automatyczne,2026-11-21
+Piotrków Trybunalski,łódzkie,B,,https://karta.piotrkow.pl/dla-mieszkanca,,Google My Maps + HTML; mid=1igR1CfvpzSnhCUiPBGQdGAXcSlf_gpk (KML: google.com/maps/d/kml?mid=...&forcekml=1); lista HTML z linkami zobacz na mapie na piotrkow.pl,2026-11-21
+Skierniewice,łódzkie,F,,,,Tylko kampania informacyjna i OSP; brak wykazu adresów,2026-11-21
+Kraków,małopolskie,C,JST-KRK,,,PDF w BIP,2026-11-21
+Nowy Sącz,małopolskie,C,,https://www.nowysacz.pl/wykaz-defibrylatorow,33,HTML; Wykaz z godzinami dostępu; strona zwróciła 404 przy pobraniu - zweryfikować,2026-11-21
+Tarnów,małopolskie,D,,https://www.mpk.tarnow.pl/pl/aktualnosci/2018-10-17/defibrylatory-aed-w-mpk-tarnow,4,tylko AED MPK w komunikacie,2026-11-21
+Ostrołęka,mazowieckie,D,,,,Defibrylatory w kilku szkołach; brak publicznego wykazu,2026-11-21
+Płock,mazowieckie,D,,https://nowy.plock.eu/defibrylatory-aed/,50+,"miasto: ponad 50 AED, lokalizacje odsyła do ratujzsercem.pl i aedplusty.pl",2026-11-21
+Radom,mazowieckie,D,,https://www.radom.pl/aktualnosci/w-trosce-o-zdrowie-mieszkancow/,,pojedyncze komunikaty,2026-11-21
+Siedlce,mazowieckie,C,,https://siedlce.pl/aktualnosci/2017/2017-07/aed-ratuja-zycie,~11,lista w artykule z 2017 r.,2026-11-21
+Warszawa,mazowieckie,A,DGP-WAW,,,API z tokenem (dane.gov.pl #39512),2026-11-21
+Opole,opolskie,D,,"http://radio.opole.pl/100,923311,nowy-aed-na-mapie-opola-automatyczny-defibrylato",,tylko doniesienia prasowe,2026-11-21
+Krosno,podkarpackie,A,DGP-KRO,,,,2026-11-21
+Przemyśl,podkarpackie,A,DGP-PRZ,,,,2026-11-21
+Rzeszów,podkarpackie,D,,,,AED w budynkach urzędu (deklaracja dostępności); brak wykazu publicznego,2026-11-21
+Tarnobrzeg,podkarpackie,F,,,,Brak wykazu miejskiego; AED tylko w OSP i WORD,2026-11-21
+Białystok,podlaskie,D,JST-BIA,,,>100 AED w szkołach bez listy,2026-11-21
+Łomża,podlaskie,D,,http://www.lomza.pl/index.php?wiad=14106,,AED z budżetu obywatelskiego – brak wykazu,2026-11-21
+Suwałki,podlaskie,C,,"https://um.suwalki.pl/mieszkaniec/ochrona-zdrowia,3563/defibrylatory,2588921",8,PDF; PDF: https://um.suwalki.pl/storage/uzytkownicy/esienko@um.suwalki.pl/FOLDER%20WYDZIALOWY%20UM/SiZ/Informacja%20dotycząca%20lokalizacji%20defibrylatorów%20w%20Mieście%20Suwałki%20-%20Aktualizacja%20na%20stronę.pdf,2026-11-21
+Gdańsk,pomorskie,C,JST-GDA,,,tabela HTML; pojazdy ZTM w dane.gov.pl,2026-11-21
+Gdynia,pomorskie,D,JST-GDY,,,"miasto: „nikt nie wie, ile AED”",2026-11-21
+Słupsk,pomorskie,C,WWW-SLUPSK,https://www.slupsk.pl/mieszkaniec/zdrowie-i-sprawy-spoleczne/defibrylatory-aed,25,tabela z adresami i godzinami,2026-11-21
+Sopot,pomorskie,C,WWW-SOPOT,https://www.sopot.pl/aktualnosc/9383/gdzie-w-sopocie-znajdziesz-defibrylator-aed,~30,lista z 2021 r.,2026-11-21
+Bielsko-Biała,śląskie,D,,https://bielsko-biala.pl/aktualnosc/trzy-nowe-urzadzenia-moga-uratowac-zycie,25,25 AED miejskich; tylko wzmianki w komunikatach (Błonia; Rynek; dworzec itd.); brak pełnej listy,2026-11-21
+Bytom,śląskie,D,,,,Defibrylatory w szkołach i OSP; brak wykazu lokalizacji,2026-11-21
+Chorzów,śląskie,D,,,,Tylko artykuły o pojedynczych AED (hale MOSiR; urząd; centrum kultury),2026-11-21
+Częstochowa,śląskie,C,JST-CZE,,,PDF – do weryfikacji,2026-11-21
+Dąbrowa Górnicza,śląskie,D,,,,10 AED z budżetu obywatelskiego; brak listy; miasto odsyła do OpenAEDMap,2026-11-21
+Gliwice,śląskie,B,,https://gliwice.eu/o-gliwicach/zdrowie-i-pomoc-spoleczna/wykaz-defibrylatorow-aed,50,HTML + geoportal/ArcGIS Hub; Wykaz ok. 50; warstwa AED w geoportal.gliwice.eu; open-data-gliwice.hub.arcgis.com; API https://gliwice.eu/api/maps/300/pl,2026-11-21
+Jastrzębie-Zdrój,śląskie,D,,,,Pojedyncze komunikaty (Żelazny Szlak Rowerowy; OSP); brak wykazu,2026-11-21
+Jaworzno,śląskie,D,,,,Zakup AED 2026; projekt mapy defibrylatorów (budżet marszałkowski) niepotwierdzony,2026-11-21
+Katowice,śląskie,D,,,,Brak wykazu ani mapy na katowice.eu; tylko pomysły z BO,2026-11-21
+Mysłowice,śląskie,D,,,,Wzmianka o 14 AED (2016); brak listy lokalizacji,2026-11-21
+Piekary Śląskie,śląskie,D,,,,Artykuły z kilkoma lokalizacjami (urząd; dworzec; MDK; CUS); brak pełnego wykazu,2026-11-21
+Ruda Śląska,śląskie,D,,https://rudaslaska.com.pl/artykuly/artykul/42-defibrylatory-aed-w-rudzie-slaskiej-ruszyl-montaz-przy-placowkach,42,HTML (portal komercyjny); 42 AED przy szkołach; adresy tylko w artykule portalu lokalnego (403 przy pobraniu),2026-11-21
+Rybnik,śląskie,D,,,92,Miasto podaje 92 AED i AED w 49 autobusach; brak wykazu,2026-11-21
+Siemianowice Śląskie,śląskie,B,,https://aed.siemianowice.pl/,41,mapa internetowa; Mapa miejska z godzinami dostępu; sprawdzić czy jest API/GeoJSON za mapą,2026-11-21
+Sosnowiec,śląskie,E,,https://skm.sosnowiec.pl/aktualnosci/23-defibrylatory-aed,,aplikacja SKM; Mapa AED w aplikacji Sosnowieckiej Karty Miejskiej; 100 AED planowane z BO,2026-11-21
+Świętochłowice,śląskie,C,,https://swietochlowice.pl/urzad/dla-mieszkancow/bezpieczenstwo/,9,HTML; 7 lokalizacji z adresami (9 sztuk) na stronie urzędu,2026-11-21
+Tychy,śląskie,C,,https://umtychy.pl/zdrowie,11,HTML + mapa; Mapa defibrylatorów na umtychy.pl; osobna strona dla każdego AED; AED w trolejbusach,2026-11-21
+Zabrze,śląskie,F,,,,Tylko pojedyncze AED w szkołach; brak wykazu,2026-11-21
+Żory,śląskie,D,,,,Program publicznego dostępu AED (uchwała 2008); brak aktualnego wykazu,2026-11-21
+Kielce,świętokrzyskie,D,,,30,Ok. 30 AED według miasta; brak aktualnego wykazu,2026-11-21
+Elbląg,warmińsko-mazurskie,E,,https://elblag.eu/aktualnosci/defibrylatory-aed-w-aplikacji-welblagu-sprawdz-gdzie-znajduja-sie-urzadzenia-ratujace-zycie.html,65,aplikacja wElblągu; Mapa tylko w aplikacji miejskiej; 10 kolejnych planowanych,2026-11-21
+Olsztyn,warmińsko-mazurskie,B,JST-OLS,,,mapa Google,2026-11-21
+Kalisz,wielkopolskie,D,,,,26 AED z BO planowanych; brak wykazu; Akademia Kaliska zgłosi do mapy ogólnopolskiej,2026-11-21
+Konin,wielkopolskie,D,,,10,10 AED z BO; spółki miejskie zgłaszają do mapy Ratuj z sercem; brak wykazu miasta,2026-11-21
+Leszno,wielkopolskie,C,,https://www.leszno.pl/AED_na_terenie_miasta.html,28,HTML; Numerowana lista 28 miejsc z adresami; bez mapy i plików,2026-11-21
+Poznań,wielkopolskie,D,,,,Brak miejskiego wykazu; tylko pojedyncze AED i budżet obywatelski; OpenAEDMap,2026-11-21
+Koszalin,zachodniopomorskie,B,JST-KOS,,,mapa Google,2026-11-21
+Szczecin,zachodniopomorskie,B,,https://geoportal.szczecin.eu/index.php/dane-przestrzenne,,geoportal (WMS/WFS?); Geoportal z lokalizacją defibrylatorów (profil Ochrona zdrowia); sprawdzić usługi WMS/WFS,2026-11-21
+Świnoujście,zachodniopomorskie,D,,,55,Zakup 55 AED (Iskra życia); brak listy adresów,2026-11-21

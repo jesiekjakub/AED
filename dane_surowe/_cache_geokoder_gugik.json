@@ -1,0 +1,4525 @@
+{
+"{\"address\": \"Krosno, Jasna\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "street",
+"found objects": 2,
+"results": {
+"1": {
+"street": "Jasna",
+"teryt": "302110",
+"simc": "0589553",
+"ulic": "07335",
+"city": "Krosno",
+"x": "16.8482044371128",
+"y": "52.2285852380345",
+"geometry_wkt": "LINESTRING(16.847193746579 52.22844527986,16.8482044371128 52.2285852380345)",
+"accuracy": "1",
+"id": 1,
+"jednostka": "{Krosno,302110}"
+},
+"2": {
+"street": "Jasna",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "07335",
+"city": "Krosno",
+"x": "21.7226834567328",
+"y": "49.715462530407",
+"geometry_wkt": "MULTILINESTRING((21.721148073679 49.7199371401374,21.7212253182255 49.7198193290259,21.7217100949751 49.7190543674736,21.7220373799481 49.7186500919515,21.7221176808296 49.7185969100683,21.7226222148837 49.718465808921,21.7226537697306 49.718449318703,21.7232416664181 49.7182900672868,21.7240113962942 49.7181336428861),(21.721148073679 49.7199371401374,21.7212253182255 49.7198193290259,21.7217100949751 49.7190543674736,21.7220373799481 49.7186500919515,21.7221176808296 49.7185969100683,21.7226222148837 49.718465808921,21.7226537697306 49.718449318703,21.7232416664181 49.7182900672868,21.7240113962942 49.7181336428861),(21.722074985137 49.7186226609882,21.7216862827365 49.7181919375164,21.7216100127832 49.718106262027,21.7212723264097 49.7177388594088,21.7210118449413 49.7174589095395,21.7209625732133 49.7173869071321,21.7204009632892 49.7167179047971,21.7200081698574 49.7162531662714,21.7199592417257 49.7162046423731,21.7199062300566 49.7160954721573,21.7199158626056 49.7160641997658,21.7199113125902 49.7159778277112,21.7199170018929 49.7159430484383,21.7198774871245 49.7158916036493,21.7198218277052 49.7158865223482,21.7197341841454 49.7158927212132,21.7195122523657 49.71582045561),(21.719900028658 49.7159199602782,21.720003510448 49.7159289571165,21.720144108352 49.7159613785232,21.7202685040863 49.7159571952518,21.7208456628438 49.7158346535349,21.7213977790753 49.7156986594899,21.7215322964204 49.7156819084484,21.7223347452973 49.715535434244,21.7226834567328 49.715462530407,21.7229436713225 49.715370650092,21.723179115153 49.7152007019503,21.7233327752761 49.7150970194044,21.7234418203679 49.7150169735466,21.7237461903323 49.7148908466571,21.7243695277415 49.7146490454842,21.7247584030775 49.7144930303676,21.7249968222734 49.7143838406911,21.725332824831 49.7142254688236,21.7255762215918 49.7141060820056,21.7257743612426 49.7139889303093,21.7259715666914 49.7138848486177,21.7262297752068 49.7137598922198,21.7264019520738 49.7136772766492,21.7267794897962 49.7135445587685,21.7270035398201 49.7134663895186,21.7272503604669 49.7133537575813,21.7275009607664 49.7132144893895,21.7276317443745 49.713123848496,21.7277580654458 49.7130105454875,21.7277927407455 49.7128740253975))",
+"accuracy": "1",
+"id": 2,
+"jednostka": "{Krosno,186101}"
+}
+},
+"request time": 0.0019608020782470705
+},
+"{\"location\": \"POINT(21.72034402175176 49.718809346153336)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Sportowa",
+"number": "8",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "20683",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7207863218457",
+"y": "49.7189260742225",
+"geometry_wkt": "POINT(21.7207863218457 49.7189260742225)",
+"distance": "34.428817168059",
+"id": 1
+}
+},
+"request time": 0.0008308013280232747
+},
+"{\"address\": \"Krosno, Stanisława Wyspiańskiego 20\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 2,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Stanisława Wyspiańskiego",
+"number": "20",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "25084",
+"code": "38-404",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.711359141117",
+"y": "49.7190455049286",
+"geometry_wkt": "POINT(21.711359141117 49.7190455049286)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+},
+"2": {
+"city": "Krosno",
+"citypart": null,
+"street": "hetm. Stanisława Żółkiewskiego",
+"number": "20",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "48199",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7662727444119",
+"y": "49.6983712100569",
+"geometry_wkt": "POINT(21.7662727444119 49.6983712100569)",
+"accuracy": "0.541667",
+"city_accuracy": "1",
+"street_part_accuracy": "0.484848",
+"street_accuracy": "0.421053",
+"id": 2
+}
+},
+"request time": 0.007220629851023356
+},
+"{\"location\": \"POINT(21.71133598253567 49.719088753029276)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Stanisława Wyspiańskiego",
+"number": "20",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "25084",
+"code": "38-404",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.711359141117",
+"y": "49.7190455049286",
+"geometry_wkt": "POINT(21.711359141117 49.7190455049286)",
+"distance": "5.0906880109309",
+"id": 1
+}
+},
+"request time": 0.0008374134699503581
+},
+"{\"address\": \"Krosno, Rzeszowska\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "street",
+"found objects": 1,
+"results": {
+"1": {
+"street": "Rzeszowska",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "19351",
+"city": "Krosno",
+"x": "21.7136078077452",
+"y": "49.7249047764784",
+"geometry_wkt": "LINESTRING(21.7158709568906 49.7177479246652,21.7160506590521 49.7183515801257,21.7152174498752 49.7205396692934,21.7136078077452 49.7249047764784,21.7124250950902 49.7281205121822,21.7117321803737 49.7300815729426,21.7115570858147 49.7306163352459,21.7115453007875 49.7312092738674,21.7116289136396 49.7317801804047)",
+"accuracy": "1",
+"id": 1,
+"jednostka": "{Krosno,186101}"
+}
+},
+"request time": 0.0018053332964579265
+},
+"{\"location\": \"POINT(21.715090873839404 49.72174399261284)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Rzeszowska",
+"number": "28",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "19351",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7150766156501",
+"y": "49.7216921247226",
+"geometry_wkt": "POINT(21.7150766156501 49.7216921247226)",
+"distance": "5.85848950568457",
+"id": 1
+}
+},
+"request time": 0.0009922305742899576
+},
+"{\"address\": \"Krosno, Mikołaja Kopernika 17\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Mikołaja Kopernika",
+"number": "17",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "09282",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7499807745184",
+"y": "49.7067591412251",
+"geometry_wkt": "POINT(21.7499807745184 49.7067591412251)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.006501615047454834
+},
+"{\"location\": \"POINT(21.749909495737537 49.706695518375945)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Mikołaja Kopernika",
+"number": "17",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "09282",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7499807745184",
+"y": "49.7067591412251",
+"geometry_wkt": "POINT(21.7499807745184 49.7067591412251)",
+"distance": "8.74503220321593",
+"id": 1
+}
+},
+"request time": 0.001150198777516683
+},
+"{\"address\": \"Krosno, Augusta Lewakowskiego 11\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 14,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Augusta Lewakowskiego",
+"number": "11",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "33497",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7560489918193",
+"y": "49.6947557603134",
+"geometry_wkt": "POINT(21.7560489918193 49.6947557603134)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.007413951555887858
+},
+"{\"location\": \"POINT(21.75611258614517 49.69465763621457)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Augusta Lewakowskiego",
+"number": "11",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "33497",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7560489918193",
+"y": "49.6947557603134",
+"geometry_wkt": "POINT(21.7560489918193 49.6947557603134)",
+"distance": "11.8363925444974",
+"id": 1
+}
+},
+"request time": 0.0009985645612080893
+},
+"{\"address\": \"Krosno, Kolejowa 1\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Kolejowa",
+"number": "1",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "08828",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7541491177269",
+"y": "49.696364460866",
+"geometry_wkt": "POINT(21.7541491177269 49.696364460866)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.006251200040181478
+},
+"{\"address\": \"Krosno, Franciszka Żwirki i Stanisława Wigury\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "street",
+"found objects": 1,
+"results": {
+"1": {
+"street": "Franciszka Żwirki i Stanisława Wigury",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "26605",
+"city": "Krosno",
+"x": "21.7455179627693",
+"y": "49.6873030876885",
+"geometry_wkt": "MULTILINESTRING((21.7502819744043 49.6878349205274,21.7477680791689 49.6872523834967,21.747572826995 49.6875162782297,21.7475086751334 49.6876183192398,21.7474503399911 49.6876464309695,21.7473701000015 49.6876722730284,21.7472998619263 49.6876787098911,21.7471775891427 49.6876675741998,21.746797860086 49.6875946075752,21.745607939862 49.6873490972444,21.7453135421369 49.6879385813727,21.7450127831425 49.6885531425427,21.7450061332119 49.6885754376103,21.7434573510244 49.688273084424,21.7430523146644 49.6890955574484,21.7429407935628 49.6893148045631,21.7429288573264 49.6893713306754,21.7429323475445 49.6894554777772,21.7429485218849 49.6895111576484,21.742965650627 49.68954683731,21.7431203302137 49.6897860516974),(21.743733538394 49.6883276393984,21.7442607835382 49.6872963706697,21.74433123729 49.6871386587383,21.7444511489306 49.6869700550484,21.7448645535858 49.6861614164444,21.7430023533509 49.6857673229302,21.7424641239963 49.6856502247029,21.7423426290243 49.6855517760099,21.7423511832712 49.6854967698971,21.7426795439035 49.6848154192985),(21.7443939822127 49.6870533908765,21.7455179627693 49.6873030876885,21.7456079449274 49.6873491871134),(21.7477680842383 49.6872524733655,21.7478104697379 49.6870940758362,21.7478660754522 49.6869585815986,21.7478742993245 49.6869052026982,21.7478644705482 49.6868662007775,21.7478425384208 49.6868290160585,21.7477806201311 49.686778832434,21.7476779849397 49.686749413148,21.7448644100059 49.6861613298607),(21.7465768199267 49.6865230429853,21.7460988791114 49.6874511050876))",
+"accuracy": "1",
+"id": 1,
+"jednostka": "{Krosno,186101}"
+}
+},
+"request time": 0.00234451691309611
+},
+"{\"location\": \"POINT(21.746365639365692 49.684573184910604)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Franciszka Żwirki i Stanisława Wigury",
+"number": "9",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "26605",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7466161528887",
+"y": "49.6847261946123",
+"geometry_wkt": "POINT(21.7466161528887 49.6847261946123)",
+"distance": "24.8226312975037",
+"id": 1
+}
+},
+"request time": 0.000961764653523763
+},
+"{\"address\": \"Krosno, Rynek 1\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Rynek",
+"number": "1",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "19253",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7658573511425",
+"y": "49.6939964079952",
+"geometry_wkt": "POINT(21.7658573511425 49.6939964079952)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.0021595001220703126
+},
+"{\"location\": \"POINT(21.765759126782257 49.694119216437514)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Rynek",
+"number": "1",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "19253",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7658573511425",
+"y": "49.6939964079952",
+"geometry_wkt": "POINT(21.7658573511425 49.6939964079952)",
+"distance": "15.3849105412209",
+"id": 1
+}
+},
+"request time": 0.000792849063873291
+},
+"{\"address\": \"Krosno, Kazimierza Wielkiego 4\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 3,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Kazimierza Wielkiego",
+"number": "4",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "08265",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.764770705219",
+"y": "49.6928646598371",
+"geometry_wkt": "POINT(21.764770705219 49.6928646598371)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+},
+"2": {
+"city": "Krosno",
+"citypart": null,
+"street": "Kazimierza Pużaka",
+"number": "4",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "18220",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7482158303158",
+"y": "49.6933199808314",
+"geometry_wkt": "POINT(21.7482158303158 49.6933199808314)",
+"accuracy": "0.527778",
+"city_accuracy": "1",
+"street_part_accuracy": "0.392857",
+"street_accuracy": "0.392857",
+"id": 2
+},
+"3": {
+"city": "Krosno",
+"citypart": null,
+"street": "Kazimierza Człowiekowskiego",
+"number": "4",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "35009",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7620408676753",
+"y": "49.704619896944",
+"geometry_wkt": "POINT(21.7620408676753 49.704619896944)",
+"accuracy": "0.585366",
+"city_accuracy": "1",
+"street_part_accuracy": "0.2",
+"street_accuracy": "0.484848",
+"id": 3
+}
+},
+"request time": 0.007236981391906738
+},
+"{\"location\": \"POINT(21.764685474955883 49.69275307484104)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Kazimierza Wielkiego",
+"number": "4",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "08265",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.764770705219",
+"y": "49.6928646598371",
+"geometry_wkt": "POINT(21.764770705219 49.6928646598371)",
+"distance": "13.8478850566581",
+"id": 1
+}
+},
+"request time": 0.0010076483090718587
+},
+"{\"location\": \"POINT(21.76504873040803 49.692489647485594)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Kazimierza Wielkiego",
+"number": "8",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "08265",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7652549085039",
+"y": "49.6924260917044",
+"geometry_wkt": "POINT(21.7652549085039 49.6924260917044)",
+"distance": "16.4667739931127",
+"id": 1
+}
+},
+"request time": 0.0009347995122273763
+},
+"{\"address\": \"Krosno, Aleksandra Fredry\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "street",
+"found objects": 1,
+"results": {
+"1": {
+"street": "Aleksandra Fredry",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "05172",
+"city": "Krosno",
+"x": "21.7711564752656",
+"y": "49.6970414083228",
+"geometry_wkt": "LINESTRING(21.7694390322895 49.6958009804028,21.7711564752656 49.6970414083228,21.7712909694558 49.697154634101,21.7714330061683 49.6972736184044)",
+"accuracy": "1",
+"id": 1,
+"jednostka": "{Krosno,186101}"
+}
+},
+"request time": 0.0016765356063842773
+},
+"{\"location\": \"POINT(21.770282628403308 49.69599910236438)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Aleksandra Fredry",
+"number": "12",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "05172",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7704185115284",
+"y": "49.6960628037631",
+"geometry_wkt": "POINT(21.7704185115284 49.6960628037631)",
+"distance": "12.0932250357748",
+"id": 1
+}
+},
+"request time": 0.0008999506632486979
+},
+"{\"address\": \"Krosno, Korczyńska 57\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Korczyńska",
+"number": "57",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "09333",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.782304011736",
+"y": "49.702301641756",
+"geometry_wkt": "POINT(21.782304011736 49.702301641756)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.0023368199666341147
+},
+"{\"location\": \"POINT(21.783098460710946 49.70152282974884)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 0,
+"results": null,
+"request time": 0.0008284171422322591
+},
+"{\"address\": \"Krosno, Bursaki 29\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 11,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Bursaki",
+"number": "29",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "02454",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7754795395607",
+"y": "49.6921783603535",
+"geometry_wkt": "POINT(21.7754795395607 49.6921783603535)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.002253401279449463
+},
+"{\"location\": \"POINT(21.77560126708233 49.69222165953797)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Bursaki",
+"number": "29",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "02454",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7754795395607",
+"y": "49.6921783603535",
+"geometry_wkt": "POINT(21.7754795395607 49.6921783603535)",
+"distance": "10.0145323362578",
+"id": 1
+}
+},
+"request time": 0.0008536338806152344
+},
+"{\"address\": \"Krosno, Wojska Polskiego 45\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Wojska Polskiego",
+"number": "45",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "24628",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7750838721479",
+"y": "49.6856430901969",
+"geometry_wkt": "POINT(21.7750838721479 49.6856430901969)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.007489148775736491
+},
+"{\"location\": \"POINT(21.775953730106846 49.68610377238189)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Wojska Polskiego",
+"number": "45",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "24628",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7750838721479",
+"y": "49.6856430901969",
+"geometry_wkt": "POINT(21.7750838721479 49.6856430901969)",
+"distance": "81.011041830809",
+"id": 1
+}
+},
+"request time": 0.0007411003112792969
+},
+"{\"address\": \"Krosno, Bieszczadzka\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "street",
+"found objects": 1,
+"results": {
+"1": {
+"street": "Bieszczadzka",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "01326",
+"city": "Krosno",
+"x": "21.7787111524329",
+"y": "49.6624368723449",
+"geometry_wkt": "LINESTRING(21.7736913883372 49.6774929994021,21.7744430067468 49.6751618866014,21.7750526430891 49.6732996895976,21.7756995544585 49.6714061779401,21.7767970237106 49.6681347256142,21.7778367345274 49.6649712850511,21.7787111524329 49.6624368723449,21.7796665708155 49.6594986106118,21.7805288016082 49.6568824929233,21.7812219298438 49.6544453728409,21.7820156277527 49.6516463189076,21.7827741842891 49.6489591508861,21.783458631779 49.6465897147167)",
+"accuracy": "1",
+"id": 1,
+"jednostka": "{Krosno,186101}"
+}
+},
+"request time": 0.0018825848897298177
+},
+"{\"location\": \"POINT(21.773223600840677 49.67751294467392)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Bieszczadzka",
+"number": "2",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "01326",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7732787536682",
+"y": "49.6777354224675",
+"geometry_wkt": "POINT(21.7732787536682 49.6777354224675)",
+"distance": "25.0575217206943",
+"id": 1
+}
+},
+"request time": 0.0009388009707132976
+},
+"{\"address\": \"Krosno, Bieszczadzka 29\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 2,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Bieszczadzka",
+"number": "29",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "01326",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7749676205071",
+"y": "49.6770666274011",
+"geometry_wkt": "POINT(21.7749676205071 49.6770666274011)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+},
+"2": {
+"city": "Krosno",
+"citypart": null,
+"street": "Seweryna Bieszczada",
+"number": "29",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "01324",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7696773652723",
+"y": "49.7000351254093",
+"geometry_wkt": "POINT(21.7696773652723 49.7000351254093)",
+"accuracy": "0.558824",
+"city_accuracy": "1",
+"street_part_accuracy": "0.529412",
+"street_accuracy": "0.375",
+"id": 2
+}
+},
+"request time": 0.0038887699445088702
+},
+"{\"location\": \"POINT(21.77610827089202 49.67697483192884)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Bieszczadzka",
+"number": "29",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "01326",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7749676205071",
+"y": "49.6770666274011",
+"geometry_wkt": "POINT(21.7749676205071 49.6770666274011)",
+"distance": "82.9397863904547",
+"id": 1
+}
+},
+"request time": 0.0007497827212015788
+},
+"{\"address\": \"Krosno, Profesora Doktora Jerzego Dmochowskiego 12\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 8,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "prof. dr. Jerzego Dmochowskiego",
+"number": "12",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "51874",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7732345337549",
+"y": "49.6693043579884",
+"geometry_wkt": "POINT(21.7732345337549 49.6693043579884)",
+"accuracy": "0.708333",
+"city_accuracy": "1",
+"street_part_accuracy": "0.631579",
+"street_accuracy": "0.631579",
+"id": 1
+}
+},
+"request time": 0.00774913231531779
+},
+"{\"location\": \"POINT(21.773166067646468 49.66947168313232)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "prof. dr. Jerzego Dmochowskiego",
+"number": "12",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "51874",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7732345337549",
+"y": "49.6693043579884",
+"geometry_wkt": "POINT(21.7732345337549 49.6693043579884)",
+"distance": "19.2514141491818",
+"id": 1
+}
+},
+"request time": 0.0010723511377970377
+},
+"{\"address\": \"Krosno, Grunwaldzka\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "street",
+"found objects": 1,
+"results": {
+"1": {
+"street": "Grunwaldzka",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "06260",
+"city": "Krosno",
+"x": "21.7638643355232",
+"y": "49.6690502537346",
+"geometry_wkt": "LINESTRING(21.7624102636348 49.6705422673479,21.7638643355232 49.6690502537346,21.763957153555 49.669004841676,21.7639909224366 49.6689646196003,21.763992643997 49.6689118445526,21.7640357446333 49.6688332439533,21.7640697412857 49.6685574235389,21.7640811596929 49.6684775999418,21.7645353078988 49.6679873757776,21.7645902737528 49.6678490983017)",
+"accuracy": "1",
+"id": 1,
+"jednostka": "{Krosno,186101}"
+}
+},
+"request time": 0.0023628830909729003
+},
+"{\"location\": \"POINT(21.763678690888117 49.66885045220135)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Grunwaldzka",
+"number": "10",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "06260",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7634954525629",
+"y": "49.6689096812884",
+"geometry_wkt": "POINT(21.7634954525629 49.6689096812884)",
+"distance": "14.7739268712718",
+"id": 1
+}
+},
+"request time": 0.0007207314173380534
+},
+"{\"address\": \"Krosno, Bohaterów Westerplatte 20\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Bohaterów Westerplatte",
+"number": "20",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "01681",
+"code": "38-402",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7792174690854",
+"y": "49.6840953286522",
+"geometry_wkt": "POINT(21.7792174690854 49.6840953286522)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.0019926150639851888
+},
+"{\"location\": \"POINT(21.779275196328467 49.6840970026165)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Bohaterów Westerplatte",
+"number": "20",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "01681",
+"code": "38-402",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7792174690854",
+"y": "49.6840953286522",
+"geometry_wkt": "POINT(21.7792174690854 49.6840953286522)",
+"distance": "4.16915227894877",
+"id": 1
+}
+},
+"request time": 0.001116800308227539
+},
+"{\"address\": \"Krosno, Lwowska 28A\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Lwowska",
+"number": "28A",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "11467",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7711294533718",
+"y": "49.684015450621",
+"geometry_wkt": "POINT(21.7711294533718 49.684015450621)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.003372049331665039
+},
+"{\"location\": \"POINT(21.771130722297613 49.683990115416655)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Lwowska",
+"number": "28A",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "11467",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7711294533718",
+"y": "49.684015450621",
+"geometry_wkt": "POINT(21.7711294533718 49.684015450621)",
+"distance": "2.81875862315762",
+"id": 1
+}
+},
+"request time": 0.0007429997126261394
+},
+"{\"address\": \"Krosno, Naftowa 23\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Naftowa",
+"number": "23",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "13927",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7473904461869",
+"y": "49.6955553801226",
+"geometry_wkt": "POINT(21.7473904461869 49.6955553801226)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.0029678503672281903
+},
+"{\"location\": \"POINT(21.747439987244785 49.69557115700829)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Naftowa",
+"number": "23",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "13927",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7473904461869",
+"y": "49.6955553801226",
+"geometry_wkt": "POINT(21.7473904461869 49.6955553801226)",
+"distance": "3.98090370251965",
+"id": 1
+}
+},
+"request time": 0.0010265469551086425
+},
+"{\"address\": \"Przemyśl, Juliusza Słowackiego 12\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Juliusza Słowackiego",
+"number": "12",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "20291",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7751418851466",
+"y": "49.781202800729",
+"geometry_wkt": "POINT(22.7751418851466 49.781202800729)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.006827584902445475
+},
+"{\"address\": \"Przemyśl, Juliusza Słowackiego 21\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Juliusza Słowackiego",
+"number": "21",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "20291",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7770691733745",
+"y": "49.7806470475269",
+"geometry_wkt": "POINT(22.7770691733745 49.7806470475269)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.007718801498413086
+},
+"{\"address\": \"Przemyśl, Generała Mieczysława Boruty Spiechowicza 1\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 2,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Generała Mieczysława Boruty-Spiechowicza",
+"number": "1",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "44674",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7581124257941",
+"y": "49.7978524655056",
+"geometry_wkt": "POINT(22.7581124257941 49.7978524655056)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+},
+"2": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Mieczysława Orłowicza",
+"number": "1",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "15174",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7730575021677",
+"y": "49.8083556419682",
+"geometry_wkt": "POINT(22.7730575021677 49.8083556419682)",
+"accuracy": "0.5",
+"city_accuracy": "1",
+"street_part_accuracy": "0.377778",
+"street_accuracy": "0.377778",
+"id": 2
+}
+},
+"request time": 0.008483032385508219
+},
+"{\"address\": \"Przemyśl, Zamkowa\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "street",
+"found objects": 1,
+"results": {
+"1": {
+"street": "Zamkowa",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "25547",
+"city": "Przemyśl",
+"x": "22.7678666951664",
+"y": "49.7806321466855",
+"geometry_wkt": "LINESTRING(22.7667050889759 49.7804634979308,22.7678666951664 49.7806321466855,22.7684049322644 49.7807526842335,22.7686261423658 49.7808430434524)",
+"accuracy": "1",
+"id": 1,
+"jednostka": "{Przemyśl,186201}"
+}
+},
+"request time": 0.001989316940307617
+},
+"{\"address\": \"Przemyśl, Władycze 3\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Władycze",
+"number": "3",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "24485",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7735918399854",
+"y": "49.7818645738239",
+"geometry_wkt": "POINT(22.7735918399854 49.7818645738239)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.0017890016237894694
+},
+"{\"address\": \"Przemyśl, Adama Mickiewicza 30\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Adama Mickiewicza",
+"number": "30",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "12740",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7837870978646",
+"y": "49.7824775757174",
+"geometry_wkt": "POINT(22.7837870978646 49.7824775757174)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.008342750867207845
+},
+"{\"address\": \"Przemyśl, Wybrzeże Ojca Świętego Jana Pawła II 70\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Wybrzeże Ojca Świętego Jana Pawła II",
+"number": "70",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "41670",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7484147273332",
+"y": "49.7823542023192",
+"geometry_wkt": "POINT(22.7484147273332 49.7823542023192)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.003724066416422526
+},
+"{\"address\": \"Przemyśl, 3 Maja 19\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "3 Maja",
+"number": "19",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "11937",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7661838335224",
+"y": "49.787737964547",
+"geometry_wkt": "POINT(22.7661838335224 49.787737964547)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.0027498324712117513
+},
+"{\"address\": \"Przemyśl, Plac Konstytucji 3 Maja 19\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "3 Maja",
+"number": "19",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "11937",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7661838335224",
+"y": "49.787737964547",
+"geometry_wkt": "POINT(22.7661838335224 49.787737964547)",
+"accuracy": "0.542857",
+"city_accuracy": "1",
+"street_part_accuracy": "0.291667",
+"street_accuracy": "0.291667",
+"id": 1
+}
+},
+"request time": 0.003921651840209961
+},
+"{\"address\": \"Przemyśl, konstytucji 19\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 0,
+"results": null,
+"request time": 0.0025887330373128253
+},
+"{\"address\": \"Przemyśl, Plac Konstytucji 3 Maja\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "city",
+"found objects": 0,
+"results": null,
+"request time": 0.001137534777323405
+},
+"{\"address\": \"Przemyśl, 22 Stycznia 8\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "22 Stycznia",
+"number": "8",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "21454",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7742825665987",
+"y": "49.7889026288056",
+"geometry_wkt": "POINT(22.7742825665987 49.7889026288056)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.0025411526362101237
+},
+"{\"address\": \"Przemyśl, Jagiellońska\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "street",
+"found objects": 1,
+"results": {
+"1": {
+"street": "Jagiellońska",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "07029",
+"city": "Przemyśl",
+"x": "22.7717474573354",
+"y": "49.7837935366183",
+"geometry_wkt": "LINESTRING(22.7743623914647 49.7824552453908,22.7738641000448 49.7828808330213,22.7731711769843 49.7830398749096,22.7721656053545 49.7835721785068,22.7718349033305 49.7837472146499,22.7717474573354 49.7837935366183,22.7698534128595 49.7844968014669,22.7695084103094 49.7844182174414,22.7685789582177 49.7842062925641,22.7677173942443 49.7838410343791)",
+"accuracy": "1",
+"id": 1,
+"jednostka": "{Przemyśl,186201}"
+}
+},
+"request time": 0.0019080162048339844
+},
+"{\"address\": \"Przemyśl, Sportowa 2\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Sportowa",
+"number": "2",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "20683",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7724445635709",
+"y": "49.7848160207525",
+"geometry_wkt": "POINT(22.7724445635709 49.7848160207525)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.003186317284901937
+},
+"{\"address\": \"Przemyśl, Aleksandra Dworskiego 98\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 13,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Aleksandra Dworskiego",
+"number": "98",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "04447",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7911982558822",
+"y": "49.7785260311546",
+"geometry_wkt": "POINT(22.7911982558822 49.7785260311546)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.002588331699371338
+},
+"{\"address\": \"Przemyśl, Św. Jana Nepomucena 3\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Świętego Jana Nepomucena",
+"number": "3",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "39277",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7619160229869",
+"y": "49.7870042069271",
+"geometry_wkt": "POINT(22.7619160229869 49.7870042069271)",
+"accuracy": "0.777778",
+"city_accuracy": "1",
+"street_part_accuracy": "0.652174",
+"street_accuracy": "0.68",
+"id": 1
+}
+},
+"request time": 0.002329850196838379
+},
+"{\"address\": \"Przemyśl, Biskupa Jakuba Glazera 9\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 4,
+"returned objects": 3,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Biskupa Jakuba Glazera",
+"number": "9",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "41618",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.759376491134",
+"y": "49.7869892645143",
+"geometry_wkt": "POINT(22.759376491134 49.7869892645143)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+},
+"2": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Biskupa Jana Śnigurskiego",
+"number": "9",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "41619",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7723960782638",
+"y": "49.7814736174284",
+"geometry_wkt": "POINT(22.7723960782638 49.7814736174284)",
+"accuracy": "0.42",
+"city_accuracy": "1",
+"street_part_accuracy": "0.121951",
+"street_accuracy": "0.25641",
+"id": 2
+},
+"3": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Biskupa Karola Józefa Fischera",
+"number": "9",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "41630",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7706749323481",
+"y": "49.777117572548",
+"geometry_wkt": "POINT(22.7706749323481 49.777117572548)",
+"accuracy": "0.407407",
+"city_accuracy": "1",
+"street_part_accuracy": "0.0697674",
+"street_accuracy": "0.255814",
+"id": 3
+}
+},
+"request time": 0.0019709189732869466
+},
+"{\"address\": \"Przemyśl, Wodna 11\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 2,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Wodna",
+"number": "11",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "24550",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7693906727977",
+"y": "49.7838725827728",
+"geometry_wkt": "POINT(22.7693906727977 49.7838725827728)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+},
+"2": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Swobodna",
+"number": "11",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "21625",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7447889617894",
+"y": "49.7937238382657",
+"geometry_wkt": "POINT(22.7447889617894 49.7937238382657)",
+"accuracy": "0.625",
+"city_accuracy": "1",
+"street_part_accuracy": "0.333333",
+"street_accuracy": "0.25",
+"id": 2
+}
+},
+"request time": 0.003066098690032959
+},
+"{\"address\": \"Przemyśl, Plac Legionów 6\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 4,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Plac Legionów",
+"number": "6",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "41680",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7768732441902",
+"y": "49.7831117064677",
+"geometry_wkt": "POINT(22.7768732441902 49.7831117064677)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.0013929486274719238
+},
+"{\"address\": \"Przemyśl, Rynek 1\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Rynek",
+"number": "1",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "19252",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7689792284747",
+"y": "49.7826309790939",
+"geometry_wkt": "POINT(22.7689792284747 49.7826309790939)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.002381400267283122
+},
+"{\"address\": \"Przemyśl, Aleje XXV Polskiej Drużyny Strzeleckiej 1\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 1,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Aleje XXV Polskiej Drużyny Strzeleckiej",
+"number": "1",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "41676",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7656931042552",
+"y": "49.7803170594246",
+"geometry_wkt": "POINT(22.7656931042552 49.7803170594246)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.006887451807657877
+},
+"{\"address\": \"Przemyśl, Grunwaldzka 81\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Grunwaldzka",
+"number": "81",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "06260",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7542863942616",
+"y": "49.7846182320637",
+"geometry_wkt": "POINT(22.7542863942616 49.7846182320637)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.0023662686347961427
+},
+"{\"address\": \"Przemyśl, Bpa. Jakuba Glazera 44\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 9,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Biskupa Jakuba Glazera",
+"number": "44",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "41618",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7531132325698",
+"y": "49.7916724686537",
+"geometry_wkt": "POINT(22.7531132325698 49.7916724686537)",
+"accuracy": "0.783784",
+"city_accuracy": "1",
+"street_part_accuracy": "0.695652",
+"street_accuracy": "0.68",
+"id": 1
+}
+},
+"request time": 0.0014987031618754068
+},
+"{\"address\": \"Marki, al. Piłsudskiego 95\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Marki",
+"citypart": null,
+"street": "Aleja Marszałka Józefa Piłsudskiego",
+"number": "95",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "48194",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.1075225808017",
+"y": "52.3266867707655",
+"geometry_wkt": "POINT(21.1075225808017 52.3266867707655)",
+"accuracy": "0.55814",
+"city_accuracy": "1",
+"street_part_accuracy": "0.619048",
+"street_accuracy": "0.405405",
+"id": 1
+}
+},
+"request time": 0.004483898480733235
+},
+"{\"location\": \"POINT(21.107557 52.326697)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Marki",
+"citypart": null,
+"street": "Aleja Marszałka Józefa Piłsudskiego",
+"number": "95",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "48194",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.1075225808017",
+"y": "52.3266867707655",
+"geometry_wkt": "POINT(21.1075225808017 52.3266867707655)",
+"distance": "2.60691994351487",
+"id": 1
+}
+},
+"request time": 0.000980083147684733
+},
+"{\"address\": \"Marki, Okólna 14\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Marki",
+"citypart": null,
+"street": "Okólna",
+"number": "14",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "14890",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.0982012011264",
+"y": "52.3236840181101",
+"geometry_wkt": "POINT(21.0982012011264 52.3236840181101)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.0030045151710510255
+},
+"{\"location\": \"POINT(21.098185 52.32396)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Marki",
+"citypart": null,
+"street": "Okólna",
+"number": "14",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "14890",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.0982012011264",
+"y": "52.3236840181101",
+"geometry_wkt": "POINT(21.0982012011264 52.3236840181101)",
+"distance": "30.7155292683494",
+"id": 1
+}
+},
+"request time": 0.0007786830266316732
+},
+"{\"address\": \"Marki, Szkolna 9\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 5,
+"results": {
+"1": {
+"city": "Marki",
+"citypart": null,
+"street": "Szkolna",
+"number": "9",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "21970",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.1037449134188",
+"y": "52.3171003930519",
+"geometry_wkt": "POINT(21.1037449134188 52.3171003930519)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+},
+"2": {
+"city": "Marki",
+"citypart": null,
+"street": "Polna",
+"number": "9",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "17011",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.1016305871224",
+"y": "52.3224228744581",
+"geometry_wkt": "POINT(21.1016305871224 52.3224228744581)",
+"accuracy": "0.578947",
+"city_accuracy": "1",
+"street_part_accuracy": "0.272727",
+"street_accuracy": "0.272727",
+"id": 2
+},
+"3": {
+"city": "Marki",
+"citypart": null,
+"street": "Rolna",
+"number": "9",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "18819",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.1111619098131",
+"y": "52.3565129703434",
+"geometry_wkt": "POINT(21.1111619098131 52.3565129703434)",
+"accuracy": "0.578947",
+"city_accuracy": "1",
+"street_part_accuracy": "0.272727",
+"street_accuracy": "0.272727",
+"id": 3
+},
+"4": {
+"city": "Marki",
+"citypart": null,
+"street": "Dolna",
+"number": "9",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "04034",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.1170225378416",
+"y": "52.3530935470275",
+"geometry_wkt": "POINT(21.1170225378416 52.3530935470275)",
+"accuracy": "0.578947",
+"city_accuracy": "1",
+"street_part_accuracy": "0.272727",
+"street_accuracy": "0.272727",
+"id": 4
+},
+"5": {
+"city": "Marki",
+"citypart": null,
+"street": "Szpitalna",
+"number": "9",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "22073",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.1021423769499",
+"y": "52.3089860283001",
+"geometry_wkt": "POINT(21.1021423769499 52.3089860283001)",
+"accuracy": "0.545455",
+"city_accuracy": "1",
+"street_part_accuracy": "0.142857",
+"street_accuracy": "0.285714",
+"id": 5
+}
+},
+"request time": 0.008661051591237387
+},
+"{\"location\": \"POINT(21.104131 52.317014)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Marki",
+"citypart": null,
+"street": "Szkolna",
+"number": "9",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "21970",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.1037449134188",
+"y": "52.3171003930519",
+"geometry_wkt": "POINT(21.1037449134188 52.3171003930519)",
+"distance": "28.0155494882791",
+"id": 1
+}
+},
+"request time": 0.0007789174715677898
+},
+"{\"address\": \"Marki, Pomnikowa 21\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Marki",
+"citypart": null,
+"street": "Pomnikowa",
+"number": "21",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "17084",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.1136450197699",
+"y": "52.340306128241",
+"geometry_wkt": "POINT(21.1136450197699 52.340306128241)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.0027266701062520346
+},
+"{\"location\": \"POINT(21.113589 52.340344)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Marki",
+"citypart": null,
+"street": "Pomnikowa",
+"number": "21",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "17084",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.1136450197699",
+"y": "52.340306128241",
+"geometry_wkt": "POINT(21.1136450197699 52.340306128241)",
+"distance": "5.68400148104007",
+"id": 1
+}
+},
+"request time": 0.0007714351018269856
+},
+"{\"address\": \"Marki, Duza 3\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Marki",
+"citypart": null,
+"street": "Duża",
+"number": "3",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "04418",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.1239924166309",
+"y": "52.3360176552743",
+"geometry_wkt": "POINT(21.1239924166309 52.3360176552743)",
+"accuracy": "0.625",
+"city_accuracy": "1",
+"street_part_accuracy": "0.25",
+"street_accuracy": "0.25",
+"id": 1
+}
+},
+"request time": 0.0018733819325764975
+},
+"{\"location\": \"POINT(21.105177 52.322235)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Marki",
+"citypart": null,
+"street": "Aleja Marszałka Józefa Piłsudskiego",
+"number": "96",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "48194",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.1051214171983",
+"y": "52.3224197915535",
+"geometry_wkt": "POINT(21.1051214171983 52.3224197915535)",
+"distance": "20.8993781057188",
+"id": 1
+}
+},
+"request time": 0.0008012016614278157
+},
+"{\"address\": \"Marki, al. Piłsudskiego 96\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Marki",
+"citypart": null,
+"street": "Aleja Marszałka Józefa Piłsudskiego",
+"number": "96",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "48194",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.1051214171983",
+"y": "52.3224197915535",
+"geometry_wkt": "POINT(21.1051214171983 52.3224197915535)",
+"accuracy": "0.55814",
+"city_accuracy": "1",
+"street_part_accuracy": "0.619048",
+"street_accuracy": "0.405405",
+"id": 1
+}
+},
+"request time": 0.004973681767781576
+},
+"{\"address\": \"Marki, Wczsowa 5\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 4,
+"returned objects": 2,
+"results": {
+"1": {
+"city": "Marki",
+"citypart": null,
+"street": "Wczasowa",
+"number": "5",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "23814",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.1363406720553",
+"y": "52.3580774346042",
+"geometry_wkt": "POINT(21.1363406720553 52.3580774346042)",
+"accuracy": "0.736842",
+"city_accuracy": "1",
+"street_part_accuracy": "0.230769",
+"street_accuracy": "0.545455",
+"id": 1
+},
+"2": {
+"city": "Marki",
+"citypart": null,
+"street": "Wrzosowa",
+"number": "5",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "24870",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.126453318801",
+"y": "52.3551855013956",
+"geometry_wkt": "POINT(21.126453318801 52.3551855013956)",
+"accuracy": "0.571429",
+"city_accuracy": "1",
+"street_part_accuracy": "0.230769",
+"street_accuracy": "0.307692",
+"id": 2
+}
+},
+"request time": 0.002131366729736328
+},
+"{\"address\": \"Marki, Wczsowa\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "street",
+"found objects": 0,
+"results": null,
+"request time": 0.0018578489621480306
+},
+"{\"address\": \"Marki, Sportowa 5\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Marki",
+"citypart": null,
+"street": "Sportowa",
+"number": "5",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "20683",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.1081357802628",
+"y": "52.3254548860639",
+"geometry_wkt": "POINT(21.1081357802628 52.3254548860639)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.003559601306915283
+},
+"{\"location\": \"POINT(21.108176 52.325445)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Marki",
+"citypart": null,
+"street": "Sportowa",
+"number": "5",
+"teryt": "143402",
+"simc": "0920901",
+"ulic": "20683",
+"code": "05-270",
+"jednostka": "{Polska,mazowieckie,wołomiński,Marki}",
+"x": "21.1081357802628",
+"y": "52.3254548860639",
+"geometry_wkt": "POINT(21.1081357802628 52.3254548860639)",
+"distance": "2.95324247209288",
+"id": 1
+}
+},
+"request time": 0.0010065158208211263
+},
+"{\"address\": \"Legionowo, Piłsudskiego 41\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "marsz. Józefa Piłsudskiego",
+"number": "41",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "16274",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9311229488626",
+"y": "52.395452978249",
+"geometry_wkt": "POINT(20.9311229488626 52.395452978249)",
+"accuracy": "0.666667",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "0.5",
+"id": 1
+}
+},
+"request time": 0.005009384950002035
+},
+"{\"location\": \"POINT(20.931382 52.395198)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "marsz. Józefa Piłsudskiego",
+"number": "41",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "16274",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9311229488626",
+"y": "52.395452978249",
+"geometry_wkt": "POINT(20.9311229488626 52.395452978249)",
+"distance": "33.389761202724",
+"id": 1
+}
+},
+"request time": 0.000820779800415039
+},
+"{\"address\": \"Legionowo, Sikorskiego 11\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 2,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "gen. Władysława Sikorskiego",
+"number": "11",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "19907",
+"code": "05-119",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9390316021286",
+"y": "52.4218584164238",
+"geometry_wkt": "POINT(20.9390316021286 52.4218584164238)",
+"accuracy": "0.625",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "0.444444",
+"id": 1
+},
+"2": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Jerzego Siwińskiego",
+"number": "11",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "19955",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9212604656511",
+"y": "52.3895284254824",
+"geometry_wkt": "POINT(20.9212604656511 52.3895284254824)",
+"accuracy": "0.555556",
+"city_accuracy": "1",
+"street_part_accuracy": "0.411765",
+"street_accuracy": "0.304348",
+"id": 2
+}
+},
+"request time": 0.0052247166633605955
+},
+"{\"location\": \"POINT(20.939056 52.421807)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "gen. Władysława Sikorskiego",
+"number": "11",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "19907",
+"code": "05-119",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9390316021286",
+"y": "52.4218584164238",
+"geometry_wkt": "POINT(20.9390316021286 52.4218584164238)",
+"distance": "5.95437774102889",
+"id": 1
+}
+},
+"request time": 0.0007481137911478678
+},
+"{\"address\": \"Legionowo, Chrobrego 50B\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Bolesława Chrobrego",
+"number": "50B",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "01742",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9176300125092",
+"y": "52.3999810684703",
+"geometry_wkt": "POINT(20.9176300125092 52.3999810684703)",
+"accuracy": "0.705882",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "0.5",
+"id": 1
+}
+},
+"request time": 0.0027606844902038573
+},
+"{\"location\": \"POINT(20.917295 52.400177)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Bolesława Chrobrego",
+"number": "50B",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "01742",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9176300125092",
+"y": "52.3999810684703",
+"geometry_wkt": "POINT(20.9176300125092 52.3999810684703)",
+"distance": "31.5326388075826",
+"id": 1
+}
+},
+"request time": 0.0010134498278299966
+},
+"{\"address\": \"Legionowo, Kościuszki 8A\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Tadeusza Kościuszki",
+"number": "8A",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "09582",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9409498437408",
+"y": "52.4010652000463",
+"geometry_wkt": "POINT(20.9409498437408 52.4010652000463)",
+"accuracy": "0.75",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "0.578947",
+"id": 1
+}
+},
+"request time": 0.004753283659617106
+},
+"{\"location\": \"POINT(20.940969 52.401135)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Tadeusza Kościuszki",
+"number": "8A",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "09582",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9409498437408",
+"y": "52.4010652000463",
+"geometry_wkt": "POINT(20.9409498437408 52.4010652000463)",
+"distance": "7.87183317553263",
+"id": 1
+}
+},
+"request time": 0.0008459170659383138
+},
+"{\"address\": \"Legionowo, Jagiellońska 71A\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Jagiellońska",
+"number": "71A",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "07029",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9166330306471",
+"y": "52.4088171621427",
+"geometry_wkt": "POINT(20.9166330306471 52.4088171621427)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.0029964844385782876
+},
+"{\"address\": \"Legionowo, Mickiewicza 11\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Adama Mickiewicza",
+"number": "11",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "12740",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9297958796312",
+"y": "52.4033441687515",
+"geometry_wkt": "POINT(20.9297958796312 52.4033441687515)",
+"accuracy": "0.806452",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "0.666667",
+"id": 1
+}
+},
+"request time": 0.0073836366335550945
+},
+"{\"location\": \"POINT(20.930048 52.403239)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Adama Mickiewicza",
+"number": "11",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "12740",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9297958796312",
+"y": "52.4033441687515",
+"geometry_wkt": "POINT(20.9297958796312 52.4033441687515)",
+"distance": "20.759705335352",
+"id": 1
+}
+},
+"request time": 0.0007583498954772949
+},
+"{\"address\": \"Legionowo, Jagiellońska 26B\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Jagiellońska",
+"number": "26B",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "07029",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9278488684839",
+"y": "52.4026899462597",
+"geometry_wkt": "POINT(20.9278488684839 52.4026899462597)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.002479366461435954
+},
+"{\"location\": \"POINT(20.92785 52.402691)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Jagiellońska",
+"number": "26B",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "07029",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9278488684839",
+"y": "52.4026899462597",
+"geometry_wkt": "POINT(20.9278488684839 52.4026899462597)",
+"distance": "0.140214381624469",
+"id": 1
+}
+},
+"request time": 0.00114133358001709
+},
+"{\"address\": \"Legionowo, Zegrzyńska 121\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Zegrzyńska",
+"number": "121",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "25984",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9577665556264",
+"y": "52.4116813531606",
+"geometry_wkt": "POINT(20.9577665556264 52.4116813531606)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.003664882977803548
+},
+"{\"location\": \"POINT(20.952687 52.414488)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 0,
+"results": null,
+"request time": 0.00083771546681722
+},
+"{\"address\": \"Legionowo, Piaskowa 1A\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Piaskowa",
+"number": "1A",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "16033",
+"code": "05-119",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9477432337385",
+"y": "52.4107064702021",
+"geometry_wkt": "POINT(20.9477432337385 52.4107064702021)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.0038629333178202313
+},
+"{\"location\": \"POINT(20.947626 52.410412)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Piaskowa",
+"number": "1A",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "16033",
+"code": "05-119",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9477432337385",
+"y": "52.4107064702021",
+"geometry_wkt": "POINT(20.9477432337385 52.4107064702021)",
+"distance": "33.7079953406786",
+"id": 1
+}
+},
+"request time": 0.0008716662724812825
+},
+"{\"address\": \"Legionowo, Jagiellońska 67\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Jagiellońska",
+"number": "67",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "07029",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9188329794924",
+"y": "52.4065239826834",
+"geometry_wkt": "POINT(20.9188329794924 52.4065239826834)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.003766334056854248
+},
+"{\"location\": \"POINT(20.91802 52.405901)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Parkowa",
+"number": "19A",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "15710",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9187723247496",
+"y": "52.4053942013034",
+"geometry_wkt": "POINT(20.9187723247496 52.4053942013034)",
+"distance": "76.1315795986074",
+"id": 1
+}
+},
+"request time": 0.0008335669835408528
+},
+"{\"address\": \"Legionowo, Piłsudskiego 20\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "marsz. Józefa Piłsudskiego",
+"number": "20",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "16274",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9338358560114",
+"y": "52.3974350438517",
+"geometry_wkt": "POINT(20.9338358560114 52.3974350438517)",
+"accuracy": "0.666667",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "0.5",
+"id": 1
+}
+},
+"request time": 0.006332548459370931
+},
+"{\"location\": \"POINT(20.933695 52.397458)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "marsz. Józefa Piłsudskiego",
+"number": "20",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "16274",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9338358560114",
+"y": "52.3974350438517",
+"geometry_wkt": "POINT(20.9338358560114 52.3974350438517)",
+"distance": "9.91742035003157",
+"id": 1
+}
+},
+"request time": 0.0013157169024149576
+},
+"{\"address\": \"Legionowo, Zegrzyńska 8\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 3,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Zegrzyńska",
+"number": "8",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "25984",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9498844748794",
+"y": "52.4040958364945",
+"geometry_wkt": "POINT(20.9498844748794 52.4040958364945)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+},
+"2": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Cieszyńska",
+"number": "8",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "03061",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9011302661644",
+"y": "52.4119784525317",
+"geometry_wkt": "POINT(20.9011302661644 52.4119784525317)",
+"accuracy": "0.586207",
+"city_accuracy": "1",
+"street_part_accuracy": "0.294118",
+"street_accuracy": "0.294118",
+"id": 2
+},
+"3": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Gdyńska",
+"number": "8",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "05441",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9353321152831",
+"y": "52.3914079844966",
+"geometry_wkt": "POINT(20.9353321152831 52.3914079844966)",
+"accuracy": "0.592593",
+"city_accuracy": "1",
+"street_part_accuracy": "0.266667",
+"street_accuracy": "0.266667",
+"id": 3
+}
+},
+"request time": 0.002636436621348063
+},
+"{\"location\": \"POINT(20.950132 52.404009)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Zegrzyńska",
+"number": "8",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "25984",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9498844748794",
+"y": "52.4040958364945",
+"geometry_wkt": "POINT(20.9498844748794 52.4040958364945)",
+"distance": "19.4111578099734",
+"id": 1
+}
+},
+"request time": 0.0010018348693847656
+},
+"{\"address\": \"Legionowo, Husarska 14\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Husarska",
+"number": "14",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "06815",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.918440635461",
+"y": "52.3917712852972",
+"geometry_wkt": "POINT(20.918440635461 52.3917712852972)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.003553466002146403
+},
+"{\"location\": \"POINT(20.918366 52.391494)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Husarska",
+"number": "14",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "06815",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.918440635461",
+"y": "52.3917712852972",
+"geometry_wkt": "POINT(20.918440635461 52.3917712852972)",
+"distance": "31.2550621316712",
+"id": 1
+}
+},
+"request time": 0.0010878483454386393
+},
+"{\"address\": \"Legionowo, al. 1 Dywizji Zmechanizowanej 16\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 1,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Aleja 1 Dywizji Zmechanizowanej",
+"number": "16",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "46169",
+"code": "05-119",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9510587384655",
+"y": "52.4079746149784",
+"geometry_wkt": "POINT(20.9510587384655 52.4079746149784)",
+"accuracy": "0.888889",
+"city_accuracy": "1",
+"street_part_accuracy": "0.787879",
+"street_accuracy": "0.848485",
+"id": 1
+}
+},
+"request time": 0.002455782890319824
+},
+"{\"location\": \"POINT(20.951152 52.407905)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Aleja 1 Dywizji Zmechanizowanej",
+"number": "16",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "46169",
+"code": "05-119",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9510587384655",
+"y": "52.4079746149784",
+"geometry_wkt": "POINT(20.9510587384655 52.4079746149784)",
+"distance": "10.0094782195827",
+"id": 1
+}
+},
+"request time": 0.0010233839352925618
+},
+"{\"address\": \"Legionowo, Orląt Lwowskich 8\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 2,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Orląt Lwowskich",
+"number": "8",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "15148",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9554623871406",
+"y": "52.4037497666197",
+"geometry_wkt": "POINT(20.9554623871406 52.4037497666197)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+},
+"2": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Lwowska",
+"number": "8",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "11467",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.911801965423",
+"y": "52.403852114296",
+"geometry_wkt": "POINT(20.911801965423 52.403852114296)",
+"accuracy": "0.586207",
+"city_accuracy": "1",
+"street_part_accuracy": "0.333333",
+"street_accuracy": "0.333333",
+"id": 2
+}
+},
+"request time": 0.002708868185679118
+},
+"{\"location\": \"POINT(20.955478 52.403689)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Orląt Lwowskich",
+"number": "8",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "15148",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9554623871406",
+"y": "52.4037497666197",
+"geometry_wkt": "POINT(20.9554623871406 52.4037497666197)",
+"distance": "6.84148319302568",
+"id": 1
+}
+},
+"request time": 0.0008319656054178874
+},
+"{\"address\": \"Legionowo, Zegrzyńska 3\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 3,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Zegrzyńska",
+"number": "3",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "25984",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9486054302673",
+"y": "52.4101662687261",
+"geometry_wkt": "POINT(20.9486054302673 52.4101662687261)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+},
+"2": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Cieszyńska",
+"number": "3",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "03061",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.901642421346",
+"y": "52.4114624859765",
+"geometry_wkt": "POINT(20.901642421346 52.4114624859765)",
+"accuracy": "0.586207",
+"city_accuracy": "1",
+"street_part_accuracy": "0.294118",
+"street_accuracy": "0.294118",
+"id": 2
+},
+"3": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Gdyńska",
+"number": "3",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "05441",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9348108964829",
+"y": "52.3903448410084",
+"geometry_wkt": "POINT(20.9348108964829 52.3903448410084)",
+"accuracy": "0.592593",
+"city_accuracy": "1",
+"street_part_accuracy": "0.266667",
+"street_accuracy": "0.266667",
+"id": 3
+}
+},
+"request time": 0.002584981918334961
+},
+"{\"location\": \"POINT(20.948494 52.410253)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Zegrzyńska",
+"number": "3",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "25984",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9486054302673",
+"y": "52.4101662687261",
+"geometry_wkt": "POINT(20.9486054302673 52.4101662687261)",
+"distance": "12.2675710456612",
+"id": 1
+}
+},
+"request time": 0.0008103847503662109
+},
+"{\"address\": \"Legionowo, Piłsudskiego 26\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "marsz. Józefa Piłsudskiego",
+"number": "26",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "16274",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9304703306504",
+"y": "52.3958615509171",
+"geometry_wkt": "POINT(20.9304703306504 52.3958615509171)",
+"accuracy": "0.666667",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "0.5",
+"id": 1
+}
+},
+"request time": 0.0058211843172709145
+},
+"{\"location\": \"POINT(20.929996 52.395922)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "marsz. Józefa Piłsudskiego",
+"number": "26",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "16274",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9304703306504",
+"y": "52.3958615509171",
+"geometry_wkt": "POINT(20.9304703306504 52.3958615509171)",
+"distance": "32.9650450335254",
+"id": 1
+}
+},
+"request time": 0.0007917682329813639
+},
+"{\"address\": \"Legionowo, Targowa 73A\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Targowa",
+"number": "73A",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "22659",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9178598316251",
+"y": "52.4116863255041",
+"geometry_wkt": "POINT(20.9178598316251 52.4116863255041)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.002543950080871582
+},
+"{\"location\": \"POINT(20.917855 52.411683)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Targowa",
+"number": "73A",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "22659",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9178598316251",
+"y": "52.4116863255041",
+"geometry_wkt": "POINT(20.9178598316251 52.4116863255041)",
+"distance": "0.494758509898564",
+"id": 1
+}
+},
+"request time": 0.0010378638903299968
+},
+"{\"address\": \"Legionowo, Jagiellońska 69\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Jagiellońska",
+"number": "69",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "07029",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9183371507662",
+"y": "52.4074069089622",
+"geometry_wkt": "POINT(20.9183371507662 52.4074069089622)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.003049317995707194
+},
+"{\"location\": \"POINT(20.917662 52.40728)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Jagiellońska",
+"number": "69",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "07029",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9183371507662",
+"y": "52.4074069089622",
+"geometry_wkt": "POINT(20.9183371507662 52.4074069089622)",
+"distance": "48.0436161680995",
+"id": 1
+}
+},
+"request time": 0.0010261853535970052
+},
+"{\"address\": \"Legionowo, Piłsudskiego 47\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "marsz. Józefa Piłsudskiego",
+"number": "47",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "16274",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9259431069298",
+"y": "52.3920022795348",
+"geometry_wkt": "POINT(20.9259431069298 52.3920022795348)",
+"accuracy": "0.666667",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "0.5",
+"id": 1
+}
+},
+"request time": 0.005200401941935221
+},
+"{\"location\": \"POINT(20.926457 52.392091)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "marsz. Józefa Piłsudskiego",
+"number": "47",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "16274",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9259431069298",
+"y": "52.3920022795348",
+"geometry_wkt": "POINT(20.9259431069298 52.3920022795348)",
+"distance": "36.3325217335911",
+"id": 1
+}
+},
+"request time": 0.0008995334307352701
+},
+"{\"address\": \"Legionowo, Królowej Jadwigi 7\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Królowej Jadwigi",
+"number": "7",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "10003",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9258118538465",
+"y": "52.3943092203438",
+"geometry_wkt": "POINT(20.9258118538465 52.3943092203438)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.003754250208536784
+},
+"{\"location\": \"POINT(20.926166 52.394028)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Królowej Jadwigi",
+"number": "7",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "10003",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9258118538465",
+"y": "52.3943092203438",
+"geometry_wkt": "POINT(20.9258118538465 52.3943092203438)",
+"distance": "39.4828848153108",
+"id": 1
+}
+},
+"request time": 0.0010068853696187337
+},
+"{\"address\": \"Legionowo, Siwińskiego 11\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 3,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Jerzego Siwińskiego",
+"number": "11",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "19955",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9212604656511",
+"y": "52.3895284254824",
+"geometry_wkt": "POINT(20.9212604656511 52.3895284254824)",
+"accuracy": "0.806452",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "0.666667",
+"id": 1
+},
+"2": {
+"city": "Legionowo",
+"citypart": null,
+"street": "gen. Józefa Sowińskiego",
+"number": "11",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "20625",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9287357488781",
+"y": "52.3950981905021",
+"geometry_wkt": "POINT(20.9287357488781 52.3950981905021)",
+"accuracy": "0.564103",
+"city_accuracy": "1",
+"street_part_accuracy": "0.6",
+"street_accuracy": "0.346154",
+"id": 2
+},
+"3": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Zygmunta Krasińskiego",
+"number": "11",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "09848",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9297820658914",
+"y": "52.4047728752179",
+"geometry_wkt": "POINT(20.9297820658914 52.4047728752179)",
+"accuracy": "0.5",
+"city_accuracy": "1",
+"street_part_accuracy": "0.388889",
+"street_accuracy": "0.259259",
+"id": 3
+}
+},
+"request time": 0.004332935810089112
+},
+"{\"location\": \"POINT(20.921079 52.389337)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Jerzego Siwińskiego",
+"number": "11",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "19955",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9212604656511",
+"y": "52.3895284254824",
+"geometry_wkt": "POINT(20.9212604656511 52.3895284254824)",
+"distance": "24.6121616211951",
+"id": 1
+}
+},
+"request time": 0.0009676496187845866
+},
+"{\"address\": \"Legionowo, al. 3 Maja 28\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Aleja 3 Maja",
+"number": "28",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "30066",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.927622195442",
+"y": "52.3971668005047",
+"geometry_wkt": "POINT(20.927622195442 52.3971668005047)",
+"accuracy": "0.846154",
+"city_accuracy": "1",
+"street_part_accuracy": "0.538462",
+"street_accuracy": "0.692308",
+"id": 1
+}
+},
+"request time": 0.002731784184773763
+},
+"{\"location\": \"POINT(20.92759 52.397203)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Aleja 3 Maja",
+"number": "28",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "30066",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.927622195442",
+"y": "52.3971668005047",
+"geometry_wkt": "POINT(20.927622195442 52.3971668005047)",
+"distance": "4.58340956106564",
+"id": 1
+}
+},
+"request time": 0.0008633494377136231
+},
+"{\"location\": \"POINT(21.754469690437958 49.69638043514565)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Krosno",
+"citypart": null,
+"street": "Kolejowa",
+"number": "1",
+"teryt": "186101",
+"simc": "0952410",
+"ulic": "08828",
+"code": "38-400",
+"jednostka": "{Polska,podkarpackie,Krosno,Krosno}",
+"x": "21.7541491177269",
+"y": "49.696364460866",
+"geometry_wkt": "POINT(21.7541491177269 49.696364460866)",
+"distance": "23.1912690065908",
+"id": 1
+}
+},
+"request time": 0.0010184645652770996
+},
+"{\"address\": \"Przemyśl, Zamkowa 1\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 2,
+"results": {
+"1": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Zamkowa",
+"number": "1",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "25547",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7683452567297",
+"y": "49.7807019757444",
+"geometry_wkt": "POINT(22.7683452567297 49.7807019757444)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+},
+"2": {
+"city": "Przemyśl",
+"citypart": null,
+"street": "Bukowa",
+"number": "1",
+"teryt": "186201",
+"simc": "0971672",
+"ulic": "02387",
+"code": "37-700",
+"jednostka": "{Polska,podkarpackie,Przemyśl,Przemyśl}",
+"x": "22.7668379146989",
+"y": "49.8076822449916",
+"geometry_wkt": "POINT(22.7668379146989 49.8076822449916)",
+"accuracy": "0.608696",
+"city_accuracy": "1",
+"street_part_accuracy": "0.25",
+"street_accuracy": "0.25",
+"id": 2
+}
+},
+"request time": 0.002441716194152832
+},
+"{\"location\": \"POINT(20.91651 52.408839)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Legionowo",
+"citypart": null,
+"street": "Jagiellońska",
+"number": "71A",
+"teryt": "140801",
+"simc": "0920806",
+"ulic": "07029",
+"code": "05-120",
+"jednostka": "{Polska,mazowieckie,legionowski,Legionowo}",
+"x": "20.9166330306471",
+"y": "52.4088171621427",
+"geometry_wkt": "POINT(20.9166330306471 52.4088171621427)",
+"distance": "8.71354564109493",
+"id": 1
+}
+},
+"request time": 0.0009215831756591797
+},
+"{\"address\": \"Łódź, Paradna 36\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Paradna",
+"number": "36",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "15676",
+"code": "93-345",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4804996548709",
+"y": "51.7094894474061",
+"geometry_wkt": "POINT(19.4804996548709 51.7094894474061)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.001467450459798177
+},
+"{\"location\": \"POINT(19.4797692 51.7093566)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Paradna",
+"number": "38",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "15676",
+"code": "93-345",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4793467503369",
+"y": "51.7096068533889",
+"geometry_wkt": "POINT(19.4793467503369 51.7096068533889)",
+"distance": "40.319970791882",
+"id": 1
+}
+},
+"request time": 0.000937501589457194
+},
+"{\"address\": \"Łódź, Podgórna 2/14\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Podgórna",
+"number": "2/14",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "16742",
+"code": "93-278",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4875752239706",
+"y": "51.7401024912341",
+"geometry_wkt": "POINT(19.4875752239706 51.7401024912341)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.0030970295270284017
+},
+"{\"location\": \"POINT(19.48769 51.7398892)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Podgórna",
+"number": "2/14",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "16742",
+"code": "93-278",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4875752239706",
+"y": "51.7401024912341",
+"geometry_wkt": "POINT(19.4875752239706 51.7401024912341)",
+"distance": "25.003433006923",
+"id": 1
+}
+},
+"request time": 0.0009072661399841308
+},
+"{\"address\": \"Łódź, Złotnicza 10\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 2,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Złotnicza",
+"number": "10",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "26206",
+"code": "91-836",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4632827910608",
+"y": "51.7900869117668",
+"geometry_wkt": "POINT(19.4632827910608 51.7900869117668)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+},
+"2": {
+"city": "Łódź",
+"citypart": null,
+"street": "Lotnicza",
+"number": "10",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "11270",
+"code": "93-467",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4136855299142",
+"y": "51.72089974829",
+"geometry_wkt": "POINT(19.4136855299142 51.72089974829)",
+"accuracy": "0.666667",
+"city_accuracy": "1",
+"street_part_accuracy": "0.461538",
+"street_accuracy": "0.461538",
+"id": 2
+}
+},
+"request time": 0.00226821502049764
+},
+"{\"location\": \"POINT(19.4632551 51.7899422)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Złotnicza",
+"number": "10",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "26206",
+"code": "91-836",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4632827910608",
+"y": "51.7900869117668",
+"geometry_wkt": "POINT(19.4632827910608 51.7900869117668)",
+"distance": "16.2029389945795",
+"id": 1
+}
+},
+"request time": 0.000877066453297933
+},
+"{\"address\": \"Łódź, Rojna 15\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Rojna",
+"number": "15",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "18791",
+"code": "91-142",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.3896085422596",
+"y": "51.7931808452638",
+"geometry_wkt": "POINT(19.3896085422596 51.7931808452638)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.0017191171646118164
+},
+"{\"location\": \"POINT(19.3898256 51.793533)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Rojna",
+"number": "13",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "18791",
+"code": "91-142",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.3902331413036",
+"y": "51.7934383415941",
+"geometry_wkt": "POINT(19.3902331413036 51.7934383415941)",
+"distance": "30.0047492684831",
+"id": 1
+}
+},
+"request time": 0.0008398652076721192
+},
+"{\"address\": \"Łódź, Spadkowa 4/6\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Spadkowa",
+"number": "4/6",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "20644",
+"code": "91-232",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.3474948898393",
+"y": "51.8104017147954",
+"geometry_wkt": "POINT(19.3474948898393 51.8104017147954)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.00249399741490682
+},
+"{\"location\": \"POINT(19.3486576 51.8097085)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Spadkowa",
+"number": "8",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "20644",
+"code": "91-232",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.3495019037007",
+"y": "51.8098985796304",
+"geometry_wkt": "POINT(19.3495019037007 51.8098985796304)",
+"distance": "61.9092534511415",
+"id": 1
+}
+},
+"request time": 0.0010057171185811362
+},
+"{\"address\": \"Łódź, Rudzka 56\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 2,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Rudzka",
+"number": "56",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "19082",
+"code": "93-423",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4338560655674",
+"y": "51.7060190282941",
+"geometry_wkt": "POINT(19.4338560655674 51.7060190282941)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+},
+"2": {
+"city": "Łódź",
+"citypart": null,
+"street": "Starorudzka",
+"number": "56",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "20976",
+"code": "93-424",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4392024259502",
+"y": "51.7068660235911",
+"geometry_wkt": "POINT(19.4392024259502 51.7068660235911)",
+"accuracy": "0.590909",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "0.357143",
+"id": 2
+}
+},
+"request time": 0.0012881000836690267
+},
+"{\"location\": \"POINT(19.4338917 51.7061796)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Rudzka",
+"number": "56",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "19082",
+"code": "93-423",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4338560655674",
+"y": "51.7060190282941",
+"geometry_wkt": "POINT(19.4338560655674 51.7060190282941)",
+"distance": "18.0220860538368",
+"id": 1
+}
+},
+"request time": 0.001113434632619222
+},
+"{\"address\": \"Łódź, Przyrodnicza 24/26\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Przyrodnicza",
+"number": "24/26",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "17973",
+"code": "91-480",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4502066567613",
+"y": "51.8029061782338",
+"geometry_wkt": "POINT(19.4502066567613 51.8029061782338)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.0026431997617085774
+},
+"{\"location\": \"POINT(19.4502671 51.802865)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Przyrodnicza",
+"number": "24/26",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "17973",
+"code": "91-480",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4502066567613",
+"y": "51.8029061782338",
+"geometry_wkt": "POINT(19.4502066567613 51.8029061782338)",
+"distance": "6.19047020670124",
+"id": 1
+}
+},
+"request time": 0.0009512702624003092
+},
+"{\"address\": \"Łódź, Dojazdowa 5/7\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Dojazdowa",
+"number": "5/7",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "04003",
+"code": "91-503",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4753982479028",
+"y": "51.8103905289522",
+"geometry_wkt": "POINT(19.4753982479028 51.8103905289522)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+}
+},
+"request time": 0.00177001953125
+},
+"{\"location\": \"POINT(19.4754559 51.8103702)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Dojazdowa",
+"number": "5/7",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "04003",
+"code": "91-503",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4753982479028",
+"y": "51.8103905289522",
+"geometry_wkt": "POINT(19.4753982479028 51.8103905289522)",
+"distance": "4.57132659909052",
+"id": 1
+}
+},
+"request time": 0.0008086323738098145
+},
+"{\"location\": \"POINT(19.4256771 51.7871523)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Bydgoska",
+"number": "17/21",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "02498",
+"code": "91-036",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.425654267783",
+"y": "51.7873497083767",
+"geometry_wkt": "POINT(19.425654267783 51.7873497083767)",
+"distance": "22.0055597389705",
+"id": 1
+}
+},
+"request time": 0.0007710695266723633
+},
+"{\"address\": \"Łódź, Libelta 16 Łódź\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "city",
+"found objects": 0,
+"results": null,
+"request time": 0.0006781498591105144
+},
+"{\"location\": \"POINT(19.479871 51.790564)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Karola Libelta",
+"number": "16",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "11021",
+"code": "91-713",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4799374703264",
+"y": "51.790536549751",
+"geometry_wkt": "POINT(19.4799374703264 51.790536549751)",
+"distance": "5.50643959054932",
+"id": 1
+}
+},
+"request time": 0.0007303158442179362
+},
+"{\"address\": \"Łódź, Murarska 4 Łódź\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "city",
+"found objects": 0,
+"results": null,
+"request time": 0.0006216843922932943
+},
+"{\"address\": \"Łódź, Traktorowa 61 Łódź\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "city",
+"found objects": 0,
+"results": null,
+"request time": 0.0010832667350769043
+},
+"{\"location\": \"POINT(19.394813 51.7951462)\", \"radius\": \"100\", \"request\": \"GetAddressReverse\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 1,
+"radius": "100",
+"max polygon area": null,
+"returned objects": 1,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Traktorowa",
+"number": "61",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "22937",
+"code": "91-111",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.3945357080151",
+"y": "51.7952175721192",
+"geometry_wkt": "POINT(19.3945357080151 51.7952175721192)",
+"distance": "20.6990443823863",
+"id": 1
+}
+},
+"request time": 0.0007271846135457357
+},
+"{\"address\": \"Łódź, mobilny\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "street",
+"found objects": 0,
+"results": null,
+"request time": 0.0015546003977457681
+},
+"{\"address\": \"Łódź, Nastrojowa 10\", \"request\": \"GetAddress\", \"srid\": \"4326\"}": {
+"type": "address",
+"max results limit": 15,
+"min accuracy limit": 0.4,
+"only exact numbers": 1,
+"found objects": 15,
+"returned objects": 5,
+"results": {
+"1": {
+"city": "Łódź",
+"citypart": null,
+"street": "Nastrojowa",
+"number": "10",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "14034",
+"code": "91-496",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4404498411207",
+"y": "51.8238617479778",
+"geometry_wkt": "POINT(19.4404498411207 51.8238617479778)",
+"accuracy": "1",
+"city_accuracy": "1",
+"street_part_accuracy": "1",
+"street_accuracy": "1",
+"id": 1
+},
+"2": {
+"city": "Łódź",
+"citypart": null,
+"street": "Alabastrowa",
+"number": "10",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "00175",
+"code": "93-641",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.5390703366953",
+"y": "51.7099322942685",
+"geometry_wkt": "POINT(19.5390703366953 51.7099322942685)",
+"accuracy": "0.5",
+"city_accuracy": "1",
+"street_part_accuracy": "0.294118",
+"street_accuracy": "0.277778",
+"id": 2
+},
+"3": {
+"city": "Łódź",
+"citypart": null,
+"street": "Sojowa",
+"number": "10",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "20474",
+"code": "94-214",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.3643218269694",
+"y": "51.7895931603133",
+"geometry_wkt": "POINT(19.3643218269694 51.7895931603133)",
+"accuracy": "0.545455",
+"city_accuracy": "1",
+"street_part_accuracy": "0.285714",
+"street_accuracy": "0.285714",
+"id": 3
+},
+"4": {
+"city": "Łódź",
+"citypart": null,
+"street": "Pokojowa",
+"number": "10",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "16937",
+"code": "93-403",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.4342917001959",
+"y": "51.7116925572298",
+"geometry_wkt": "POINT(19.4342917001959 51.7116925572298)",
+"accuracy": "0.5",
+"city_accuracy": "1",
+"street_part_accuracy": "0.25",
+"street_accuracy": "0.25",
+"id": 4
+},
+"5": {
+"city": "Łódź",
+"citypart": null,
+"street": "Nasturcjowa",
+"number": "10",
+"teryt": "106101",
+"simc": "0957650",
+"ulic": "14036",
+"code": "92-708",
+"jednostka": "{Polska,łódzkie,Łódź,Łódź}",
+"x": "19.5801137817481",
+"y": "51.7925226475329",
+"geometry_wkt": "POINT(19.5801137817481 51.7925226475329)",
+"accuracy": "0.625",
+"city_accuracy": "1",
+"street_part_accuracy": "0.222222",
+"street_accuracy": "0.4375",
+"id": 5
+}
+},
+"request time": 0.0017699678738911948
+}
+}

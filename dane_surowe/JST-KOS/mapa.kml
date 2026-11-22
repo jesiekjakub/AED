@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Defibrylatory AED w Koszalinie</name>
+    <description><![CDATA[www.budkazycia.pl<br>https://www.koszalin.pl/pl/page/punkty-zycia-defibrylatory-aed]]></description>
+    <Style id="icon-1749-A52714-normal">
+      <IconStyle>
+        <color>ff1427a5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1749-A52714-highlight">
+      <IconStyle>
+        <color>ff1427a5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1749-A52714">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1749-A52714-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1749-A52714-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1749-A52714-nodesc-normal">
+      <IconStyle>
+        <color>ff1427a5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1749-A52714-nodesc-highlight">
+      <IconStyle>
+        <color>ff1427a5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1749-A52714-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1749-A52714-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1749-A52714-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1749-FFD600-nodesc-normal">
+      <IconStyle>
+        <color>ff00d6ff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1749-FFD600-nodesc-highlight">
+      <IconStyle>
+        <color>ff00d6ff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1749-FFD600-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1749-FFD600-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1749-FFD600-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Folder>
+      <name>AED</name>
+      <Placemark>
+        <name>Punkt Życia #1
+</name>
+        <description>Dom Studenta nr 1 (na ścianie budynku obok Ksero w Akademikach) – ul. Rejtana</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.2025342709805,54.1979870545911,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #2
+</name>
+        <description>Obok wejścia E na Cmentarz od ul. Kamieniarskiej (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1931868310074,54.1730414670271,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #3
+</name>
+        <description>Obok targowiska ul. Połczyńska 20 (AED na ścianie)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1839332,54.185137,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #4
+</name>
+        <description>Przy barierce od przystanku autobusowego prze szafce elektrycznej (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1706771992634,54.1907339044899,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #5
+</name>
+        <description>Przy toaletach obok szafki elektrycznej (AED wolnostojące) - ul. Dąbrowskiego</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1779545472223,54.1948516368705,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #6
+</name>
+        <description>Wodna Dolina, przy plaży, obok szafek elektrycznych (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.2095531712298,54.1788383605564,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #7
+</name>
+        <description>Przy przystanku, przy chodniku (AED wolnostojące) ul. Jana Pawła II</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1975087185128,54.20228005089,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #8
+</name>
+        <description>Przy przystanku autobusowym „Osiedle Bukowe 01” za biletomatem (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.2009786274985,54.2128967036548,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #9
+</name>
+        <description>Plac od strony Biedronki, przy szafce elektrycznej obok szaletu miejskiego (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1773312332977,54.18870794861,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #10
+</name>
+        <description>Przy szafce elektrycznej przy przystanku autobusowym od ul. Zwycięstwa (od strony Ekonoma – AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1915533441106,54.1901497856561,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #11
+</name>
+        <description>Na ścianie budynku od strony głównego wejścia - ul. Podgórna 16</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1841030217212,54.1958818184479,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #12
+</name>
+        <description>Cmentarz, na ścianie budynku administracji cmentarza od zewnętrznej strony w pobliżu przystanku MZK</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.201168473576,54.1741038555117,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #13
+</name>
+        <description>Przystanek autobusowy przy Biedronce „Urząd Skarbowy 01” (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1597038732178,54.2027960304324,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #14
+</name>
+        <description>Orlik na osiedlu Wenedów, przy płocie obok szafki elektrycznej (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1804642349242,54.177523159816,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #15
+</name>
+        <description>Przy szafce elektrycznej obok restauracji La Vita (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1906025942827,54.1915208986649,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #16
+</name>
+        <description>W Parku Książąt Pomorskich od ul. Modrzejewskiej przy szafce elektrycznej pod wierzbą (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1886920868704,54.1855768330764,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #17
+</name>
+        <description>Orlik na osiedlu Raduszka, przy głównym wejściu przy szafce elektrycznej (AED wolnostojący)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1989962004111,54.1505410092776,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #18
+</name>
+        <description>Przystanek autobusowy przy ul. Piłsudskiego obok placu zabaw Jacek i Agatka obok szafki elektrycznej</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1988530227078,54.1930506380064,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #19
+</name>
+        <description>Przy Biedronce, przy ulicy (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1796851269547,54.2065004077538,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #20
+</name>
+        <description>Przystanek autobusowy „Sikorskiego 01” przy szafce elektrycznej (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1841646792039,54.2041311926199,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #21
+</name>
+        <description>Obok Bistro Qura przy szafce elektrycznej (AED wolnostojące) – ul. Francuska</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1700300299249,54.2197818613286,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #22
+</name>
+        <description>Przy Kościele przy szafce elektrycznej (AED wolnostojące) – ul. Włoska</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.175612982705,54.2188912703267,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #23
+</name>
+        <description>Zagroda Jamneńska, na linii płotu przy szkole, przy szafce elektrycznej na rogu (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1674542905449,54.2450344240747,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #24
+</name>
+        <description>Przystanek autobusowy „Św. Wojciecha 01” przy szafce elektrycznej (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.2253662623116,54.1892032310674,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #25
+</name>
+        <description>Na ścianie szkoły przy głównym wejściu</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1639525,54.2066699,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #26
+</name>
+        <description>Bistro na Żytniej przy szafce elektrycznej (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1825924233284,54.1643760539388,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #27
+</name>
+        <description>Na łączniku ul. JP II i Akademicka (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1896215584963,54.2071126544544,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #28
+</name>
+        <description>Przystanek autobusowy „Grottgera 02” przy szafce elektrycznej (AED wolnostojący)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.2014191742272,54.1904903164448,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #29
+</name>
+        <description>Stadion ABC, przy szafce elektrycznej obok latarni (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1895424479555,54.1998970203006,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #30
+</name>
+        <description>Przy parkingu samochodowych przy szafce elektrycznej (AED wolnostojący)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.2545137005123,54.1752575274345,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #31
+</name>
+        <description>Centrum Przesiadkowe MZK, obok biletomatu w teren zieleni (AED wolnostojące)</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1836544212235,54.2109004548604,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #32
+</name>
+        <description>Na ścianie budynku Straży Miejskiej od strony wjazdu</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1794325347179,54.186472068134,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #33</name>
+        <styleUrl>#icon-1749-FFD600-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            16.2240833333333,54.1908611111111,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #34 - Urząd Miejski w Koszalinie</name>
+        <styleUrl>#icon-1749-A52714-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            16.1819102,54.1909071,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Punkt Życia #35 - Koszalińska Biblioteka Publiczna</name>
+        <description>Dostępna w godzinach otwarcia placówki.</description>
+        <styleUrl>#icon-1749-A52714</styleUrl>
+        <Point>
+          <coordinates>
+            16.1888611111111,54.1948055555556,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>
