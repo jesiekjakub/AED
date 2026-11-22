@@ -417,6 +417,19 @@
               </a>
             </li>
 
+            <!-- MISJA AED – link do strony defibrylatorów -->
+            <li class="nav-item" role="presentation">
+              <a
+                class="nav-link"
+                role="menuitem"
+                [routerLink]="['/!aed' | localize]"
+                routerLinkActive="active"
+                #menuLinkAed="routerLinkActive"
+                [attr.aria-current]="menuLinkAed.isActive ? true : null">
+                Mapa AED
+              </a>
+            </li>
+
             <!-- dga information point -->
             <li class="nav-item" role="presentation">
               <a

@@ -1,0 +1,6 @@
+{
+  "/api/**": { "target": "https://127.0.0.1", "secure": false, "changeOrigin": false, "headers": { "host": "api.mcod.local" }, "pathRewrite": { "^/api": "" } },
+  "/media": { "target": "https://127.0.0.1", "secure": false, "changeOrigin": false, "headers": { "host": "mcod.local" } },
+  "/flags": { "target": "https://dane.gov.pl/", "secure": true, "changeOrigin": true },
+  "/cms": { "target": "https://127.0.0.1", "secure": false, "changeOrigin": false, "headers": { "host": "cms.mcod.local" }, "pathRewrite": { "^/cms": "" } }
+}

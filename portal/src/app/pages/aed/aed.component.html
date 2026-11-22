@@ -1,0 +1,250 @@
+<!-- „AED na ratunek” – rozszerzenie portalu dane.gov.pl; układ jak strona „Dane” (pages/dataset/dataset-page) -->
+<header class="vertical-spacing">
+  <div class="container pb-3">
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center">
+      <h1 class="heading">Defibrylatory AED</h1>
+      <img class="aed-logo" [src]="assets + 'logo_aed_na_ratunek.svg'" alt="AED na ratunek – akcja dane.gov.pl" />
+    </div>
+    <div class="aed-wyszukiwarka">
+      <label class="visually-hidden" for="aed-fraza">Wyszukaj AED: miejscowość, ulica lub obiekt</label>
+      <input id="aed-fraza" class="form-control" type="search" placeholder="Wyszukaj AED: miejscowość, ulica, obiekt…"
+        [(ngModel)]="fraza" (input)="filtruj()" (keydown.enter)="filtruj(true)" autocomplete="off" />
+      <svg class="aed-lupa" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg>
+    </div>
+    <p class="aed-112" role="note"><strong>Nagłe zatrzymanie krążenia? Dzwoń 112</strong> – dyspozytor poprowadzi resuscytację.</p>
+  </div>
+</header>
+
+<div class="container pb-0 pb-lg-4 aed">
+  <div class="row no-gutters">
+    <!-- FILTRY – jak panel filtrów zbiorów danych -->
+    <aside class="col-lg-4 col-xl-3 bg-custom">
+      <section class="aggregation-filters p-3">
+        <h2 class="heading heading--xs">Filtry</h2>
+
+        <button type="button" class="btn btn-primary w-100 mb-3" (click)="najblizszy()">Pokaż najbliższy AED</button>
+
+        <fieldset class="aed-filtr">
+          <legend class="h6 font-weight-bold">Województwo</legend>
+          <label class="visually-hidden" for="aed-woj">Województwo</label>
+          <select id="aed-woj" class="form-control" [(ngModel)]="wojewodztwo" (change)="filtruj(true)">
+            <option value="">Cała Polska</option>
+            <option *ngFor="let w of wojewodztwa" [value]="w">{{ w }}</option>
+          </select>
+        </fieldset>
+        <span class="aggregation-filters__divider" aria-hidden="true"></span>
+
+        <fieldset class="aed-filtr">
+          <legend class="h6 font-weight-bold">Dostępność</legend>
+          <ul class="dropdown__list">
+            <li class="dropdown-item">
+              <input type="checkbox" class="dropdown-item__input" id="aed-f-247" [(ngModel)]="tylko247" (change)="filtruj()" />
+              <label for="aed-f-247" class="dropdown-item__content"><span class="dropdown-item__content-title">Dostępny 24/7</span>
+                <span class="dropdown-item__content-doc-count">&nbsp;({{ liczba(calodobowe) }})</span></label>
+            </li>
+            <li class="dropdown-item">
+              <input type="checkbox" class="dropdown-item__input" id="aed-f-zamek" [(ngModel)]="tylkoSwobodny" (change)="filtruj()" />
+              <label for="aed-f-zamek" class="dropdown-item__content"><span class="dropdown-item__content-title">Bez zamka</span>
+                <span class="dropdown-item__content-doc-count">&nbsp;({{ liczba(swobodne) }})</span></label>
+            </li>
+          </ul>
+        </fieldset>
+        <span class="aggregation-filters__divider" aria-hidden="true"></span>
+
+        <fieldset class="aed-filtr">
+          <legend class="h6 font-weight-bold">Źródło danych</legend>
+          <ul class="dropdown__list">
+            <li class="dropdown-item">
+              <input type="checkbox" class="dropdown-item__input" id="aed-f-osm" [(ngModel)]="pokazOsm" (change)="przelaczOsm()" />
+              <label for="aed-f-osm" class="dropdown-item__content"><span class="dropdown-item__content-title">Dane OSM (niezweryfikowane)</span></label>
+            </li>
+          </ul>
+        </fieldset>
+        <button type="button" class="btn btn-link p-0 mt-2" *ngIf="fraza || wojewodztwo || tylko247 || tylkoSwobodny" (click)="wyczysc()">Wyczyść filtry</button>
+      </section>
+    </aside>
+
+    <!-- WYNIKI -->
+    <div class="col-lg-8 col-xl-9">
+      <div class="ml-0 ml-lg-4">
+        <section class="results-section" aria-labelledby="znajdz-tytul">
+          <h2 id="znajdz-tytul" class="visually-hidden">Znajdź AED</h2>
+          <p class="aed-znaleziono" *ngIf="!ladowanie">
+            <strong>Znaleziono:</strong> AED ({{ liczba(aed.length) }}), na mapie ({{ liczba(naMapie) }}), dostępnych 24/7 ({{ liczba(calodobowe) }}),
+            dostawców danych ({{ zrodlaRaportu.length }})
+          </p>
+          <p class="aed-status" role="status" aria-live="polite">
+            {{ komunikatGeo || ('Wyniki: ' + liczba(widoczne.length) + (pozycja ? ' – od najbliższego' : '')) }}
+          </p>
+
+          <div class="aed-widok-przelacznik" role="group" aria-label="Widok">
+            <button type="button" class="btn" [ngClass]="widokMobilny === 'mapa' ? 'btn-primary' : 'btn-outline-primary'" [attr.aria-pressed]="widokMobilny === 'mapa'" (click)="widokMobilny = 'mapa'">Mapa</button>
+            <button type="button" class="btn" [ngClass]="widokMobilny === 'lista' ? 'btn-primary' : 'btn-outline-primary'" [attr.aria-pressed]="widokMobilny === 'lista'" (click)="widokMobilny = 'lista'">Lista</button>
+          </div>
+
+          <div class="aed-kolumna-mapa" [class.ukryj-mobilnie]="widokMobilny !== 'mapa'">
+            <div #mapa class="aed-mapa" role="region" aria-label="Mapa defibrylatorów – te same dane są na liście poniżej"></div>
+            <p class="aed-legenda" aria-hidden="true">
+              <span class="kropka k-247"></span>dostępny 24/7 <span class="kropka k-inne"></span>w określonych godzinach / brak informacji
+              <span *ngIf="pokazOsm"><span class="kropka k-osm"></span>OSM – niezweryfikowane</span>
+            </p>
+            <aside #szczegoly *ngIf="wybrany" class="aed-szczegoly" tabindex="-1" aria-labelledby="szczegoly-tytul">
+              <button type="button" class="btn-close aed-zamknij" aria-label="Zamknij szczegóły" (click)="zamknijSzczegoly()"></button>
+              <h3 id="szczegoly-tytul">{{ wybrany.nazwa_obiektu || 'Defibrylator AED' }}</h3>
+              <p class="mb-1">{{ adres(wybrany) }}</p>
+              <p class="mb-1" *ngIf="wybrany.opis_lokalizacji"><strong>Gdzie:</strong> {{ wybrany.opis_lokalizacji }}</p>
+              <ul class="aed-znaczniki">
+                <li [ngClass]="wybrany.dostepny_24_7 === 'tak' ? 'z-ok' : 'z-info'">{{ godziny(wybrany) }}</li>
+                <li [ngClass]="swobodny(wybrany) ? 'z-ok' : (wybrany.zabezpieczenie === 'zamkniete_na_klucz' ? 'z-uwaga' : 'z-info')">{{ zabezpieczenie[wybrany.zabezpieczenie] || zabezpieczenie['nieznane'] }}</li>
+                <li class="z-info" *ngIf="wybrany.wewnatrz_budynku !== 'nieznane'">{{ wybrany.wewnatrz_budynku === 'tak' ? 'w budynku' : 'na zewnątrz' }}</li>
+              </ul>
+              <p class="mb-1" *ngIf="wybrany.instrukcja_dostepu"><strong>Dostęp:</strong> {{ wybrany.instrukcja_dostepu }}</p>
+              <div class="aed-akcje" *ngIf="wybrany.szerokosc_geograficzna !== ''">
+                <a class="btn btn-primary btn-sm" [href]="trasa(wybrany)" target="_blank" rel="noopener">Wyznacz trasę<span class="visually-hidden"> (nowe okno)</span></a>
+              </div>
+              <p class="aed-zrodlo">
+                Dane: <a [href]="wybrany.zrodlo_url" target="_blank" rel="noopener">{{ wybrany.dostawca_danych }}</a>
+                <span *ngIf="wybrany.data_stanu_zrodla"> · stan na {{ wybrany.data_stanu_zrodla }}</span> · kompletność {{ wybrany.kompletnosc_proc }}%
+                <br /><a [href]="'mailto:kontakt@dane.gov.pl?subject=AED%20na%20ratunek%20–%20błąd%20w%20danych%20' + wybrany.id_aed">Zgłoś błąd w danych</a>
+              </p>
+            </aside>
+          </div>
+
+          <div class="aed-kolumna-lista" [class.ukryj-mobilnie]="widokMobilny !== 'lista'">
+            <a class="visually-hidden-focusable" href="#aed-lista">Przejdź do listy defibrylatorów</a>
+            <ol id="aed-lista" class="aed-lista" aria-label="Lista defibrylatorów">
+              <li *ngFor="let a of widoczne.slice(0, limitListy)" class="result-item" [class.aktywna]="wybrany?.id_aed === a.id_aed">
+                <div class="result-item__left col-lg-8 col-xl-9 px-3">
+                  <h3 class="heading heading--primary-link heading--sm result-item-heading">
+                    <button type="button" class="aed-pozycja" (click)="wybierz(a)">{{ a.nazwa_obiektu || 'Defibrylator AED' }}</button>
+                  </h3>
+                  <p class="mb-1">{{ adres(a) }}<ng-container *ngIf="a._odl !== undefined && a._odl !== Infinity"> · <strong>{{ formatujOdl(a._odl) }}</strong></ng-container></p>
+                  <p class="aed-znaczniki mb-0">
+                    <span [ngClass]="a.dostepny_24_7 === 'tak' ? 'z-ok' : 'z-info'">{{ godziny(a) }}</span>
+                    <span *ngIf="a.zabezpieczenie !== 'nieznane'" [ngClass]="swobodny(a) ? 'z-ok' : (a.zabezpieczenie === 'zamkniete_na_klucz' ? 'z-uwaga' : 'z-info')">{{ zabezpieczenie[a.zabezpieczenie] }}</span>
+                    <span *ngIf="a.szerokosc_geograficzna === ''" class="z-info">brak na mapie</span>
+                  </p>
+                </div>
+                <div class="result-item__right col-lg-4 col-xl-3 px-3">
+                  <p class="font-weight-bold mb-1">Dostawca danych</p>
+                  <p class="mb-0 aed-dostawca">{{ a.dostawca_danych }}</p>
+                </div>
+              </li>
+            </ol>
+            <button type="button" class="btn btn-outline-primary w-100 mt-2" *ngIf="widoczne.length > limitListy" (click)="limitListy = limitListy + 30">
+              Pokaż więcej ({{ limitListy }} z {{ widoczne.length }})
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container aed">
+  <!-- ===================================================== ZAKŁADKI -->
+  <section class="aed-zakladki" aria-label="Informacje o danych">
+    <div role="tablist" aria-label="Informacje o danych" class="aed-tablist">
+      <button *ngFor="let z of zakladki" type="button" role="tab" [id]="'tab-' + z.id" [attr.aria-selected]="zakladka === z.id"
+        [attr.aria-controls]="'panel-' + z.id" [attr.tabindex]="zakladka === z.id ? 0 : -1" [class.aktywna]="zakladka === z.id"
+        (click)="ustawZakladke(z.id)" (keydown)="ustawZakladke(z.id, $event)">{{ z.nazwa }}</button>
+    </div>
+
+    <div role="tabpanel" id="panel-wykaz" aria-labelledby="tab-wykaz" *ngIf="zakladka === 'wykaz'" class="aed-panel">
+      <ng-container *ngIf="wykaz; else brakWykazu">
+        <p>
+          Zasób portalu <a [routerLink]="['/!dataset', wykaz.dataset_id, '!resource', wykaz.resource_id] | localize">„Wykaz zbiorczy AED”</a>
+          – scalony automatycznie z {{ wykaz.aggregated_resources_count }} zasobów dysponentów oznaczonych jako „wykaz AED”
+          ({{ wykaz.rows_count }} urządzeń, aktualizacja {{ (wykaz.last_run_date || '').slice(0, 10) }}).
+        </p>
+        <app-resource-table-no-filters [resourceId]="wykaz.resource_id" tableTitle="Wykaz zbiorczy AED"></app-resource-table-no-filters>
+      </ng-container>
+      <ng-template #brakWykazu>
+        <p>Wykaz zbiorczy nie jest jeszcze dostępny w tym portalu (endpoint <code>/aggregated-aed-info</code>).</p>
+      </ng-template>
+    </div>
+
+    <div role="tabpanel" id="panel-zrodla" aria-labelledby="tab-zrodla" *ngIf="zakladka === 'zrodla'" class="aed-panel">
+      <div class="table-responsive">
+        <table class="table aed-tabela">
+          <caption>Dostawcy danych w zbiorze zbiorczym</caption>
+          <thead><tr><th scope="col">Dostawca danych</th><th scope="col">Format źródła</th><th scope="col">Licencja</th><th scope="col" class="text-end">AED</th><th scope="col" class="text-end">Kompletność</th><th scope="col">Stan na</th></tr></thead>
+          <tbody>
+            <tr *ngFor="let z of zrodlaRaportu">
+              <th scope="row"><a [href]="z.zrodlo_url" target="_blank" rel="noopener">{{ z.dostawca_danych }}</a></th>
+              <td>{{ rejestrInfo(z.zrodlo_id).format || 'strona www' }}</td>
+              <td>{{ z.licencja || 'brak informacji' }}</td>
+              <td class="text-end">{{ z.liczba_rekordow }}</td>
+              <td class="text-end">{{ z.srednia_kompletnosc_proc }}%</td>
+              <td>{{ z.data_stanu || '—' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 class="h5">Kto udostępnia dane o AED – rejestr {{ rejestr.length }} podmiotów</h3>
+      <ul class="aed-statusy">
+        <li *ngFor="let s of statusy"><strong>{{ s.liczba }}</strong> {{ s.opis }}</li>
+      </ul>
+      <h3 class="h5">Zbiory o AED w dane.gov.pl (na żywo z API portalu)</h3>
+      <p *ngIf="bladPortalu">Nie udało się pobrać listy z API portalu.</p>
+      <ul *ngIf="!bladPortalu">
+        <li *ngFor="let z of zbioryPortalu"><a [routerLink]="['/!dataset', z.id] | localize">{{ z.tytul }}</a> <span class="text-muted">– {{ z.formaty.join(', ') }}, {{ z.licencja }}</span></li>
+      </ul>
+      <p><a [href]="assets + 'rejestr_zrodel.json'" download>Pobierz rejestr źródeł (JSON)</a></p>
+    </div>
+
+    <div role="tabpanel" id="panel-dysponent" aria-labelledby="tab-dysponent" *ngIf="zakladka === 'dysponent'" class="aed-panel">
+      <p>Wybierz sposób dopasowany do Twojej instytucji. Każdy kończy się zasobem w dane.gov.pl z zaznaczonym <b>„Zasób zawiera wykaz AED”</b> – portal co noc dołącza go do <b>Wykazu zbiorczego AED</b>.</p>
+      <div class="aed-sciezki" role="radiogroup" aria-label="Sposób przekazania danych">
+        <button type="button" role="radio" [attr.aria-checked]="sciezka === 'formularz'" [class.aktywna]="sciezka === 'formularz'" (click)="sciezka = 'formularz'"><b>Mam kilka AED</b><span>formularz → plik CSV</span></button>
+        <button type="button" role="radio" [attr.aria-checked]="sciezka === 'plik'" [class.aktywna]="sciezka === 'plik'" (click)="sciezka = 'plik'"><b>Mam plik lub arkusz</b><span>szablon + walidator</span></button>
+        <button type="button" role="radio" [attr.aria-checked]="sciezka === 'system'" [class.aktywna]="sciezka === 'system'" (click)="sciezka = 'system'"><b>Mam system / dużo AED</b><span>harwester XML – automatycznie</span></button>
+      </div>
+
+      <div *ngIf="sciezka === 'formularz'">
+        <app-aed-formularz></app-aed-formularz>
+      </div>
+
+      <div *ngIf="sciezka === 'plik'">
+        <ol class="aed-kroki">
+          <li><a [href]="assets + 'szablon_aed_dla_dysponenta.csv'" download>Pobierz szablon CSV</a> (<a [href]="assets + 'wzorcowy_zakres_danych_AED.xlsx'" download>opis pól, XLSX</a>) – jeden wiersz = jedno urządzenie.</li>
+          <li>Sprawdź plik walidatorem – plik nie opuszcza Twojego komputera.</li>
+          <li>W panelu dostawcy dane.gov.pl dodaj zasób: <b>wgraj plik</b> albo <b>podaj link</b> do pliku na stronie gminy/BIP (portal sam pobierze nową wersję po jej podmianie). Zaznacz „Zasób zawiera wykaz AED”.</li>
+        </ol>
+        <div class="aed-walidator">
+          <label for="aed-plik" class="form-label fw-bold">Walidator pliku CSV</label>
+          <input id="aed-plik" class="form-control" type="file" accept=".csv,text/csv" (change)="wczytajPlik($event)" aria-describedby="aed-plik-opis" />
+          <p id="aed-plik-opis" class="form-text">Sprawdza kolumny, pola wymagane, słowniki, daty i współrzędne.</p>
+          <p role="status" aria-live="polite" class="fw-bold">{{ podsumowanieWalidacji }}</p>
+          <ul class="aed-walidacja" *ngIf="wynikiWalidacji.length">
+            <li *ngFor="let w of wynikiWalidacji" [ngClass]="w.poziom === 'blad' ? 'z-uwaga' : 'z-info'"><strong>{{ w.poziom === 'blad' ? 'Błąd' : 'Uwaga' }}:</strong> {{ w.tekst }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div *ngIf="sciezka === 'system'">
+        <ol class="aed-kroki">
+          <li>Twój system generuje i wystawia pod stałym adresem plik CSV zgodny ze wzorcem (np. co noc).</li>
+          <li>Obok wystawiasz plik XML z opisem zbioru – <a [href]="assets + 'metadane_dane_gov_pl.xml'" download>pobierz wzór</a>; zasób oznacz elementem <code>&lt;containsAedList&gt;true&lt;/containsAedList&gt;</code> (schemat harwestera 1.14).</li>
+          <li>Zgłoś adres pliku XML do dane.gov.pl – administrator portalu raz dodaje go jako „źródło danych”. Od tej pory portal sam pobiera aktualizacje.</li>
+        </ol>
+      </div>
+      <p class="mt-3">Pobierz zbiór zbiorczy: <a [href]="assets + 'aed_zbiorczy.csv'" download>CSV</a> · <a [href]="assets + 'aed_zbiorczy.geojson'" download>GeoJSON</a> · <a [href]="assets + 'aed_mobilne.csv'" download>AED w pojazdach (CSV)</a></p>
+    </div>
+
+    <div role="tabpanel" id="panel-jakosc" aria-labelledby="tab-jakosc" *ngIf="zakladka === 'jakosc'" class="aed-panel">
+      <div class="table-responsive">
+        <table class="table aed-tabela">
+          <caption>Wypełnienie pól wzorca w zebranych źródłach (W – wymagane, Z – zalecane, O – opcjonalne)</caption>
+          <thead><tr><th scope="col">Pole</th><th scope="col">Poziom</th><th scope="col">Wypełnienie</th></tr></thead>
+          <tbody>
+            <tr *ngFor="let p of pokrycie">
+              <th scope="row"><code>{{ p.pole }}</code></th><td>{{ p.poziom }}</td>
+              <td><span class="aed-bar" aria-hidden="true"><span [style.width.%]="p.srednio"></span></span> {{ p.srednio }}%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,460 @@
+// „AED na ratunek” – kolory portalu, kontrast WCAG 2.2 AA na białym tle
+$gov: #0052a5;
+$granat: #0f2648;
+$zielony: #00703c;
+$czerwony: #b3261e;
+$szary: #4a4a4a;
+$linia: #c9c9c9;
+
+.aed {
+  padding-bottom: 3rem;
+}
+
+.aed-wyszukiwarka {
+  position: relative;
+
+  .form-control {
+    height: 3rem;
+    font-size: 1.15rem;
+    padding-right: 3rem;
+    border: 1px solid #757575;
+    border-radius: 4px;
+  }
+}
+
+.aed-lupa {
+  position: absolute;
+  right: 0.9rem;
+  top: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  transform: translateY(-50%);
+  color: #1b1b1b;
+  pointer-events: none;
+}
+
+.aed-filtr {
+  border: 0;
+  padding: 0;
+  margin: 0 0 0.5rem;
+
+  legend {
+    font-size: 1rem;
+  }
+}
+
+.aed-znaleziono {
+  margin-bottom: 0.25rem;
+}
+
+.aed-lista {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+
+  .result-item {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+    padding: 1rem 0;
+    background: #fff;
+    border: 1px solid $linia;
+
+    &.aktywna {
+      border: 3px solid $gov;
+    }
+  }
+}
+
+.aed-pozycja {
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  color: $gov;
+  font: inherit;
+  text-decoration: underline;
+
+  &:focus-visible {
+    outline: 3px solid #ffc605;
+  }
+}
+
+.aed-dostawca {
+  font-size: 0.92rem;
+}
+
+.aed-naglowek {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  h1 {
+    margin-bottom: 0.25rem;
+  }
+}
+
+.aed-lead {
+  color: $szary;
+  margin: 0;
+}
+
+.aed-logo {
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.aed-112 {
+  border-left: 6px solid $czerwony;
+  background: #fdf1f0;
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
+}
+
+.aed-liczniki {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  margin: 0 0 1rem;
+
+  div {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+
+  dt {
+    order: 2;
+    font-weight: 400;
+    color: $szary;
+  }
+
+  dd {
+    order: 1;
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: $gov;
+  }
+}
+
+.aed-pasek {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.aed-najblizszy {
+  min-height: 44px;
+  font-weight: 700;
+}
+
+.aed-szukaj {
+  flex: 1 1 14rem;
+  min-height: 44px;
+}
+
+.aed-woj {
+  flex: 0 1 12rem;
+  min-height: 44px;
+}
+
+.aed-przelaczniki {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.aed-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid $gov;
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem;
+  min-height: 44px;
+  color: $gov;
+  cursor: pointer;
+
+  input {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  &:focus-within {
+    outline: 3px solid #ffc605;
+  }
+}
+
+.aed-chip-osm {
+  border-color: $szary;
+  color: $szary;
+}
+
+.aed-status {
+  margin: 0.6rem 0;
+  font-weight: 700;
+}
+
+.aed-widok-przelacznik {
+  display: none;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  .btn {
+    flex: 1;
+    min-height: 44px;
+  }
+}
+
+.aed-uklad {
+  display: grid;
+  grid-template-columns: minmax(18rem, 26rem) 1fr;
+  gap: 1rem;
+}
+
+.aed-kolumna-mapa {
+  position: relative;
+}
+
+.aed-mapa {
+  height: 70vh;
+  min-height: 420px;
+  border: 1px solid $linia;
+  border-radius: 6px;
+}
+
+.aed-legenda {
+  margin-top: 0.4rem;
+  color: $szary;
+  font-size: 0.9rem;
+}
+
+.kropka {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 0 0.3rem 0 0.8rem;
+  vertical-align: middle;
+}
+
+.k-247 {
+  background: $zielony;
+}
+
+.k-inne {
+  background: $gov;
+}
+
+.k-osm {
+  background: #6b6b6b;
+}
+
+
+
+
+
+.aed-znaczniki {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.35rem 0 0;
+
+  span,
+  li {
+    font-size: 0.82rem;
+    border: 1px solid currentColor;
+    border-radius: 4px;
+    padding: 0 0.4rem;
+  }
+}
+
+.z-ok {
+  color: $zielony;
+}
+
+.z-info {
+  color: $szary;
+}
+
+.z-uwaga {
+  color: $czerwony;
+}
+
+.aed-szczegoly {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 1000;
+  width: min(24rem, calc(100% - 1.5rem));
+  max-height: calc(70vh - 1.5rem);
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid $linia;
+  border-top: 5px solid $gov;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 20%);
+  padding: 1rem;
+
+  h3 {
+    font-size: 1.15rem;
+    padding-right: 2rem;
+  }
+
+  &:focus {
+    outline: 3px solid #ffc605;
+  }
+}
+
+.aed-zamknij {
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+}
+
+.aed-akcje {
+  margin: 0.6rem 0;
+}
+
+.aed-zrodlo {
+  font-size: 0.85rem;
+  color: $szary;
+  margin: 0.5rem 0 0;
+}
+
+.aed-zakladki {
+  margin-top: 2.5rem;
+}
+
+.aed-tablist {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 2px solid $gov;
+
+  button {
+    background: none;
+    border: 0;
+    border-bottom: 4px solid transparent;
+    padding: 0.7rem 1.1rem;
+    font-weight: 700;
+    color: $granat;
+    min-height: 44px;
+
+    &.aktywna {
+      border-bottom-color: $gov;
+      color: $gov;
+    }
+
+    &:focus-visible {
+      outline: 3px solid #ffc605;
+    }
+  }
+}
+
+.aed-panel {
+  padding-top: 1.2rem;
+}
+
+.aed-tabela caption {
+  caption-side: top;
+  color: $szary;
+}
+
+.aed-statusy {
+  columns: 2 20rem;
+}
+
+.aed-walidator {
+  background: #f5f7fa;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.aed-walidacja {
+  max-height: 22rem;
+  overflow-y: auto;
+  padding-left: 1.2rem;
+}
+
+.aed-bar {
+  display: inline-block;
+  width: 10rem;
+  max-width: 50%;
+  height: 0.7rem;
+  background: #e3e3e3;
+  border-radius: 4px;
+  vertical-align: middle;
+  margin-right: 0.4rem;
+
+  span {
+    display: block;
+    height: 100%;
+    background: $gov;
+    border-radius: 4px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .aed-uklad {
+    grid-template-columns: 1fr;
+  }
+
+  .aed-widok-przelacznik {
+    display: flex;
+  }
+
+  .ukryj-mobilnie {
+    display: none;
+  }
+
+  .aed-mapa {
+    height: 65vh;
+  }
+
+  .aed-logo {
+    height: 44px;
+  }
+}
+
+.aed-sciezki {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.6rem;
+  margin: 1rem 0;
+
+  button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    background: #fff;
+    border: 2px solid $gov;
+    border-radius: 6px;
+    padding: 0.7rem 1rem;
+    color: $granat;
+    min-height: 44px;
+
+    span {
+      color: $szary;
+      font-size: 0.9rem;
+    }
+
+    &.aktywna {
+      background: $gov;
+      color: #fff;
+
+      span {
+        color: #fff;
+      }
+    }
+
+    &:focus-visible {
+      outline: 3px solid #ffc605;
+    }
+  }
+}

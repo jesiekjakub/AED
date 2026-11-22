@@ -1,0 +1,6 @@
+{
+  "/api/**": { "target": "https://api.dane.gov.pl/1.4/", "secure": true, "pathRewrite": { "^/api": "" }, "changeOrigin": true },
+  "/media": { "target": "https://api.dane.gov.pl/", "secure": true, "changeOrigin": true },
+  "/flags": { "target": "https://dane.gov.pl/", "secure": true, "changeOrigin": true },
+  "/cms": { "target": "https://cms.dane.gov.pl/", "secure": true, "changeOrigin": true, "pathRewrite": { "^/cms": "" } }
+}

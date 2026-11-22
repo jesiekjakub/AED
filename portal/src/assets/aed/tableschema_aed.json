@@ -1,0 +1,598 @@
+{
+  "fields": [
+    {
+      "name": "id_aed",
+      "title": "id_aed",
+      "description": "Stały identyfikator urządzenia nadany przez dysponenta (nie zmienia się przy aktualizacjach). W zbiorze zbiorczym poprzedzony kodem źródła.",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "poziom": "W"
+    },
+    {
+      "name": "status",
+      "title": "status",
+      "description": "Stan obecności urządzenia w lokalizacji.",
+      "type": "string",
+      "constraints": {
+        "required": true,
+        "enum": [
+          "aktywny",
+          "tymczasowo_niedostepny",
+          "wycofany",
+          "nieznany"
+        ]
+      },
+      "poziom": "W"
+    },
+    {
+      "name": "numer_seryjny",
+      "title": "numer_seryjny",
+      "description": "Numer seryjny urządzenia – pozwala powiadomić dysponenta przy wycofaniu wadliwej partii przez producenta.",
+      "type": "string",
+      "poziom": "O"
+    },
+    {
+      "name": "osm_id",
+      "title": "osm_id",
+      "description": "Identyfikator obiektu w OpenStreetMap (np. node/123), jeśli urządzenie jest tam naniesione.",
+      "type": "string",
+      "poziom": "O"
+    },
+    {
+      "name": "nazwa_obiektu",
+      "title": "nazwa_obiektu",
+      "description": "Nazwa budynku lub miejsca, w którym jest AED.",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "poziom": "W"
+    },
+    {
+      "name": "typ_obiektu",
+      "title": "typ_obiektu",
+      "description": "Rodzaj obiektu (słownik).",
+      "type": "string",
+      "constraints": {
+        "enum": [
+          "urzad_administracja",
+          "szkola_przedszkole",
+          "uczelnia",
+          "ochrona_zdrowia",
+          "pomoc_spoleczna",
+          "sport_rekreacja",
+          "kultura",
+          "transport",
+          "handel_uslugi",
+          "sluzby_ratownicze",
+          "obiekt_sakralny",
+          "zaklad_pracy",
+          "budynek_mieszkalny",
+          "przestrzen_publiczna",
+          "inny"
+        ]
+      },
+      "poziom": "Z"
+    },
+    {
+      "name": "wojewodztwo",
+      "title": "wojewodztwo",
+      "description": "Województwo.",
+      "type": "string",
+      "poziom": "Z"
+    },
+    {
+      "name": "powiat",
+      "title": "powiat",
+      "description": "Powiat.",
+      "type": "string",
+      "poziom": "Z"
+    },
+    {
+      "name": "gmina",
+      "title": "gmina",
+      "description": "Gmina.",
+      "type": "string",
+      "poziom": "Z"
+    },
+    {
+      "name": "teryt_gmina",
+      "title": "teryt_gmina",
+      "description": "Identyfikator gminy z rejestru TERYT (TERC, 6 cyfr WWPPGG – jak zwraca usługa GUGiK).",
+      "type": "string",
+      "constraints": {
+        "pattern": "^\\d{6,7}$"
+      },
+      "poziom": "Z"
+    },
+    {
+      "name": "simc",
+      "title": "simc",
+      "description": "Identyfikator miejscowości z rejestru TERYT-SIMC.",
+      "type": "string",
+      "constraints": {
+        "pattern": "^\\d{7}$"
+      },
+      "poziom": "Z"
+    },
+    {
+      "name": "ulic",
+      "title": "ulic",
+      "description": "Identyfikator ulicy z rejestru TERYT-ULIC.",
+      "type": "string",
+      "constraints": {
+        "pattern": "^\\d{5}$"
+      },
+      "poziom": "O"
+    },
+    {
+      "name": "miejscowosc",
+      "title": "miejscowosc",
+      "description": "Miejscowość.",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "poziom": "W"
+    },
+    {
+      "name": "ulica",
+      "title": "ulica",
+      "description": "Ulica wraz z cechą (ul., al., pl., os.). Wymagane, jeśli adres ma ulicę.",
+      "type": "string",
+      "poziom": "W"
+    },
+    {
+      "name": "nr_budynku",
+      "title": "nr_budynku",
+      "description": "Numer porządkowy budynku.",
+      "type": "string",
+      "poziom": "W"
+    },
+    {
+      "name": "kod_pocztowy",
+      "title": "kod_pocztowy",
+      "description": "Kod pocztowy.",
+      "type": "string",
+      "constraints": {
+        "pattern": "^\\d{2}-\\d{3}$"
+      },
+      "poziom": "Z"
+    },
+    {
+      "name": "szerokosc_geograficzna",
+      "title": "szerokosc_geograficzna",
+      "description": "Szerokość geograficzna urządzenia, WGS84 (EPSG:4326), stopnie dziesiętne, min. 5 miejsc po przecinku.",
+      "type": "number",
+      "constraints": {
+        "required": true,
+        "minimum": 49.0,
+        "maximum": 54.9
+      },
+      "poziom": "W"
+    },
+    {
+      "name": "dlugosc_geograficzna",
+      "title": "dlugosc_geograficzna",
+      "description": "Długość geograficzna urządzenia, WGS84 (EPSG:4326), stopnie dziesiętne.",
+      "type": "number",
+      "constraints": {
+        "required": true,
+        "minimum": 14.1,
+        "maximum": 24.2
+      },
+      "poziom": "W"
+    },
+    {
+      "name": "zrodlo_wspolrzednych",
+      "title": "zrodlo_wspolrzednych",
+      "description": "Skąd pochodzą współrzędne – informuje o dokładności.",
+      "type": "string",
+      "constraints": {
+        "enum": [
+          "pomiar_gps",
+          "mapa_dysponenta",
+          "geokodowanie_adresu",
+          "geokodowanie_ulicy",
+          "nieznane"
+        ]
+      },
+      "poziom": "Z"
+    },
+    {
+      "name": "wewnatrz_budynku",
+      "title": "wewnatrz_budynku",
+      "description": "Czy urządzenie jest wewnątrz budynku.",
+      "type": "string",
+      "constraints": {
+        "required": true,
+        "enum": [
+          "tak",
+          "nie",
+          "nieznane"
+        ]
+      },
+      "poziom": "W"
+    },
+    {
+      "name": "kondygnacja",
+      "title": "kondygnacja",
+      "description": "Kondygnacja (0 = parter, -1 = piwnica).",
+      "type": "string",
+      "poziom": "O"
+    },
+    {
+      "name": "opis_lokalizacji",
+      "title": "opis_lokalizacji",
+      "description": "Gdzie dokładnie jest AED – tak, by obca osoba trafiła w stresie.",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "poziom": "W"
+    },
+    {
+      "name": "opis_lokalizacji_en",
+      "title": "opis_lokalizacji_en",
+      "description": "Opis lokalizacji po angielsku.",
+      "type": "string",
+      "poziom": "O"
+    },
+    {
+      "name": "dostep",
+      "title": "dostep",
+      "description": "Kto może skorzystać z urządzenia.",
+      "type": "string",
+      "constraints": {
+        "required": true,
+        "enum": [
+          "publiczny",
+          "dla_klientow_pracownikow",
+          "prywatny",
+          "nieznany"
+        ]
+      },
+      "poziom": "W"
+    },
+    {
+      "name": "godziny_dostepnosci",
+      "title": "godziny_dostepnosci",
+      "description": "Godziny, w których AED jest fizycznie dostępny – składnia opening_hours (OSM), np. 24/7, Mo-Fr 08:00-16:00, Jun-Sep 09:30-17:30.",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "poziom": "W"
+    },
+    {
+      "name": "dostepny_24_7",
+      "title": "dostepny_24_7",
+      "description": "Skrót: czy dostępny całą dobę przez cały rok.",
+      "type": "string",
+      "constraints": {
+        "enum": [
+          "tak",
+          "nie",
+          "nieznane"
+        ]
+      },
+      "poziom": "Z"
+    },
+    {
+      "name": "godziny_opis",
+      "title": "godziny_opis",
+      "description": "Godziny opisowo (gdy nie da się ich zapisać w składni opening_hours).",
+      "type": "string",
+      "poziom": "O"
+    },
+    {
+      "name": "zabezpieczenie",
+      "title": "zabezpieczenie",
+      "description": "Jak zabezpieczone jest urządzenie – czy świadek zdarzenia otworzy je bez pomocy.",
+      "type": "string",
+      "constraints": {
+        "required": true,
+        "enum": [
+          "brak",
+          "szafka_otwarta",
+          "szafka_z_alarmem",
+          "szafka_z_kodem",
+          "zamkniete_na_klucz",
+          "u_personelu",
+          "nieznane"
+        ]
+      },
+      "poziom": "W"
+    },
+    {
+      "name": "instrukcja_dostepu",
+      "title": "instrukcja_dostepu",
+      "description": "Co zrobić, by dostać się do AED (kod, klucz, osoba).",
+      "type": "string",
+      "poziom": "Z"
+    },
+    {
+      "name": "typ_montazu",
+      "title": "typ_montazu",
+      "description": "Sposób montażu.",
+      "type": "string",
+      "constraints": {
+        "enum": [
+          "wolnostojacy",
+          "elewacja",
+          "wewnatrz_budynku",
+          "pojazd",
+          "nieznany"
+        ]
+      },
+      "poziom": "O"
+    },
+    {
+      "name": "mobilny",
+      "title": "mobilny",
+      "description": "Czy urządzenie jest przenośne/w pojeździe (lokalizacja zmienna).",
+      "type": "string",
+      "constraints": {
+        "enum": [
+          "tak",
+          "nie",
+          "nieznane"
+        ]
+      },
+      "poziom": "O"
+    },
+    {
+      "name": "sezonowy",
+      "title": "sezonowy",
+      "description": "Czy dostępny tylko sezonowo (np. kąpielisko).",
+      "type": "string",
+      "constraints": {
+        "enum": [
+          "tak",
+          "nie",
+          "nieznane"
+        ]
+      },
+      "poziom": "O"
+    },
+    {
+      "name": "producent",
+      "title": "producent",
+      "description": "Producent.",
+      "type": "string",
+      "poziom": "Z"
+    },
+    {
+      "name": "model",
+      "title": "model",
+      "description": "Model.",
+      "type": "string",
+      "poziom": "Z"
+    },
+    {
+      "name": "tryb_pediatryczny",
+      "title": "tryb_pediatryczny",
+      "description": "Czy są elektrody pediatryczne lub tryb dziecięcy.",
+      "type": "string",
+      "constraints": {
+        "enum": [
+          "tak",
+          "nie",
+          "nieznane"
+        ]
+      },
+      "poziom": "Z"
+    },
+    {
+      "name": "data_instalacji",
+      "title": "data_instalacji",
+      "description": "Data instalacji (RRRR-MM-DD).",
+      "type": "date",
+      "poziom": "O"
+    },
+    {
+      "name": "stan_techniczny",
+      "title": "stan_techniczny",
+      "description": "Stan techniczny wg ostatniej kontroli.",
+      "type": "string",
+      "constraints": {
+        "enum": [
+          "sprawny",
+          "niesprawny",
+          "w_serwisie",
+          "nieznany"
+        ]
+      },
+      "poziom": "Z"
+    },
+    {
+      "name": "data_ostatniego_przegladu",
+      "title": "data_ostatniego_przegladu",
+      "description": "Data ostatniego przeglądu serwisowego.",
+      "type": "date",
+      "poziom": "Z"
+    },
+    {
+      "name": "data_waznosci_elektrod",
+      "title": "data_waznosci_elektrod",
+      "description": "Data ważności elektrod.",
+      "type": "date",
+      "poziom": "O"
+    },
+    {
+      "name": "data_waznosci_baterii",
+      "title": "data_waznosci_baterii",
+      "description": "Data ważności baterii.",
+      "type": "date",
+      "poziom": "O"
+    },
+    {
+      "name": "data_weryfikacji",
+      "title": "data_weryfikacji",
+      "description": "Kiedy ostatnio potwierdzono, że urządzenie jest na miejscu.",
+      "type": "date",
+      "constraints": {
+        "required": true
+      },
+      "poziom": "W"
+    },
+    {
+      "name": "sposob_weryfikacji",
+      "title": "sposob_weryfikacji",
+      "description": "Jak potwierdzono obecność urządzenia.",
+      "type": "string",
+      "constraints": {
+        "required": true,
+        "enum": [
+          "deklaracja_dysponenta",
+          "kontrola_na_miejscu",
+          "zgloszenie_spoleczne",
+          "nieznany"
+        ]
+      },
+      "poziom": "W"
+    },
+    {
+      "name": "dysponent_nazwa",
+      "title": "dysponent_nazwa",
+      "description": "Właściciel lub zarządca urządzenia (odpowiada za jego sprawność).",
+      "type": "string",
+      "constraints": {
+        "required": true
+      },
+      "poziom": "W"
+    },
+    {
+      "name": "dysponent_typ",
+      "title": "dysponent_typ",
+      "description": "Rodzaj dysponenta.",
+      "type": "string",
+      "constraints": {
+        "enum": [
+          "jst",
+          "jednostka_jst",
+          "administracja_rzadowa",
+          "podmiot_leczniczy",
+          "uczelnia",
+          "spolka_skarbu_panstwa",
+          "firma",
+          "ngo",
+          "wspolnota_spoldzielnia",
+          "kosciol_zwiazek_wyznaniowy",
+          "inny",
+          "nieznany"
+        ]
+      },
+      "poziom": "Z"
+    },
+    {
+      "name": "dysponent_regon",
+      "title": "dysponent_regon",
+      "description": "REGON dysponenta (tylko podmioty – nie dotyczy osób fizycznych).",
+      "type": "string",
+      "constraints": {
+        "pattern": "^(\\d{9}|\\d{14})$"
+      },
+      "poziom": "Z"
+    },
+    {
+      "name": "kontakt",
+      "title": "kontakt",
+      "description": "Kontakt instytucjonalny (telefon/e-mail instytucji). Bez danych osobowych pracowników (RODO).",
+      "type": "string",
+      "poziom": "O"
+    },
+    {
+      "name": "zdjecie_url",
+      "title": "zdjecie_url",
+      "description": "Adres URL zdjęcia urządzenia/oznakowania.",
+      "type": "string",
+      "poziom": "O"
+    },
+    {
+      "name": "uwagi",
+      "title": "uwagi",
+      "description": "Dodatkowe informacje.",
+      "type": "string",
+      "poziom": "O"
+    },
+    {
+      "name": "zrodlo_id",
+      "title": "zrodlo_id",
+      "description": "Kod źródła w rejestrze źródeł (zrodla/rejestr_zrodel.csv).",
+      "type": "string",
+      "poziom": "A"
+    },
+    {
+      "name": "dostawca_danych",
+      "title": "dostawca_danych",
+      "description": "Instytucja, która opublikowała rekord i za niego ręczy.",
+      "type": "string",
+      "poziom": "A"
+    },
+    {
+      "name": "zrodlo_url",
+      "title": "zrodlo_url",
+      "description": "Adres, z którego pobrano dane.",
+      "type": "string",
+      "poziom": "A"
+    },
+    {
+      "name": "licencja_zrodla",
+      "title": "licencja_zrodla",
+      "description": "Licencja źródła lub informacja o jej braku.",
+      "type": "string",
+      "poziom": "A"
+    },
+    {
+      "name": "data_stanu_zrodla",
+      "title": "data_stanu_zrodla",
+      "description": "Data stanu danych deklarowana przez źródło.",
+      "type": "date",
+      "poziom": "A"
+    },
+    {
+      "name": "data_pobrania",
+      "title": "data_pobrania",
+      "description": "Kiedy agregator pobrał dane.",
+      "type": "date",
+      "poziom": "A"
+    },
+    {
+      "name": "id_zrodlowe",
+      "title": "id_zrodlowe",
+      "description": "Identyfikator/numer pozycji w źródle.",
+      "type": "string",
+      "poziom": "A"
+    },
+    {
+      "name": "adres_oryginalny",
+      "title": "adres_oryginalny",
+      "description": "Adres w postaci podanej przez źródło (przed normalizacją).",
+      "type": "string",
+      "poziom": "A"
+    },
+    {
+      "name": "flagi_jakosci",
+      "title": "flagi_jakosci",
+      "description": "Wykryte problemy i wartości wywnioskowane – oddzielone średnikiem.",
+      "type": "string",
+      "poziom": "A"
+    },
+    {
+      "name": "kompletnosc_proc",
+      "title": "kompletnosc_proc",
+      "description": "Procent wypełnionych pól wymaganych (W).",
+      "type": "integer",
+      "poziom": "A"
+    }
+  ],
+  "primaryKey": [
+    "id_aed"
+  ],
+  "missingValues": [
+    ""
+  ]
+}

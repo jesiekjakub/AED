@@ -47,6 +47,8 @@ const routes: Routes = [
       { path: '', component: HomeComponent },
       { path: '!resource/!:id', redirectTo: '/embed/resource/:id', pathMatch: 'full' },
       { path: '!sitemap', component: SitemapComponent },
+      // MISJA AED – strona defibrylatorów (rozszerzenie)
+      { path: '!aed', data: { breadcrumbs: { translationKey: 'Menu.Aed' } }, loadComponent: () => import('./pages/aed/aed.component').then((m) => m.AedComponent) },
 
       {
         path: '!dataset',
