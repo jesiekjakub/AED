@@ -1,0 +1,46 @@
+# Render Blueprint: publiczne demo frontendu portalu ze stroną /pl/aed.
+#
+# Blueprint tworzy wyłącznie jedną stronę statyczną (static site), która na Renderze
+# jest darmowa. Nie ma tu baz danych, workerów ani usług z płatnym planem.
+#
+# To odpowiednik lokalnego `ng serve --configuration aed`:
+#   - dane AED pochodzą z portal/src/assets/aed,
+#   - zapytania /api, /media, /flags i /cms trafiają do produkcyjnego dane.gov.pl
+#     (reguły poniżej są przeniesione z portal/proxy.aed.conf.json).
+# Wykaz zbiorczy z naszego backendu (/api/aggregated-aed-info) wymaga pełnego
+# portalu uruchomionego lokalnie, więc w tym demo nie jest dostępny.
+services:
+  - type: web
+    runtime: static
+    name: aed-na-ratunek
+    # Konfiguracja `development` zostawia environment.production = false, więc aplikacja
+    # woła API pod względnym adresem /api. W konfiguracji `production` szukałaby go pod
+    # api.<domena strony>, czyli pod adresem, którego na Renderze nie ma.
+    # Pozostałe flagi włączają optymalizację paczki jak w buildzie produkcyjnym.
+    buildCommand: cd portal && npm ci --include=dev --no-audit --no-fund && npx ng build --configuration development --optimization --no-source-map --no-named-chunks --output-hashing all
+    staticPublishPath: portal/dist/frontend/browser
+    autoDeployTrigger: commit
+    buildFilter:
+      paths:
+        - portal/**
+        - render.yaml
+    envVars:
+      - key: NODE_VERSION
+        value: 24.13.0
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://api.dane.gov.pl/1.4/*
+      - type: rewrite
+        source: /media/*
+        destination: https://api.dane.gov.pl/media/*
+      - type: rewrite
+        source: /flags/*
+        destination: https://dane.gov.pl/flags/*
+      - type: rewrite
+        source: /cms/*
+        destination: https://cms.dane.gov.pl/*
+      # Aplikacja jednostronicowa: każdy inny adres obsługuje router Angulara.
+      - type: rewrite
+        source: /*
+        destination: /index.html
