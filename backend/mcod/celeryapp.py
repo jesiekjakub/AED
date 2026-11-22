@@ -90,6 +90,12 @@ def get_beat_schedule(
             "options": default_options,
             "schedule": crontab(minute=30, hour=3),
         },
+        # MISJA AED - codzienna agregacja wykazów AED do "Wykazu zbiorczego AED"
+        "aed_main_resource_creation": {
+            "task": "mcod.resources.tasks.create_main_aed_resource_task",
+            "options": default_options,
+            "schedule": crontab(minute=45, hour=3),
+        },
         "kibana-statistics": {
             "task": "mcod.counters.tasks.kibana_statistics",
             "options": default_options,

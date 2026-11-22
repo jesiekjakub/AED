@@ -89,6 +89,7 @@ NEWSLETTER_MEDIA_ROOT = str(os.path.join(MEDIA_ROOT, "newsletter"))
 RESOURCES_MEDIA_ROOT = str(os.path.join(MEDIA_ROOT, "resources"))
 BROKEN_LINKS_CREATION_STAGING_ROOT = str(ROOT_DIR.path(MEDIA_ROOT, "broken_links_temp"))
 MAIN_DGA_RESOURCE_XLSX_CREATION_ROOT = str(ROOT_DIR.path(MEDIA_ROOT, "main_dga"))
+MAIN_AED_RESOURCE_FILES_CREATION_ROOT = str(ROOT_DIR.path(MEDIA_ROOT, "main_aed"))  # MISJA AED
 RESOURCES_FILES_TO_REMOVE_ROOT = str(ROOT_DIR.path(MEDIA_ROOT, "to_be_removed", "resources"))
 REPORTS_MEDIA_ROOT = str(os.path.join(MEDIA_ROOT, "reports"))
 SHOWCASES_MEDIA_ROOT = str(os.path.join(MEDIA_ROOT, "showcases"))
@@ -98,6 +99,9 @@ METADATA_MEDIA_ROOT = str(ROOT_DIR.path(MEDIA_ROOT, "datasets", "catalog"))
 # Do not use cache in tests
 MAIN_DGA_RESOURCE_CREATION_CACHE_TIMEOUT = 0
 MAIN_DGA_RESOURCE_XLSX_CREATION_CACHE_TIMEOUT = 0
+# MISJA AED
+MAIN_AED_RESOURCE_CREATION_CACHE_TIMEOUT = 0
+MAIN_AED_RESOURCE_FILES_CREATION_CACHE_TIMEOUT = 0
 
 CACHES.update({"test": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"}})
 
@@ -183,6 +187,7 @@ DISCOURSE_FORUM_ENABLED = False
 FIELD_ENCRYPTION_KEYS = ["c2d95c58322ca6ddcf8b0c304c8131f6b515ff5f3a297dcdadeda1a82cb4ec9b"]
 
 MAIN_DGA_DATASET_OWNER_ORGANIZATION_PK = 99
+MAIN_AED_DATASET_OWNER_ORGANIZATION_PK = 99  # MISJA AED
 
 # Set unique cache prefix for each pytest worker to isolate session clearing
 # in a shared cache environment, preventing conflicts between workers.

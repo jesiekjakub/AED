@@ -1,0 +1,17 @@
+{% load i18n %}
+---
+tags:
+   - API Endpoints
+summary: Returns info about Aggregated AED resource (Misja AED)
+description: |
+  {% spaceless %}
+      <p>Returns data about Aggregated AED list ("Wykaz zbiorczy AED") - main resource_id, dataset_id,
+      number of source resources and rows, last aggregation date and validation report of source resources.</p>
+  {% endspaceless %}
+responses:
+  200:
+    description: valid response in jsonapi format
+    content:
+      application/vnd.api+json:
+        schema:
+          $ref: '#/components/schemas/AggregatedAEDInfo'

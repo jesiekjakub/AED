@@ -47,8 +47,9 @@ from mcod.resources.deserializers import (
     TableApiSearchRequest,
 )
 from mcod.resources.documents import ResourceDocument
-from mcod.resources.models import RESOURCE_TYPE_FILE, AggregatedDGAInfo, ResourceFile
+from mcod.resources.models import RESOURCE_TYPE_FILE, AggregatedAEDInfo, AggregatedDGAInfo, ResourceFile
 from mcod.resources.serializers import (
+    AggregatedAEDInfoApiResponse,
     AggregatedDGAInfoApiResponse,
     ChartApiResponse,
     CommentApiResponse,
@@ -810,3 +811,31 @@ class DownloadResourceFileView(View):
         response["X-Accel-Redirect"] = f"/protected_resources/{safe_path}"
 
         return response
+
+
+# MISJA AED
+class AggregatedAEDInfoView(JsonAPIView):
+
+    @falcon.before(login_optional)
+    @versioned
+    def on_get(self, request, response, *args, **kwargs):
+        """
+        ---
+        doc_template: docs/resources/aggregated_aed_info_view.yml
+        """
+        self.handle(request, response, self.GET, *args, **kwargs)
+
+    class GET(BaseHdlr):
+        database_model = apps.get_model("resources", "AggregatedAEDInfo")
+        serializer_schema = AggregatedAEDInfoApiResponse
+
+        def _get_data(self, cleaned, *args, **kwargs) -> AggregatedAEDInfo:
+            data: AggregatedAEDInfo = self.database_model.objects.select_related("resource", "resource__dataset").first()
+
+            if not data or data.resource is None or data.resource.is_removed or not data.resource.is_published:
+                raise falcon.HTTPNotFound
+            return data
+
+        def serialize(self, *args, **kwargs):
+            self.prepare_context(*args, **kwargs)
+            return self.serializer.dump(self.response.context.data)

@@ -577,6 +577,8 @@ class Resource(ExtendedModel):
     automatic_data_date_end = models.DateField(verbose_name=_("Data date end date update"), blank=True, null=True)
     endless_data_date_update = models.BooleanField(verbose_name=_("Endless data date update"), default=False)
     contains_protected_data = models.BooleanField(verbose_name=_("Contains protected data list"), default=False)
+    # MISJA AED - zasób zawiera wykaz lokalizacji defibrylatorów AED zgodny z wzorcowym zakresem danych
+    contains_aed_list = models.BooleanField(verbose_name="Zasób zawiera wykaz AED (Misja AED)", default=False)
 
     def __str__(self):
         return self.title
@@ -1651,6 +1653,51 @@ class AggregatedDGAInfo(models.Model):
             return self.resource.dataset
 
         return None
+
+
+# MISJA AED
+class AggregatedAEDInfo(models.Model):
+    """
+    Informacje o ostatnim uruchomieniu agregacji wykazów AED ("Wykaz zbiorczy AED").
+    Model wzorowany na `AggregatedDGAInfo` - może istnieć tylko jedna instancja.
+    """
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    # Zasób główny (CSV) wykazu zbiorczego AED.
+    resource = models.ForeignKey(Resource, on_delete=models.SET_NULL, null=True, related_name="+")
+    # Pozostałe zasoby wykazu zbiorczego (te same dane w innych formatach).
+    xlsx_resource = models.ForeignKey(Resource, on_delete=models.SET_NULL, null=True, blank=True, related_name="+")
+    geojson_resource = models.ForeignKey(Resource, on_delete=models.SET_NULL, null=True, blank=True, related_name="+")
+    last_run_date = models.DateTimeField(null=True, blank=True)
+    source_resources_count = models.PositiveIntegerField(default=0)
+    aggregated_resources_count = models.PositiveIntegerField(default=0)
+    rows_count = models.PositiveIntegerField(default=0)
+    invalid_rows_count = models.PositiveIntegerField(default=0)
+    geo_rows_count = models.PositiveIntegerField(default=0)
+    # Raport walidacji zasobów źródłowych (lista słowników, po jednym na zasób).
+    validation_report = JSONField(default=list, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.id and AggregatedAEDInfo.objects.exists():
+            raise ValidationError("There can be only one AggregatedAEDInfo instance")
+        return super(AggregatedAEDInfo, self).save(*args, **kwargs)
+
+    @property
+    def main_aed_resource(self) -> Optional[Resource]:
+        if self.resource and self.resource.is_published and not self.resource.is_removed:
+            return self.resource
+        return None
+
+    @property
+    def main_aed_dataset(self) -> Optional[Dataset]:
+        if self.resource and self.resource.dataset.is_published and not self.resource.dataset.is_removed:
+            return self.resource.dataset
+        return None
+
+    @property
+    def main_aed_resources_ids(self) -> list:
+        return [pk for pk in (self.resource_id, self.xlsx_resource_id, self.geojson_resource_id) if pk]
 
 
 class Chart(ExtendedModel):

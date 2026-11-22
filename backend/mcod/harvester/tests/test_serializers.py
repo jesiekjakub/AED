@@ -4,7 +4,7 @@ from typing import List, Optional
 import pytest
 from pytest_mock import MockerFixture
 
-from mcod.harvester.serializers import DatasetSchema, XMLDatasetSchema
+from mcod.harvester.serializers import DatasetSchema, XMLDatasetSchema, XMLResourceSchema
 from mcod.harvester.tests.utils import mocked_response
 from mcod.harvester.utils import get_xml_as_dict
 from mcod.lib.utils import get_file_content
@@ -98,6 +98,7 @@ def test_dataset_xml_prepare_data_handles_top_level_none():
         ("import_example1.12.xml", "1.12"),
         ("import_example1.13.xml", "1.13"),
         ("import_example1.13_data_date.xml", "1.13"),
+        ("import_example1.14_aed.xml", "1.14"),  # MISJA AED
     ),
 )
 def test_xml_parser_works_with_full_input(xml_file_name: str, schema_version: str):
@@ -115,3 +116,20 @@ def test_xml_parser_works_with_full_input(xml_file_name: str, schema_version: st
     assert parsed_data["dataset"][0]["resources"]
     assert parsed_data["dataset"][0]["resources"]["resource"][0]["dataDate"]
     assert parsed_data["dataset"][0]["resources"]["resource"][0]["extIdent"]
+
+
+# MISJA AED
+def test_xml_parser_reads_contains_aed_list_from_schema_1_14():
+    xml_file_content: bytes = get_file_content(Path("harvester") / "import_example1.14_aed.xml")
+
+    parsed_data = get_xml_as_dict(source=xml_file_content, version="1.14")
+
+    resources = parsed_data["dataset"][0]["resources"]["resource"]
+    assert [res.get("containsAedList") for res in resources] == [None, True, None, None]
+
+
+# MISJA AED
+def test_xml_resource_schema_maps_contains_aed_list_field():
+    field = XMLResourceSchema().fields["contains_aed_list"]
+    assert field.data_key == "containsAedList"
+    assert field.missing is False

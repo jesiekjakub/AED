@@ -150,6 +150,7 @@ class ResourceApiAttrs(ObjectAttrs, HighlightObjectMixin):
     has_high_value_data_from_ec_list = fields.Boolean()
     has_research_data = fields.Boolean()
     contains_protected_data = fields.Boolean()
+    contains_aed_list = fields.Boolean()  # MISJA AED
     regions = fields.Method("get_regions")
     files = fields.Method("get_files")
     supplement_docs = fields.Nested(SupplementSchema, data_key="supplements", many=True)
@@ -694,3 +695,22 @@ class AggregatedDGAInfoApiResponse(ExtSchema):
     dataset_slug = fields.Str(attribute="resource.dataset.slug", data_key="dataset_slug")
     resource_id = fields.Int(attribute="resource.id", data_key="resource_id")
     resource_slug = fields.Str(attribute="resource.slug", data_key="resource_slug")
+
+
+# MISJA AED
+class AggregatedAEDInfoApiResponse(ExtSchema):
+    dataset_id = fields.Int(attribute="resource.dataset.id", data_key="dataset_id")
+    dataset_slug = fields.Str(attribute="resource.dataset.slug", data_key="dataset_slug")
+    resource_id = fields.Int(attribute="resource.id", data_key="resource_id")
+    resource_slug = fields.Str(attribute="resource.slug", data_key="resource_slug")
+    resource_url = fields.Str(attribute="resource.frontend_absolute_url", data_key="resource_url")
+    download_url = fields.Str(attribute="resource.download_url", data_key="download_url")
+    xlsx_resource_id = fields.Int(attribute="xlsx_resource_id", data_key="xlsx_resource_id", allow_none=True)
+    geojson_resource_id = fields.Int(attribute="geojson_resource_id", data_key="geojson_resource_id", allow_none=True)
+    last_run_date = ma.fields.DateTime(data_key="last_run_date")
+    source_resources_count = fields.Int(data_key="source_resources_count")
+    aggregated_resources_count = fields.Int(data_key="aggregated_resources_count")
+    rows_count = fields.Int(data_key="rows_count")
+    invalid_rows_count = fields.Int(data_key="invalid_rows_count")
+    geo_rows_count = fields.Int(data_key="geo_rows_count")
+    validation_report = ma.fields.Raw(data_key="validation_report")

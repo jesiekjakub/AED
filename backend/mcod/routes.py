@@ -147,6 +147,8 @@ routes = [
     ("/resources/{id:int},{slug}/comments", res_views.ResourceCommentsView()),
     # DGA
     ("/dga-aggregated", res_views.AggregatedDGAInfoView()),
+    # MISJA AED
+    ("/aggregated-aed-info", res_views.AggregatedAEDInfoView()),
     # Depricated views
     ("/resources/{id:int}/incr_download_count", res_views.ResourceDownloadCounter()),
     (

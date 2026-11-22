@@ -294,6 +294,14 @@ class AggregatedDGAInfoFactory(factory.django.DjangoModelFactory):
         model = models.AggregatedDGAInfo
 
 
+# MISJA AED
+class AggregatedAEDInfoFactory(factory.django.DjangoModelFactory):
+    resource = factory.SubFactory(ResourceFactory)
+
+    class Meta:
+        model = models.AggregatedAEDInfo
+
+
 class ResourceTxtFileFactory(BaseResourceFileFactory):
     file = factory.django.FileField(
         from_func=lambda: BytesIO(b"some text"),

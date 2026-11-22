@@ -1,0 +1,3 @@
+id_aed;status;nazwa_obiektu;miejscowosc;ulica;nr_budynku;kod_pocztowy;szerokosc_geograficzna;dlugosc_geograficzna;wewnatrz_budynku;opis_lokalizacji;dostep;godziny_dostepnosci;zabezpieczenie;data_weryfikacji;sposob_weryfikacji;dysponent_nazwa;notatka_wewnetrzna
+SP-01;aktywny;Starostwo Powiatowe;Przykładów;ul. Główna;10;11-222;53,123456;20,654321;tak;Parter, przy portierni;dla_klientow_pracownikow;Pn-Pt 07:30-15:30;u_personelu;2026-09-30;kontrola_na_miejscu;Starostwo Powiatowe w Przykładowie;do usunięcia
+SP-02;tymczasowo_niedostepny;Szpital Powiatowy;Przykładów;;;11-223;53,130000;20,660000;nie;Wiata przy SOR;publiczny;24/7;szafka_otwarta;2026-09-30;deklaracja_dysponenta;Starostwo Powiatowe w Przykładowie;

@@ -1,7 +1,8 @@
 import logging
 import os
+from io import BytesIO
 from mimetypes import guess_extension
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 import magic
 from dal import autocomplete, forward
@@ -31,6 +32,8 @@ from mcod.lib.widgets import (
 from mcod.organizations.models import Organization
 from mcod.regions.fields import RegionsMultipleChoiceField
 from mcod.resources.archives import is_password_protected_archive_file
+from mcod.resources.aed_constants import AED_RESOURCE_EXTENSIONS  # MISJA AED
+from mcod.resources.aed_utils import get_missing_aed_required_columns_in_file  # MISJA AED
 from mcod.resources.dga_constants import (
     ALLOWED_DGA_INSTITUTIONS,
     DGA_COLUMNS,
@@ -264,6 +267,17 @@ class ResourceForm(forms.ModelForm, HighValueDataFormValidatorMixin):
         ),
         widget=CheckboxSelect(attrs={"class": "inline"}),
     )
+    # MISJA AED
+    contains_aed_list = forms.BooleanField(
+        required=False,
+        label="Zasób zawiera wykaz AED (Misja AED)",
+        help_text=(
+            "Zaznaczenie oznacza, że zasób jest wykazem lokalizacji defibrylatorów AED zgodnym "
+            "z wzorcowym zakresem danych AED. Plik (csv, xls lub xlsx) musi zawierać wszystkie "
+            "kolumny wymagane. Zasób zostanie automatycznie dołączony do zbiorczego wykazu AED "
+            "publikowanego w portalu."
+        ),
+    )
     confirm_save = forms.CharField(required=False, widget=forms.HiddenInput())
 
     def __init__(self, *args, **kwargs):
@@ -333,10 +347,66 @@ class ResourceForm(forms.ModelForm, HighValueDataFormValidatorMixin):
             if not is_main_dga_resource and organization:
                 self._remove_dga_flag_from_current_dga_resource_if_needed(data, organization)
 
+        # MISJA AED
+        if data.get("contains_aed_list"):
+            self._validate_aed_list(data, creating_resource, contains_protected_data)
+
         self.validate_high_value_data_flags_conflict(data)
         if organization:
             self._validate_high_value_data_from_ec_list_organization(data, organization)
         return data
+
+    # MISJA AED
+    def _validate_aed_list(self, data: dict, creating_resource: bool, contains_protected_data: bool) -> None:
+        """
+        Validates the file of a resource marked as AED list: file extension
+        (csv, xls, xlsx) and presence of all required (poziom "W") columns of
+        the AED tableschema. Resources with a link only are validated later,
+        during the aggregation.
+        """
+        if contains_protected_data:
+            self.add_error(
+                "contains_aed_list",
+                "Zasób nie może być jednocześnie wykazem chronionych danych i wykazem AED.",
+            )
+            return
+
+        error_field: str = "file" if creating_resource else "contains_aed_list"
+        file: Optional[UploadedFile] = data.get("file") if creating_resource else None
+        if file:
+            file_name: str = file.name
+            content = file
+        else:
+            main_file = None if creating_resource else self.instance.main_file
+            if not main_file:
+                return
+            file_name = main_file.name
+            try:
+                with open(main_file.path, "rb") as existing_file:
+                    content = BytesIO(existing_file.read())
+            except (FileNotFoundError, ValueError):
+                self.add_error(error_field, _("Cannot read existing file") + f": {main_file.name}.")
+                return
+
+        extension: str = os.path.splitext(file_name)[1].lower().lstrip(".")
+        if extension not in AED_RESOURCE_EXTENSIONS:
+            content_type_ext: Optional[str] = guess_extension(getattr(file, "content_type", "") or "")
+            extension = content_type_ext[1:] if content_type_ext else extension
+        if extension not in AED_RESOURCE_EXTENSIONS:
+            self.add_error(
+                error_field,
+                "Wykaz AED musi być plikiem w formacie csv, xls lub xlsx.",
+            )
+            return
+
+        missing_columns: Optional[List[str]] = get_missing_aed_required_columns_in_file(content, extension)
+        if missing_columns is None:
+            self.add_error(error_field, "Nie można odczytać pliku wykazu AED.")
+        elif missing_columns:
+            self.add_error(
+                error_field,
+                "Plik oznaczony jako wykaz AED nie zawiera wymaganych kolumn: " + ", ".join(missing_columns) + ".",
+            )
 
     def _validate_data_date(self, data: dict) -> None:
         data_date_err = Resource.get_auto_data_date_errors(data)
@@ -597,6 +667,7 @@ class ChangeResourceForm(ResourceForm, UnEscapeWidgetMixin):
         data["has_high_value_data"] = instance.has_high_value_data
         data["has_research_data"] = instance.has_research_data
         data["contains_protected_data"] = instance.contains_protected_data
+        data["contains_aed_list"] = instance.contains_aed_list  # MISJA AED
         data["has_high_value_data_from_ec_list"] = instance.has_high_value_data_from_ec_list
         return data
 

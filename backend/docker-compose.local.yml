@@ -123,7 +123,7 @@ services:
       - "0:8001"
     networks:
       backend:
-        ipv4_address: 172.18.18.101
+        ipv4_address: 10.213.18.101
     mem_limit: 2000m
     mem_swappiness: 0
     profiles: []
@@ -146,7 +146,7 @@ services:
       - "mcod.api:app"
     networks:
       backend:
-        ipv4_address: 172.18.18.102
+        ipv4_address: 10.213.18.102
 
   mcod-local-cms:
     <<: *local-container-service
@@ -162,7 +162,7 @@ services:
       - "0:8002"
     networks:
       backend:
-        ipv4_address: 172.18.18.103
+        ipv4_address: 10.213.18.103
 
   mcod-local-ws:
     <<: *local-container-service
@@ -181,7 +181,7 @@ services:
       - "mcod.asgi:application"
     networks:
       backend:
-        ipv4_address: 172.18.18.104
+        ipv4_address: 10.213.18.104
 
   mcod-local-celery:
     <<: *local-container-service
@@ -199,7 +199,7 @@ services:
       - /usr/local/bin/start-celery-local
     networks:
       backend:
-        ipv4_address: 172.18.18.110 # unused, for clarity
+        ipv4_address: 10.213.18.110 # unused, for clarity
 
   mcod-local-run:
     <<: *local-container-with-tests

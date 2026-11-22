@@ -289,6 +289,7 @@ HARVESTER_XML_VERSION_TO_SCHEMA_PATH = {
     "1.11": HARVESTER_DATA_DIR.path("xml_import_otwarte_dane_1_11.xsd").root,
     "1.12": HARVESTER_DATA_DIR.path("xml_import_otwarte_dane_1_12.xsd").root,
     "1.13": HARVESTER_DATA_DIR.path("xml_import_otwarte_dane_1_13.xsd").root,
+    "1.14": HARVESTER_DATA_DIR.path("xml_import_otwarte_dane_1_14.xsd").root,  # MISJA AED: containsAedList
 }
 
 HARVESTER_IMPORTERS = {
@@ -402,6 +403,8 @@ METADATA_MEDIA_ROOT = str(ROOT_DIR.path(MEDIA_ROOT, "datasets", "catalog"))
 DGA_RESOURCE_CREATION_STAGING_ROOT = str(ROOT_DIR.path(MEDIA_ROOT, "dga_temp"))
 BROKEN_LINKS_CREATION_STAGING_ROOT = str(ROOT_DIR.path(MEDIA_ROOT, "broken_links_temp"))
 MAIN_DGA_RESOURCE_XLSX_CREATION_ROOT = str(ROOT_DIR.path(MEDIA_ROOT, "main_dga"))
+# MISJA AED - katalog roboczy dla plików wykazu zbiorczego AED
+MAIN_AED_RESOURCE_FILES_CREATION_ROOT = str(ROOT_DIR.path(MEDIA_ROOT, "main_aed"))
 
 MEDIA_URL = "/media/"
 ACADEMY_URL = "%s%s" % (MEDIA_URL, "academy")
@@ -970,6 +973,7 @@ CELERY_TASK_ROUTES = {
     "mcod.submissions.tasks.generate_statistical_report_for_all_submissions_task": {"queue": "reports"},
     "mcod.resources.tasks.check_link_protocol": {"queue": "resources"},
     "mcod.resources.tasks.create_main_dga_resource_task": {"queue": "resources"},
+    "mcod.resources.tasks.create_main_aed_resource_task": {"queue": "resources"},  # MISJA AED
     "mcod.resources.tasks.delete_es_resource_tabular_data_index": {"queue": "indexing_data"},
     "mcod.resources.tasks.delete_es_resource_tabular_data_indexes_for_organization": {"queue": "indexing_data"},
     "mcod.resources.tasks.entrypoint_process_resource_file_validation_task": {"queue": "resources"},
@@ -1745,6 +1749,46 @@ MAIN_DGA_DATASET_TAGS_NAMES = [
     "wykaz zasobów chronionych danych",
     "akt o zarządzaniu danymi",
     "chronione dane",
+]
+
+# MISJA AED - Main AED Resource ("Wykaz zbiorczy AED") creation task related constants
+MAIN_AED_RESOURCE_FILES_CREATION_CACHE_TIMEOUT = 60 * 60  # 60 minutes
+# Set None to prevent release cache before deleting created objects if any
+# exception will occur (see `clean_up_after_main_aed_resource_creation`).
+MAIN_AED_RESOURCE_CREATION_CACHE_TIMEOUT = None
+MAIN_AED_TASK_LOCK_TIMEOUT = 60 * 60  # 60 minutes
+MAIN_AED_DATASET_OWNER_ORGANIZATION_PK = env(
+    "MAIN_AED_DATASET_OWNER_ORGANIZATION_PK", default=MAIN_DGA_DATASET_OWNER_ORGANIZATION_PK
+)
+MAIN_AED_RESOURCE_DEFAULT_TITLE = "Wykaz zbiorczy AED"
+MAIN_AED_RESOURCE_DEFAULT_DESC = (
+    "Zbiorczy wykaz lokalizacji automatycznych defibrylatorów zewnętrznych (AED) "
+    "utworzony automatycznie z zasobów oznaczonych przez dostawców danych jako "
+    "wykaz AED (Misja AED). Dane zostały sprawdzone względem wzorcowego zakresu "
+    "danych AED i uzupełnione o informacje o pochodzeniu: nazwę dysponenta, link do "
+    "zasobu źródłowego oraz datę aktualizacji zasobu źródłowego."
+)
+MAIN_AED_XLSX_RESOURCE_DEFAULT_TITLE = "Wykaz zbiorczy AED (XLSX)"
+MAIN_AED_GEOJSON_RESOURCE_DEFAULT_TITLE = "Wykaz zbiorczy AED - mapa (GeoJSON)"
+MAIN_AED_GEOJSON_RESOURCE_DEFAULT_DESC = (
+    "Lokalizacje automatycznych defibrylatorów zewnętrznych (AED) z wykazu zbiorczego AED "
+    "w formacie GeoJSON. Zawiera wyłącznie urządzenia z poprawnymi współrzędnymi geograficznymi."
+)
+MAIN_AED_DATASET_DEFAULT_TITLE = "Wykaz zbiorczy defibrylatorów AED"
+MAIN_AED_DATASET_DEFAULT_DESC = (
+    "Zbiorczy wykaz lokalizacji automatycznych defibrylatorów zewnętrznych (AED) "
+    "publikowanych w portalu przez wielu dostawców danych. Wykaz jest aktualizowany "
+    "automatycznie (codziennie) na podstawie zasobów oznaczonych jako wykaz AED "
+    "i zgodnych z wzorcowym zakresem danych AED (Misja AED)."
+)
+MAIN_AED_FILE_NAME_PREFIX = "Wykaz zbiorczy AED"
+MAIN_AED_XLSX_WORKSHEET_NAME = "AED"
+MAIN_AED_DATASET_UPDATE_NOTIFICATION_EMAIL = env("MAIN_AED_DATASET_UPDATE_NOTIFICATION_EMAIL", default="")
+MAIN_AED_DATASET_CATEGORIES_TITLES = ["Zdrowie"]
+MAIN_AED_DATASET_TAGS_NAMES = [
+    "AED",
+    "defibrylator",
+    "misja-aed",
 ]
 
 PASSWORD_RESET_PATH = "/user/reset-password/%s/"
