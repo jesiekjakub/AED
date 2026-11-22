@@ -76,7 +76,7 @@ h2{{font-size:10.5pt;color:{GOV};margin:3mm 0 1mm}} .kol{{display:grid;grid-temp
 </div><div>
 <h2>Jak</h2><ul>
 <li>Moduł AED w istniejących szkoleniach MC: „Samorząd otwarty na dane” (2000 samorządowców) i Akademia Danych.</li>
-<li>Pilotaż przez listy intencyjne z miastami, które mają już dane o AED (jak MC z Kielcami i Metropolią GZM).</li>
+<li>Pismo Ministerstwa Cyfryzacji do każdej gminy przez e-Doręczenia i mail z portalu dane.gov.pl do wszystkich dostawców danych.</li>
 <li><i>Nasza propozycja:</i> naklejka „AED na ratunek” z kodem QR na szafkę AED dla dysponentów, którzy opublikowali dane.</li>
 <li>Strona dane.gov.pl/pl/aed: wykaz zbiorczy, szablon, walidator; portal przypomina dostawcom o aktualizacji.</li></ul>
 <h2>Mierniki</h2><ul>

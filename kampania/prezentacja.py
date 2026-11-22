@@ -94,21 +94,6 @@ def main():
 <p class="meta">Misja AED – Dane na ratunek · Ministerstwo Cyfryzacji · HackNation 2026</p></div>
 <div class="tr">{tel('aed_telefon_najblizszy.png', '138mm')}</div></section>""")
 
-    # 1b. CO ODDAJEMY
-    s.append(sl("Co oddajemy", "Zrobiliśmy więcej, niż wymagało zadanie", f"""
-<div class="oddaj"><div class="wym"><h3>Wymagane w zadaniu</h3>
-<p>✔ Wzorcowy zakres danych (XLSX)</p><p>✔ Prototyp rozwiązania</p><p>✔ Kod źródłowy</p><p>✔ Logo i księga znaku</p><p>✔ Opis kampanii</p><p>✔ Prezentacja</p></div>
-<div class="extra"><h3>Ponad wymagania</h3><div class="kafle4">
-<div><b>działa w dane.gov.pl</b>wykaz zbiorczy wbudowany w prawdziwy kod portalu: panel, API, harwester, zadanie nocne</div>
-<div><b>{d['aed']} AED</b>prawdziwe dane z {d['zrodel']} źródeł, gotowe na start wykazu</div>
-<div><b>{d['pg_przejrzane']} gmin</b>stron urzędów przejrzanych automatycznie</div>
-<div><b>własny geokoder</b>offline, z urzędowego rejestru adresów PRG</div>
-<div><b>mapa /pl/aed</b>„pokaż najbliższy AED”, WCAG 2.2 AA bez błędów</div>
-<div><b>formularz i walidator</b>dysponent robi poprawny plik bez Excela</div>
-<div><b>{d['rej']} partnerów</b>rejestr podmiotów, które mają dane o AED</div>
-<div><b>naklejka z QR</b>na szafkę AED – prowadzi prosto do mapy</div>
-</div></div></div>"""))
-
     # 2. PROBLEM
     s.append(sl("Problem", "Dane o AED istnieją. Tylko nikt ich nie znajdzie na czas.", f"""
 <div class="probl"><div class="liczby2">
@@ -153,10 +138,10 @@ def main():
     # 6. MIESZKANIEC
     s.append(sl("Kroki użytkownika · mieszkaniec", "Od wejścia na stronę do trasy do AED – trzy kroki", f"""
 <div class="mies">
-<div>{tel('aed_telefon_start.png', '100mm')}<p><em>1</em>Wchodzi w „Mapa AED” w menu portalu</p></div>
-<div>{tel('aed_telefon_najblizszy.png', '100mm')}<p><em>2</em>Klika „Pokaż najbliższy AED”</p></div>
-<div class="szer">{shot('aed_mapa_szczegoly.png', 'width:100%')}<p><em>3</em>Widzi, czy AED jest teraz dostępny i czy nie jest zamknięty – i wyznacza trasę</p>
-<div class="znaczek">WCAG 2.2 AA · 0 błędów<br><small>test axe-core, komputer i telefon</small></div></div>
+<div>{tel('aed_telefon_start.png', '92mm')}<p><em>1</em>Wchodzi w „Mapa AED” w menu portalu</p></div>
+<div>{tel('aed_telefon_najblizszy.png', '92mm')}<p><em>2</em>Klika „Pokaż najbliższy AED”</p></div>
+<div class="szer">{shot('aed_mapa_szczegoly.png', 'width:100%;max-height:80mm;object-fit:cover;object-position:top right')}<p><em>3</em>Widzi, czy AED jest teraz dostępny i czy nie jest zamknięty – i wyznacza trasę</p>
+<div class="znaczek">WCAG 2.2 AA · 0 błędów <small>(test axe-core, komputer i telefon)</small></div></div>
 </div>"""))
 
     # 7. DYSPONENT
@@ -200,7 +185,7 @@ def main():
 <div class="logo-duze"><img src="{logo}"><p class="szary">Logo zbudowane tak jak znak Otwarte Dane – ta sama konstrukcja, kolory i czcionka. Pełna księga znaku jest w repozytorium.</p></div>
 <div class="fakty">
 <p><b>Do kogo mówimy:</b> do gmin, które właśnie kupują AED z Programu Ochrony Ludności 2025–2026, oraz do dużych dysponentów, takich jak Poczta Polska, PKP i przewoźnicy miejscy.</p>
-<p><b>Jak do nich dotrzemy:</b> przez szkolenia, które Ministerstwo Cyfryzacji już prowadzi dla samorządów („Samorząd otwarty na dane”, Akademia Danych), i przez pilotaż z kilkoma miastami.</p>
+<p><b>Jak do nich dotrzemy:</b> Ministerstwo Cyfryzacji wysyła pismo do każdej gminy przez e-Doręczenia, a portal dane.gov.pl wysyła maila do wszystkich swoich dostawców danych. Temat trafia też do szkoleń, które ministerstwo już prowadzi dla samorządów („Samorząd otwarty na dane”, Akademia Danych).</p>
 <p><b>Co dostaje dysponent:</b> prosty formularz albo szablon, walidator i dwustronicową instrukcję.</p></div>
 <div><div class="naklejka"><img src="{logo}" style="width:100%"><div style="display:flex;gap:3mm;align-items:center;margin-top:3mm"><img src="{data_uri(qr_svg('https://dane.gov.pl/pl/aed'))}" style="width:22mm"><small>Ten AED jest na mapie<br><b>dane.gov.pl/pl/aed</b><br>Dzwoń <b>112</b></small></div></div>
 <p class="podpis" style="text-align:center;margin-top:6mm"><b>Naklejka na szafkę AED</b> (nasza propozycja): kod QR prowadzi do mapy.</p></div>
@@ -215,7 +200,7 @@ def main():
 <p><b>Start z danymi.</b> Od pierwszego dnia w wykazie może być {d['aed']} AED.</p></div>
 <div class="droga">
 <div><em>1</em>Przegląd i wdrożenie kodu w portalu</div>
-<div><em>2</em>Pilotaż z 5 urzędami, które już publikują AED</div>
+<div><em>2</em>Pismo do każdej gminy przez e-Doręczenia i mail do dostawców danych</div>
 <div><em>3</em>Szkolenia dla gmin i kampania „AED na ratunek”</div>
 <div class="hl"><em>4</em>Wszystkie AED w Polsce w jednym wykazie</div></div></div>"""))
 
@@ -227,10 +212,25 @@ def main():
 <li>Niektóre strony blokują automatyczne pobieranie. Nie obchodzimy tych blokad.</li>
 <li>Dane z OpenStreetMap nie trafiają do wykazu. Można je tylko włączyć na mapie jako niesprawdzone.</li></ul></div>
 <div><h3>Co dalej</h3><ul>
-<li>Włączyć pole „wykaz AED” w prawdziwym dane.gov.pl i zacząć od 5 urzędów, które już publikują AED.</li>
+<li>Włączyć pole „wykaz AED” w prawdziwym dane.gov.pl.</li>
 <li>Dać wykaz dyspozytorom numeru 112.</li>
 <li>Przypominać dysponentom o przeglądach i wymianie elektrod.</li></ul>
 <p class="szary" style="margin-top:6mm">Przy kodzie i materiałach pomagał nam asystent AI (Claude). Decyzje i sprawdzanie – zespół.</p></div></div>"""))
+
+    # 1b. CO ODDAJEMY
+    s.append(sl("Co oddajemy", "Zrobiliśmy więcej, niż wymagało zadanie", f"""
+<div class="oddaj"><div class="wym"><h3>Wymagane w zadaniu</h3>
+<p>✔ Wzorcowy zakres danych (XLSX)</p><p>✔ Prototyp rozwiązania</p><p>✔ Kod źródłowy</p><p>✔ Logo i księga znaku</p><p>✔ Opis kampanii</p><p>✔ Prezentacja</p></div>
+<div class="extra"><h3>Ponad wymagania</h3><div class="kafle4">
+<div><b>działa w dane.gov.pl</b>wykaz zbiorczy wbudowany w prawdziwy kod portalu: panel, API, harwester, zadanie nocne</div>
+<div><b>{d['aed']} AED</b>prawdziwe dane z {d['zrodel']} źródeł, gotowe na start wykazu</div>
+<div><b>{d['pg_przejrzane']} gmin</b>stron urzędów przejrzanych automatycznie</div>
+<div><b>własny geokoder</b>offline, z urzędowego rejestru adresów PRG</div>
+<div><b>mapa /pl/aed</b>„pokaż najbliższy AED”, WCAG 2.2 AA bez błędów</div>
+<div><b>formularz i walidator</b>dysponent robi poprawny plik bez Excela</div>
+<div><b>{d['rej']} partnerów</b>rejestr podmiotów, które mają dane o AED</div>
+<div><b>naklejka z QR</b>na szafkę AED – prowadzi prosto do mapy</div>
+</div></div></div>"""))
 
     # 12. KONIEC
     s.append(f"""<section class="s koniec"><img src="{logo}" style="height:40mm"><h1>Pokaż, gdzie jest AED.<br><span>Każda minuta się liczy.</span></h1>
@@ -269,8 +269,8 @@ em{{font-style:normal;display:inline-flex;width:8mm;height:8mm;border-radius:50%
 .fakty p{{margin:0 0 5mm;padding-left:4mm;border-left:1.2mm solid {G};font-size:13pt}} .fakty b{{color:{GRANAT}}}
 .dwie{{display:grid;grid-template-columns:1fr 1fr;gap:10mm;align-items:start}} h3{{color:{G};margin:0 0 4mm;font-size:16pt}}
 pre{{background:{GRANAT};color:#e6eef8;border-radius:2.5mm;padding:8mm 7mm;font-size:13pt;line-height:1.5;margin:0}} pre mark{{background:#ffc605;color:#111;padding:0 1mm}}
-.mies{{display:grid;grid-template-columns:auto auto 1fr;gap:9mm;align-items:start}} .mies p{{font-size:11.5pt;max-width:56mm;margin:3mm 0 0}} .mies .szer p{{max-width:none}}
-.znaczek{{margin-top:5mm;display:inline-block;background:#e7f4ec;border:1.5px solid #00703c;color:#00532c;border-radius:2mm;padding:2.5mm 4mm;font-weight:700;font-size:11pt}} .znaczek small{{font-weight:400}}
+.mies{{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:8mm;align-items:start}} .mies p{{font-size:11.5pt;max-width:56mm;margin:3mm 0 0}} .mies .szer p{{max-width:none}}
+.znaczek{{margin-top:3mm;display:inline-block;background:#e7f4ec;border:1.5px solid #00703c;color:#00532c;border-radius:2mm;padding:2.5mm 4mm;font-weight:700;font-size:11pt}} .znaczek small{{font-weight:400}}
 .pasek{{display:flex;gap:3mm;margin-top:5mm}} .pasek span{{flex:1;background:#f2f6fb;border-radius:2mm;padding:2.5mm 3mm;font-size:10.5pt;display:flex;align-items:center}} .pasek .hl{{background:{G};color:#fff;font-weight:700}}
 .pytania{{display:grid;grid-template-columns:1fr 1fr;gap:5mm;margin-top:2mm}} .pytania div{{background:#f2f6fb;border-radius:3mm;padding:8mm 8mm;font-size:13.5pt;color:#333}}
 .pytania b{{display:block;font-size:20pt;color:{GRANAT};margin-bottom:1.5mm}} .pytania .hl{{background:#fdeef3;border:2px solid {CZERWONY}}}
