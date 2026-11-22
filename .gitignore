@@ -221,3 +221,19 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- Misja AED ---
+.venv/
+portal/node_modules/
+portal/.angular/
+portal/dist/
+dane_surowe/prg/
+dane_surowe/osm/
+*.tmp
+.tmp/
+backend/media/
+backend/logs/
+backend/.env
+portal/.angular/
+__pycache__/
+kampania/*.html
