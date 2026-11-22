@@ -36,7 +36,7 @@ def pelny_przebieg():
     n_stac, n_geo, n_mob = eksport.zapisz_zbior(wszystkie)
     rap = eksport.raport(wszystkie, metas, sorted(siec.ZABLOKOWANE))
     daty = sorted(m.get("data_stanu_zrodla") for m in metas if m.get("data_stanu_zrodla"))
-    xml = eksport.metadane_xml([r for r in wszystkie if r["mobilny"] != "tak"], os.environ.get("AED_BAZA_URL", "https://example.org/misja-aed/dane"), daty[-1] if daty else "")
+    xml = eksport.metadane_xml([r for r in wszystkie if r["mobilny"] != "tak"], os.environ.get("AED_BAZA_URL", "https://raw.githubusercontent.com/jesiekjakub/AED/main/dane"), daty[-1] if daty else "")
     bledy = eksport.waliduj_xml(xml)
     eksport.artefakty_schematu(rap["pokrycie_pol_proc"])
     portal = eksport.KORZEN / "portal" / "src" / "assets" / "aed"

@@ -1,8 +1,7 @@
 # Instrukcja dla jury – „AED na ratunek”
 
-Każdy krok wskazuje, co otworzyć i gdzie sprawdzić jedno wymaganie z treści zadania. Kroki 1–9 da się wykonać na samych plikach, bez uruchamiania czegokolwiek. Krok 10 to klikalny prototyp.
+Każdy krok wskazuje, co otworzyć i gdzie sprawdzić jedno wymaganie z treści zadania. Kroki 1–9 da się wykonać na samych plikach, bez uruchamiania czegokolwiek. Krok 10 to przejście całego procesu w prototypie.
 
-**Prototyp online:** ADRES_PROTOTYPU
 **Repozytorium:** https://github.com/jesiekjakub/AED
 
 ## Wymagania formalne
@@ -60,7 +59,7 @@ Odtworzyliśmy w kodzie portalu logikę istniejącego wykazu DGA.
 
 ## Prototyp – przejście całego procesu
 
-**10. W prototypie online (ADRES_PROTOTYPU)**
+**10. W prototypie (portal dane.gov.pl z naszymi zmianami)**
 1. W menu portalu kliknij „Mapa AED”.
 2. Pierwsza zakładka pod mapą, „Wykaz zbiorczy AED (tabela)”, to tabela wykazu osadzona w portalu, z kolumnami: dysponent, link do zasobu źródłowego i data aktualizacji. Możesz ją sortować i stronicować.
 3. Kliknij „Pokaż najbliższy AED” i zezwól na lokalizację. Zobaczysz najbliższe urządzenie, jego godziny i to, czy nie jest zamknięte na klucz.

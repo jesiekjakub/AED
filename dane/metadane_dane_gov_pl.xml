@@ -19,7 +19,7 @@
     <resources>
       <resource status="published">
         <extIdent>misja-aed-csv</extIdent>
-        <url>https://example.org/misja-aed/dane/aed_zbiorczy.csv</url>
+        <url>https://raw.githubusercontent.com/jesiekjakub/AED/main/dane/aed_zbiorczy.csv</url>
         <title><polish>Defibrylatory AED – CSV</polish><english>AED defibrillators – CSV</english></title>
         <description><polish>Plik CSV (UTF-8, separator przecinek) zgodny ze wzorcowym zakresem danych.</polish><english>CSV file (UTF-8, comma) following the reference schema.</english></description>
         <availability>remote</availability>
@@ -34,7 +34,7 @@
       </resource>
       <resource status="published">
         <extIdent>misja-aed-geojson</extIdent>
-        <url>https://example.org/misja-aed/dane/aed_zbiorczy.geojson</url>
+        <url>https://raw.githubusercontent.com/jesiekjakub/AED/main/dane/aed_zbiorczy.geojson</url>
         <title><polish>Defibrylatory AED – GeoJSON</polish><english>AED defibrillators – GeoJSON</english></title>
         <description><polish>Warstwa punktowa GeoJSON (EPSG:4326).</polish><english>GeoJSON point layer (EPSG:4326).</english></description>
         <availability>remote</availability>
@@ -49,7 +49,7 @@
       </resource>
       <resource status="published">
         <extIdent>misja-aed-raport</extIdent>
-        <url>https://example.org/misja-aed/dane/raport_jakosci.json</url>
+        <url>https://raw.githubusercontent.com/jesiekjakub/AED/main/dane/raport_jakosci.json</url>
         <title><polish>Raport jakości danych AED</polish><english>AED data quality report</english></title>
         <description><polish>Kompletność pól i wykryte problemy w podziale na źródła.</polish><english>Field completeness and detected issues per source.</english></description>
         <availability>remote</availability>
